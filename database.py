@@ -286,25 +286,25 @@ class Db:
         except Exception as E:
             print("Fonk: getData => ", E)
 
-    def getFreeBooks(self, sql_=''):
+    def getFreeBooks(self):
         try:
-            sql = f"""SELECT KitapTablosu.kitapId,Barkod,KitapAdi,YazarAdi FROM KitapTablosu
-            LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId WHERE Durum=1 {sql_}"""
+            sql = f"""SELECT KitapTablosu.kitapId, Barkod, KitapAdi, YazarAdi, ISBN FROM KitapTablosu
+            LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId WHERE Durum=1 """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
             print("Fonk: getFreeBooks => ", E)
 
-    def getMemberDataNumberOfRead(self, sql_=''):
+    def getMemberDataNumberOfRead(self):
         try:
             sql = f"""SELECT UyeTablosu.uyeId, {self.maxNumberOfBooksGiven}-count(EmanetTablosu.UyeId), 
                         OkulNo, Ad, Soyad, TCNo, Sinif, Sube FROM UyeTablosu 
                         LEFT JOIN EmanetTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId 
-                        WHERE Durum=1 {sql_} AND DonusTarihi is NULL GROUP By UyeTablosu.uyeId"""
+                        WHERE Durum=1 AND DonusTarihi is NULL GROUP By UyeTablosu.uyeId"""
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
-            print("Fonk: getDataWithWhere => ", E)
+            print("Fonk: getMemberDataNumberOfRead => ", E)
 
     def getMemberDataWithWhere(self):
         try:
@@ -351,8 +351,8 @@ class Db:
     def getBookDataWithJoinTables(self) -> list :
         durum_0, durum_1 = "Okunuyor", "Rafta"
         try:
-            sql =f"""SELECT Barkod,ISBN,KitapAdi,YazarAdi,Kategori,Bolum,RafNo,Yayinevi,SayfaSayisi,BasimYili,Aciklama,                    
-                    KayitTarihi, CASE WHEN Durum=1 THEN '{durum_1}' ELSE '{durum_0}' END FROM KitapTablosu 
+            sql =f"""SELECT Barkod, ISBN, KitapAdi, YazarAdi, Kategori, Bolum, RafNo, Yayinevi, SayfaSayisi, BasimYili,                    
+                    KayitTarihi, CASE WHEN Durum=1 THEN '{durum_1}' ELSE '{durum_0}' END, Aciklama FROM KitapTablosu 
                     LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId
                     LEFT JOIN KategoriTablosu ON KitapTablosu.KategoriId=KategoriTablosu.kategoriId
                     LEFT JOIN BolumTablosu ON KitapTablosu.BolumId=BolumTablosu.bolumId
@@ -369,7 +369,7 @@ class Db:
             donTarihi = f"""strftime('%d.%m.%Y', date(VerilisTarihi, '+{gun} day'))"""
             kalanGun = f"""Cast ((JulianDay(date(VerilisTarihi, '+{gun} day')) - JulianDay(date('now'))) As Integer)"""
             sql = f"""SELECT Barkod,KitapAdi,YazarAdi,TCNo,OkulNo,Ad,Soyad,Sinif,Sube,
-                    {verTarihi},{donTarihi},{kalanGun} FROM EmanetTablosu 
+                    {verTarihi},{kalanGun},{donTarihi} FROM EmanetTablosu 
                     LEFT JOIN KitapTablosu ON KitapTablosu.kitapId=EmanetTablosu.KitapId
                     LEFT JOIN UyeTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId
                     LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId

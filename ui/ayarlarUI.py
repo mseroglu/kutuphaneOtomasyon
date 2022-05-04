@@ -489,7 +489,7 @@ class Ui_Form(object):
         self.verticalLayout.addWidget(self.tabWidget)
 
         self.retranslateUi(Form)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         self.combo_userState.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -515,6 +515,7 @@ class Ui_Form(object):
         self.label_4.setText(_translate("Form", "Kurum Adı"))
         self.label_5.setText(_translate("Form", "Kurum Kodu"))
         self.le_institutionCode.setInputMask(_translate("Form", "999999"))
+        self.le_institutionCode.setPlaceholderText(_translate("Form", "6 haneli bir numara girilmelidir"))
         self.btn_saveInstutionInfo.setText(_translate("Form", "Kaydet"))
         self.label_6.setText(_translate("Form", "Üyenin Elindeki\n"
 "Max Eser Sayısı"))

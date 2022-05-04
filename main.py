@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         self.duration = 20_000
         self.dictEscrowBookInfos    = {}
 
+
         self.ui.tabWidget.currentChanged.connect(self.showEvent)
 
 
@@ -46,6 +47,7 @@ class MainWindow(QMainWindow):
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         try:
+            self.ui.le_searchBarcode.setFocus()
             self.openWindowControl()
             self.showBooksOnTablewidget()
             self.showMembersInTablewidget()
@@ -124,8 +126,8 @@ class MainWindow(QMainWindow):
 
     def showMembersInTablewidget(self):
         try:
-            colLabels   = ("Üye Tipi", "Durum", "TC Kimlik No", "Okul No", "Ad", "Soyad", "Cinsiyet", "Sınıf", "Şube",
-                           "Telefon", "Doğum Tarihi", "Üyelik Tarihi", "Foto")
+            colLabels   = ("Üye Tipi", "Durum", f"{'TC Kimlik No':^20}", "Okul No", f"{'Ad':^35}", f"{'Soyad':^15}", "Cinsiyet", "Sınıf", "Şube",
+                           f"{'Telefon':^20}", "Doğum Tarihi", "Üyelik Tarihi", f"{'Foto':^20}")
             self.ui.table_memberList.clear()
             self.ui.table_memberList.setColumnCount(len(colLabels))
             self.ui.table_memberList.setHorizontalHeaderLabels(colLabels)
@@ -139,13 +141,14 @@ class MainWindow(QMainWindow):
                     if col in (2,3,7,8,10,11):
                         self.ui.table_memberList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
             self.ui.table_memberList.resizeColumnsToContents()
+            self.ui.table_memberList.horizontalHeader().setStretchLastSection(True)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showMembersInTablewidget \t\t Hata Kodu : {E}", self.duration)
 
     def showBooksOnTablewidget(self):
         try:
-            colLabels = ('Barkod', "ISBN", "Eser Adı", 'Yazarı','Kategori','Bölüm','Raf No','Yayınevi','Sayfa Sayısı',
-                        'Basım Yılı','Açıklama', 'Kayıt Tarihi', 'Durum')
+            colLabels = ('Barkod', f"{'ISBN':^20}", f"{'Eser Adı':^30}", f'{"Yazarı":^20}', 'Kategori', 'Bölüm',
+                         'Raf No', 'Yayınevi', 'Sayfa Sayısı', 'Basım Yılı', 'Kayıt Tarihi', 'Durum', 'Açıklama')
             self.ui.table_bookList.clear()
             self.ui.table_bookList.setColumnCount(len(colLabels))
             self.ui.table_bookList.setHorizontalHeaderLabels(colLabels)
@@ -154,19 +157,21 @@ class MainWindow(QMainWindow):
                 self.ui.table_bookList.setRowCount(len(books)+20)
                 for row, book in enumerate(books):
                     for col, item in enumerate(book):
-                        if col == 0: item = item[7:]
+                        if col == 0: item = item[6:]
                         self.ui.table_bookList.setItem(row,col,QTableWidgetItem(str(item if item else "")))
                         if book[12] == "Okunuyor":
                             self.ui.table_bookList.item(row, col).setBackground(QtGui.QColor("#d9ead3"))
-                        if col in (0,1,8,9,11):
+                        if col in (0,1,8,9,10):
                             self.ui.table_bookList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
                 self.ui.table_bookList.resizeColumnsToContents()
+                self.ui.table_bookList.horizontalHeader().setStretchLastSection(True)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksOnTablewidget     Hata Kodu : {E}", self.duration)
 
     def showTodayEntrustOnTablewidget(self):
         try:
-            colLabels = ('Barkod','Eser Adı','Yazarı','Üye No','Okul No','Ad','Soyad','Sınıf','Şube', 'Alma Tarihi', 'İade Tarihi', 'Kalan Gün')
+            colLabels = ('Barkod', f'{"Eser Adı":^40}', f'{"Yazarı":^25}', 'TC Kimlik Nosu', 'Okul No', f'{"Ad":^25}',
+                         f'{"Soyad":^15}', 'Sınıf','Şube', 'Veriliş Tarihi', 'Kalan Gün', 'İade Tarihi')
             self.ui.table_givenToday.clear()
             self.ui.table_givenToday.setColumnCount(len(colLabels))
             self.ui.table_givenToday.setHorizontalHeaderLabels(colLabels)
@@ -175,7 +180,7 @@ class MainWindow(QMainWindow):
                 self.ui.table_givenToday.setRowCount(len(todayEntrusted)+20)
                 for row, book in enumerate(todayEntrusted):
                     for col, item in enumerate(book):
-                        if col == 0: item = item[7:]
+                        if col == 0: item = item[6:]
                         self.ui.table_givenToday.setItem(row,col,QTableWidgetItem(str(item if item else '')))
                         if col in (0,3,4,7,8,9,10,11):
                             self.ui.table_givenToday.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
@@ -186,8 +191,8 @@ class MainWindow(QMainWindow):
 
     def showOutsidesOnTablewidget(self):
         try:
-            colLabels = ('Tıkla','Barkod','Eser Adı','Yazarı',"Verildiği Tarih","Kalan Gün","Son İade Tarihi",
-                         'Üye No','Okul No','Ad','Soyad','Sınıf','Şube')
+            colLabels = ('Tıkla','Barkod No', f'{"Eser Adı":^35}', f'{"Yazarı":^30}',"Veriliş Tarihi","Kalan Gün","İade Tarihi",
+                         'TC Kimlik No','Okul No',f'{"Ad":^25}',f'{"Soyad":^15}','Sınıf','Şube')
             self.ui.table_outsides.clear()
             self.ui.table_outsides.setColumnCount(len(colLabels))
             self.ui.table_outsides.setHorizontalHeaderLabels(colLabels)
@@ -196,21 +201,21 @@ class MainWindow(QMainWindow):
                 self.ui.table_outsides.setRowCount(len(outsides)+20)
                 for row, book in enumerate(outsides):
                     self.ui.table_outsides.setCellWidget(row,0, self.createButtonForTablewidget( book ))        # Tablewidgwta buton yerleştirme
-                    for col, item in enumerate(book[2:]):
-                        if col == 0: item = item[7:]
-                        self.ui.table_outsides.setItem(row,col+1,QTableWidgetItem(str(item if item!=None else '')))
+                    for index, item in enumerate(book[2:]):
+                        col = index+1
+                        if index == 0: item = item[6:]
+                        self.ui.table_outsides.setItem(row,col,QTableWidgetItem(str(item if item!=None else '')))
                         if col in (1,4,5,6,7,8,11,12):
                             self.ui.table_outsides.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
                 self.ui.table_outsides.resizeColumnsToContents()
-                self.ui.table_outsides.setContentsMargins(0, 0, 0, 0)
-                self.ui.table_outsides.setViewportMargins(0,0,0,0)
+                self.ui.table_outsides.horizontalHeader().setStretchLastSection(True)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showTodayEntrustOnTablewidget\t\t Hata Kodu : {E}", self.duration)
 
     def showBooksReturnTodayOnTablewidget(self):
         try:
-            colLabels = ('Tıkla', 'Barkod', 'Eser Adı', 'Yazarı', "Verildiği Tarih", "Kalan Gün", "Son İade Tarihi",
-                         'Üye No', 'Okul No', 'Ad', 'Soyad', 'Sınıf', 'Şube')
+            colLabels = ('Tıkla', 'Barkod', f'{"Eser Adı":^30}', f'{"Yazarı":^20}', "Veriliş Tarih", "Kalan Gün", "İade Tarihi",
+                         'TC Kimlik No', 'Okul No', f'{"Ad":^30}', f'{"Soyad":^15}', 'Sınıf', 'Şube')
             self.ui.table_expaired.clear()
             self.ui.table_expaired.setColumnCount(len(colLabels))
             self.ui.table_expaired.setHorizontalHeaderLabels(colLabels)
@@ -219,11 +224,14 @@ class MainWindow(QMainWindow):
                 self.ui.table_expaired.setRowCount(len(booksReturnToday) + 20)
                 for row, book in enumerate(booksReturnToday):
                     self.ui.table_expaired.setCellWidget(row, 0, self.createButtonForTablewidget(book))
-                    for col, item in enumerate(book[2:]):
-                        if col==0: item = item[7:]
-                        self.ui.table_expaired.setItem(row, col+1, QTableWidgetItem(str(item)))
+                    for index, item in enumerate(book[2:]):
+                        col = index+1
+                        if index==0: item = item[6:]
+                        self.ui.table_expaired.setItem(row, col, QTableWidgetItem(str(item)))
                         if col in (1,4,5,6,7,8,11,12):
                             self.ui.table_expaired.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
+                self.ui.table_expaired.resizeColumnsToContents()
+                self.ui.table_expaired.horizontalHeader().setStretchLastSection(True)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksReturnTodayOnTablewidget\t\t Hata Kodu : {E}", self.duration)
 

@@ -184,7 +184,7 @@ class SaveBook(QMainWindow):
         try:
             self.ui.combo_authorName.clear()
             self.ui.combo_authorName.insertItem(0, "")
-            authors = db.getData("YazarTablosu", "YazarAdi", "yazarId")
+            authors = db.getDataWithOrderBy("YazarTablosu", "YazarAdi", "yazarId")
             for Name, ID in authors:
                 self.ui.combo_authorName.addItem(Name,userData=ID)
         except Exception as E:
@@ -194,7 +194,7 @@ class SaveBook(QMainWindow):
         try:
             self.ui.combo_category.clear()
             self.ui.combo_category.insertItem(0, "")
-            categories = db.getData("KategoriTablosu", "Kategori", "kategoriId")
+            categories = db.getDataWithOrderBy("KategoriTablosu", "Kategori", "kategoriId")
             for category, ID in categories:
                 self.ui.combo_category.addItem(category, userData=ID)
         except Exception as E:
@@ -204,7 +204,7 @@ class SaveBook(QMainWindow):
         try:
             self.ui.combo_section.clear()
             self.ui.combo_section.insertItem(0, "")
-            sections = db.getData("BolumTablosu", "Bolum", "bolumId")
+            sections = db.getDataWithOrderBy("BolumTablosu", "Bolum", "bolumId")
             for section, ID in sections:
                 self.ui.combo_section.addItem(section, userData=ID)
         except Exception as E:
@@ -214,7 +214,7 @@ class SaveBook(QMainWindow):
         try:
             self.ui.combo_bookshelf.clear()
             self.ui.combo_bookshelf.insertItem(0, "")
-            bookshelfs  = db.getData("RafTablosu", "RafNo", "rafId")
+            bookshelfs  = db.getDataWithOrderBy("RafTablosu", "RafNo", "rafId")
             for bookshelf, ID in bookshelfs:
                 self.ui.combo_bookshelf.addItem(bookshelf, userData=ID)
         except Exception as E:
