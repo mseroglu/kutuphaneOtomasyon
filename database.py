@@ -10,10 +10,20 @@ import sqlite3, pandas as pd, sqlalchemy
 conn = sqlite3.connect('Otomasyon.sqlite')
 curs = conn.cursor()
 
+def tableWidgetResize(tableWidget: object, cols: list, blank=12):
+    try:
+        wid = tableWidget.width() - (tableWidget.verticalHeader().width() + tableWidget.verticalScrollBar().width()+blank)
+        commonValue = wid / sum(cols)
+        for i, col in enumerate(cols):
+            tableWidget.setColumnWidth(i, int(round(col*commonValue,0)))
+    except Exception as E:
+        print("Fonk: tableWidgetResize  \tHata: ", E)
+
+
 class Db:
     def __init__(self):
         self.cameId                 = 0
-        self.maxDayBooksStay        = 7   # gün
+        self.maxDayBooksStay        = 7    # gün
         self.maxNumberOfBooksGiven  = 3    # adet
 
 

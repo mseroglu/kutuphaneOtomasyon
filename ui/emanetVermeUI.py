@@ -270,7 +270,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Al - Ver"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Ver"))
         self.radio_okulNo.setText(_translate("MainWindow", "Okul No"))
         self.radio_tc.setText(_translate("MainWindow", "TC Kimlik No"))
         self.radio_isim.setText(_translate("MainWindow", "İsim"))

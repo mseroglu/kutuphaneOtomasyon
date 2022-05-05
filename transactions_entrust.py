@@ -5,7 +5,7 @@ locale.setlocale(locale.LC_ALL, "")
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QHBoxLayout, QWidget, QCheckBox, QRadioButton, QPushButton
 from PyQt5 import QtGui, QtCore
 from ui.emanetVermeUI import Ui_MainWindow
-from database import db, curs
+from database import db, curs, tableWidgetResize
 from messageBox import msg
 import sys, os
 class Entrust(QMainWindow):                         # Entrust = Emanet
@@ -13,6 +13,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         super(Entrust, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.resize(1000,600)
 
         self.numberOfBlankLines = 20
         self.duration           = 20_000
@@ -34,7 +35,9 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         self.ui.btn_clearSelection.clicked.connect(self.clearSelection)
 
 
-
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        tableWidgetResize(self.ui.table_membersList, (3, 2, 2, 6, 3, 4, 1, 1))
+        tableWidgetResize(self.ui.table_booksList, (2, 3, 6, 4, 4))
 
     def yenile(self):
         self.showMembersInTablewidget()
@@ -175,7 +178,8 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                         self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item)))
                         if col in (1,4):
                             self.ui.table_booksList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
-                self.ui.table_booksList.resizeColumnsToContents()
+                self.resizeEvent(QtGui.QResizeEvent)
+                # self.ui.table_booksList.resizeColumnsToContents()
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksOnTablewidget     Hata Kodu : {E}", self.duration)
 
@@ -234,6 +238,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                     self.ui.table_membersList.setItem(row, col, QTableWidgetItem(str(info)))
                     if col in (1,2,5,6,7):
                         self.ui.table_membersList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
-            self.ui.table_membersList.resizeColumnsToContents()
+            # self.ui.table_membersList.resizeColumnsToContents()
+            self.resizeEvent(QtGui.QResizeEvent)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showMembersInTablewidget \t\t Hata Kodu : {E}", self.duration)
