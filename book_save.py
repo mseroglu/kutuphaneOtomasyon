@@ -113,19 +113,19 @@ class SaveBook(QMainWindow):
             Id, Barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
             cameData = db.getBookDataWithId(Id=Id)
             self.selectedIdForUpdate = Id
-            self.ui.le_barkode.setText( cameData[0][1] )
-            self.ui.label_barcodeImg.setPixmap(QtGui.QPixmap(f"imgBarkode/{cameData[0][1]}.png"))
-            self.ui.le_isbn.setText( cameData[0][2] )
-            self.ui.le_bookName.setText( cameData[0][3] )
-            self.ui.combo_authorName.setCurrentIndex(self.ui.combo_authorName.findData( cameData[0][4] ) )
-            self.ui.combo_category.setCurrentIndex(self.ui.combo_category.findData( cameData[0][5] ) )
-            self.ui.combo_section.setCurrentIndex(self.ui.combo_section.findData( cameData[0][6] ) )
-            self.ui.combo_bookshelf.setCurrentIndex(self.ui.combo_bookshelf.findData( cameData[0][7] ) )
-            self.ui.le_publisher.setText( cameData[0][8] )
-            self.ui.le_pageCount.setText( cameData[0][9] )
-            self.ui.le_publicationYear.setText( cameData[0][10] )
-            self.ui.plain_description.setPlainText(cameData[0][11])
-            self.ui.combo_exportability.setCurrentIndex(cameData[0][12])
+            self.ui.le_barkode.setText( cameData[1] )
+            self.ui.label_barcodeImg.setPixmap(QtGui.QPixmap(f"imgBarkode/{cameData[1]}.png"))
+            self.ui.le_isbn.setText( cameData[2] )
+            self.ui.le_bookName.setText( cameData[3] )
+            self.ui.combo_authorName.setCurrentIndex(self.ui.combo_authorName.findData( cameData[4] ) )
+            self.ui.combo_category.setCurrentIndex(self.ui.combo_category.findData( cameData[5] ) )
+            self.ui.combo_section.setCurrentIndex(self.ui.combo_section.findData( cameData[6] ) )
+            self.ui.combo_bookshelf.setCurrentIndex(self.ui.combo_bookshelf.findData( cameData[7] ) )
+            self.ui.le_publisher.setText( cameData[8] )
+            self.ui.le_pageCount.setText( cameData[9] )
+            self.ui.le_publicationYear.setText( cameData[10] )
+            self.ui.plain_description.setPlainText(cameData[11])
+            self.ui.combo_exportability.setCurrentIndex(cameData[12])
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBookInfoInForm \t\t Hata Kodu : {E}", self.duration)
 
@@ -146,7 +146,6 @@ class SaveBook(QMainWindow):
     def updateBookInfo(self):
         try:
             cols_datas = self.getBookInfo()
-            print(cols_datas)
             if bool(cols_datas["KitapAdi"]):
                 cols_datas["kitapId"] = self.selectedIdForUpdate
                 db.updateData(TableName="KitapTablosu", **cols_datas)

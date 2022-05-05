@@ -95,13 +95,12 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
     def giveBooksToMembers(self):
         addedData = 0
         try:
-            tcno        = self.sender().objectName()
-            memberId    = self.dictMembersInfos[tcno][0]
-            verilebilir = self.dictMembersInfos[tcno][1]
-            memberName  = " ".join( self.dictMembersInfos[tcno][3:5])
-            listBooksId = self.selectedBooksDict["KitapId"]
-            listBooksName = self.selectedBooksDict["KitapAdi"]
-            print(self.dictMembersInfos[tcno])
+            tcno        : str   = self.sender().objectName()
+            memberId    : int   = self.dictMembersInfos[tcno][0]
+            verilebilir : int   = self.dictMembersInfos[tcno][1]
+            memberName  : str   = " ".join( self.dictMembersInfos[tcno][3:5])
+            listBooksId : list  = self.selectedBooksDict["KitapId"]
+            listBooksName: list = self.selectedBooksDict["KitapAdi"]
             if not listBooksId :
                 msg.popup_mesaj('Dikkat', "Hiç eser seçmediniz !  Lütfen önce verilecek eserleri seçiniz.\t\n")
             else:
@@ -135,11 +134,12 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             else:
                 if barcod in self.barkodList:
                     self.barkodList.remove(barcod)
-            print("bookInfo ",self.dictBooksInfos[barcod])
             listBookId   = tuple(self.dictBooksInfos[b][0] for b in self.barkodList)
             listBookName = tuple(self.dictBooksInfos[b][2] for b in self.barkodList)
             self.selectedBooksDict["KitapId"] = listBookId
             self.selectedBooksDict["KitapAdi"] = listBookName
+
+            print("bookInfo ",self.dictBooksInfos[barcod])
             print('self.selectedBooksDict: ', self.selectedBooksDict)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: addBookIdListOnDataDict \t\tHata Kodu : {E}", self.duration)
@@ -175,7 +175,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                     for index, item in enumerate(book[1:]):
                         col = index+1
                         if index==0: item = item[6:]
-                        self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item)))
+                        self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item if item else "")))
                         if col in (1,4):
                             self.ui.table_booksList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
                 self.resizeEvent(QtGui.QResizeEvent)
@@ -193,10 +193,10 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             for row in range(rows-self.numberOfBlankLines):
                 item = self.ui.table_booksList.item(row,col)
                 if item is not None:
-                    if ara.lower() not in item.text().lower():
-                        self.ui.table_booksList.hideRow(row)
-                    else:
+                    if ara.lower() in item.text().lower() or item.text().lower() in ara.lower():
                         self.ui.table_booksList.showRow(row)
+                    else:
+                        self.ui.table_booksList.hideRow(row)
         except Exception as E:
             print(E)
 

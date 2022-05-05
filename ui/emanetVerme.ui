@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>785</width>
+    <width>846</width>
     <height>600</height>
    </rect>
   </property>
@@ -91,6 +91,12 @@
          </item>
          <item>
           <widget class="QRadioButton" name="radio_isim">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -254,6 +260,19 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="btn_clearSelection">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Seçimi Temizle</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -295,32 +314,6 @@
            </property>
            <property name="text">
             <string>Ara</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_clearSelection">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Seçimi Temizle</string>
            </property>
           </widget>
          </item>
@@ -533,7 +526,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>785</width>
+     <width>846</width>
      <height>21</height>
     </rect>
    </property>

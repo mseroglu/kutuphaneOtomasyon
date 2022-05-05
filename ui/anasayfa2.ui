@@ -278,6 +278,9 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -329,7 +332,7 @@
          <property name="currentIndex">
           <number>4</number>
          </property>
-         <widget class="QWidget" name="tab_4">
+         <widget class="QWidget" name="tab_books">
           <attribute name="title">
            <string>Eser Listesi</string>
           </attribute>
@@ -402,7 +405,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_5">
+         <widget class="QWidget" name="tab_members">
           <attribute name="title">
            <string>Üye Listesi</string>
           </attribute>
@@ -486,7 +489,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_3">
+         <widget class="QWidget" name="tab_givenToday">
           <attribute name="title">
            <string>Bugün Verilenler</string>
           </attribute>
@@ -570,7 +573,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="tab_expired">
           <attribute name="title">
            <string>Süresi Dolanlar</string>
           </attribute>
@@ -651,7 +654,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_2">
+         <widget class="QWidget" name="tab_outsides">
           <attribute name="title">
            <string>Dışardakiler</string>
           </attribute>

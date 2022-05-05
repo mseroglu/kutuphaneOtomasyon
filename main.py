@@ -24,11 +24,13 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.duration = 20_000
-        self.dictEscrowBookInfos    = {}
+        self.numberOfBlankLines = 20
+        self.duration           = 20_000
+        self.dictEscrowBookInfos= {}
 
 
         self.ui.tabWidget.currentChanged.connect(self.showEvent)
+        self.ui.le_searchBarcode.textChanged.connect(self.bookStateControl)
 
 
 
@@ -62,8 +64,6 @@ class MainWindow(QMainWindow):
         except Exception as E:
             print(f"Fonk: showEvent  \tHata : {E}")
 
-
-
     def openWindowControl(self):
         if winSaveBook.isActiveWindow():
             winSaveMember.close()
@@ -82,6 +82,36 @@ class MainWindow(QMainWindow):
             winSaveMember.close()
             winEntrust.close()
 
+    def bookStateControl(self):
+        try:
+            barkod = self.ui.le_searchBarcode.text()
+            bookStateData = db.getBookState(Barkod=barkod)
+            print(bookStateData)
+            if bookStateData:
+                if bookStateData[0]:
+                    winEntrust.show()
+                    winEntrust.ui.le_searchBook.setText(barkod)
+                    winEntrust.ui.le_searchBook.setFocus()
+                else:
+                    self.filterBooksOnTablewidget()
+        except Exception as E:
+            print(E)
+
+
+    def filterBooksOnTablewidget(self):
+        try:
+            ara     = self.ui.le_searchBarcode.text()
+            rows    = self.ui.table_outsides.rowCount() - self.numberOfBlankLines
+            self.ui.tabWidget.setCurrentWidget(self.ui.tab_outsides)
+            for row in range(rows):
+                item = self.ui.table_outsides.item(row, 1)
+                if item is not None:
+                    if item.text().lower() in ara.lower() or ara.lower() in item.text().lower():
+                        self.ui.table_outsides.showRow(row)
+                    else:
+                        self.ui.table_outsides.hideRow(row)
+        except Exception as E:
+            print(E)
 
     def createButtonForTablewidget(self, data: list ) -> QWidget :
         try:

@@ -332,19 +332,26 @@ class Db:
         try:
             sql =f"""SELECT * FROM UyeTablosu WHERE TCNo={tcno}"""
             curs.execute(sql)
-            return curs.fetchall()
+            return curs.fetchone()
         except Exception as E:
-            print("Fonk: getBookDataWithJoinAndWhere_2 => ", E)
+            print("Fonk: getMemberDataWithTcno => ", E)
 
     def getBookDataWithId(self, Id):
         try:
             sql =f"""SELECT kitapId, Barkod, ISBN, KitapAdi, YazarId, KategoriId, BolumId, RafId, YayinEvi,
                     SayfaSayisi, BasimYili, Aciklama, DisariVerme, KayitTarihi, Durum FROM KitapTablosu WHERE kitapId={Id}"""
             curs.execute(sql)
-            return curs.fetchall()
+            return curs.fetchone()
         except Exception as E:
-            print("Fonk: getBookDataWithJoinAndWhere_2 => ", E)
+            print("Fonk: getBookDataWithId => ", E)
 
+    def getBookState(self, Barkod):
+        try:
+            sql =f"""SELECT Durum FROM KitapTablosu WHERE Barkod LIKE '%{Barkod}%' """
+            curs.execute(sql)
+            return curs.fetchone()
+        except Exception as E:
+            print("Fonk: getBookState => ", E)
 
 
     def getUserInfoWithCase(self) -> list :
