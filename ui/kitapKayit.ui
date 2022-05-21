@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
+    <width>822</width>
     <height>600</height>
    </rect>
   </property>
@@ -175,7 +175,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../img/add2.png</normaloff>../img/add2.png</iconset>
+                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -240,7 +240,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../img/add2.png</normaloff>../img/add2.png</iconset>
+                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -368,7 +368,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../img/add2.png</normaloff>../img/add2.png</iconset>
+                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -433,7 +433,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../img/add2.png</normaloff>../img/add2.png</iconset>
+                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -583,7 +583,7 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
                <property name="maximumSize">
                 <size>
                  <width>150</width>
-                 <height>75</height>
+                 <height>100</height>
                 </size>
                </property>
                <property name="font">
@@ -628,7 +628,7 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap>../img/addImg.png</pixmap>
+                <pixmap>../../../Users/msero/.designer/img/addImg.png</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -965,7 +965,7 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>772</width>
+     <width>822</width>
      <height>21</height>
     </rect>
    </property>

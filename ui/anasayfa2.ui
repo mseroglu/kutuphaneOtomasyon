@@ -20,48 +20,16 @@
    <string>Kütüphane Otomasyonu v1.0</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QGroupBox" name="groupBox">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>100</height>
-       </size>
+     <widget class="QFrame" name="frame_side">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>100</height>
-       </size>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="title">
-       <string/>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QPushButton" name="btn_openTransactions">
          <property name="sizePolicy">
@@ -87,30 +55,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btn_openSaveBook">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>80</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Kitap Kayıt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btn_openMemberSave">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -131,6 +75,30 @@
          </property>
          <property name="text">
           <string>Üye Kayıt</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_openSaveBook">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Kitap Kayıt</string>
          </property>
         </widget>
        </item>
@@ -183,6 +151,19 @@
         </widget>
        </item>
        <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QPushButton" name="btn_quit">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -206,131 +187,176 @@
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="le_searchBarcode">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>150</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="maxLength">
-         <number>13</number>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCommandLinkButton" name="commandLinkButton_2">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>150</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Segoe UI</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Barkod Okut</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="groupBox_3">
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
+     <widget class="QFrame" name="frame_main">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <property name="title">
-       <string/>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <widget class="QGroupBox" name="groupBox_header">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="rightMargin">
+             <number>30</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="le_searchBarcode">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>25</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="maxLength">
+               <number>13</number>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>barkod</string>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_barcodeRead">
+              <property name="maximumSize">
+               <size>
+                <width>40</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../img/barcodOkut.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_logo">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap>../img/logo.jpg</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <property name="indent">
+             <number>-1</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QTabWidget" name="tabWidget">
          <property name="tabShape">
-          <enum>QTabWidget::Triangular</enum>
+          <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
           <number>4</number>
+         </property>
+         <property name="documentMode">
+          <bool>false</bool>
          </property>
          <widget class="QWidget" name="tab_books">
           <attribute name="title">
@@ -338,18 +364,44 @@
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
-              <widget class="QLineEdit" name="lineEdit_searchBook">
+              <widget class="QPushButton" name="btn_searchBook">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_searchBook">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>300</width>
+                 <width>150</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -357,36 +409,24 @@
                 <font>
                  <pointsize>10</pointsize>
                 </font>
+               </property>
+               <property name="placeholderText">
+                <string>ara</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCommandLinkButton" name="commandLinkButton_7">
-               <property name="enabled">
-                <bool>false</bool>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>60</width>
-                 <height>16777215</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Ara</string>
-               </property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -411,18 +451,44 @@
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
-              <widget class="QLineEdit" name="lineEdit_searchMember">
+              <widget class="QPushButton" name="btn_searchMember">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_searchMember">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>300</width>
+                 <width>150</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -430,36 +496,24 @@
                 <font>
                  <pointsize>10</pointsize>
                 </font>
+               </property>
+               <property name="placeholderText">
+                <string>ara</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCommandLinkButton" name="commandLinkButton_8">
-               <property name="enabled">
-                <bool>false</bool>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>60</width>
-                 <height>16777215</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Ara</string>
-               </property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -497,6 +551,26 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
+              <widget class="QPushButton" name="btn_searchGivenToday">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="le_searchGivenToday">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -504,9 +578,15 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>300</width>
+                 <width>150</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -514,36 +594,24 @@
                 <font>
                  <pointsize>10</pointsize>
                 </font>
+               </property>
+               <property name="placeholderText">
+                <string>ara</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCommandLinkButton" name="commandLinkButton">
-               <property name="enabled">
-                <bool>false</bool>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>60</width>
-                 <height>16777215</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Ara</string>
-               </property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -581,16 +649,42 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
-              <widget class="QLineEdit" name="le_serachExpired">
+              <widget class="QPushButton" name="btn_searchExpired">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_searchExpired">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>300</width>
+                 <width>150</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -598,36 +692,24 @@
                 <font>
                  <pointsize>10</pointsize>
                 </font>
+               </property>
+               <property name="placeholderText">
+                <string>ara</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCommandLinkButton" name="commandLinkButton_5">
-               <property name="enabled">
-                <bool>false</bool>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>60</width>
-                 <height>16777215</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Ara</string>
-               </property>
-              </widget>
+              </spacer>
              </item>
             </layout>
            </item>
@@ -662,7 +744,60 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
-              <spacer name="horizontalSpacer_4">
+              <widget class="QPushButton" name="btn_searchOutside">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_searchOutsides">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="placeholderText">
+                <string>ara</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
                <property name="font">
                 <font>
                  <pointsize>10</pointsize>
@@ -678,55 +813,6 @@
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="le_searchOutsides">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCommandLinkButton" name="commandLinkButton_6">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>125</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Ara</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </item>
@@ -871,7 +957,7 @@
               </property>
               <property name="font">
                <font>
-                <pointsize>9</pointsize>
+                <pointsize>10</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
@@ -1023,31 +1109,20 @@
          </widget>
         </widget>
        </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_footer">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+        </widget>
+       </item>
       </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="title">
-       <string/>
-      </property>
      </widget>
     </item>
    </layout>
@@ -1065,5 +1140,86 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_searchOutside</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>le_searchOutsides</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>789</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>690</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchBook</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>le_searchBook</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchMember</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>le_searchMember</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchGivenToday</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>le_searchGivenToday</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchExpired</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>le_searchExpired</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -15,6 +15,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         self.ui.setupUi(self)
         self.resize(1000,600)
 
+
         self.numberOfBlankLines = 20
         self.duration           = 20_000
         self.dictBooksInfos     = {}
@@ -28,11 +29,21 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         self.ui.radio_okulNo.clicked.connect(self.filterMembersOnTablewidget)
         self.ui.le_searchMember.textChanged.connect(self.filterMembersOnTablewidget)
         self.ui.le_searchBook.textChanged.connect(self.filterBooksOnTablewidget)
+        self.ui.le_searchBook.textChanged.connect(self.editBarkodNumberOnLineedit)
         self.ui.radio_barkod.clicked.connect(self.filterBooksOnTablewidget)
         self.ui.radio_isbn.clicked.connect(self.filterBooksOnTablewidget)
         self.ui.radio_kitapAdi.clicked.connect(self.filterBooksOnTablewidget)
 
         self.ui.btn_clearSelection.clicked.connect(self.clearSelection)
+
+    def editBarkodNumberOnLineedit(self, text):
+        try:
+            if len(text)>=13:
+                if len(text.split()[-1])==13:
+                    text += ", "
+                    self.ui.le_searchBook.setText(text)
+        except Exception as E:
+            print(f"Fonk: editBarkodNumberOnLineedit    \tHata: {E}")
 
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
@@ -44,6 +55,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         self.showBooksOnTablewidget()
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
+        self.ui.le_searchBook.setFocus()
         self.setDateOnLabel()
         self.yenile()
 
@@ -183,9 +195,9 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksOnTablewidget     Hata Kodu : {E}", self.duration)
 
-    def filterBooksOnTablewidget(self):
+    def filterBooksOnTablewidget(self) -> None:
         try:
-            ara = self.ui.le_searchBook.text()
+            aranan = self.ui.le_searchBook.text()
             if self.ui.radio_barkod.isChecked()     : col = 1
             elif self.ui.radio_kitapAdi.isChecked() : col = 2
             elif self.ui.radio_isbn.isChecked()     : col = 4
@@ -193,7 +205,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             for row in range(rows-self.numberOfBlankLines):
                 item = self.ui.table_booksList.item(row,col)
                 if item is not None:
-                    if ara.lower() in item.text().lower() or item.text().lower() in ara.lower():
+                    if aranan.lower() in item.text().lower() or item.text().lower() in aranan.lower():
                         self.ui.table_booksList.showRow(row)
                     else:
                         self.ui.table_booksList.hideRow(row)
@@ -202,18 +214,15 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
 
     def filterMembersOnTablewidget(self) -> None:
         try:
-            ara = self.ui.le_searchMember.text()
-            if self.ui.radio_tc.isChecked():
-                col = 5
-            elif self.ui.radio_isim.isChecked():
-                col = 3
-            elif self.ui.radio_okulNo.isChecked():
-                col = 2
-            rows = self.ui.table_membersList.rowCount()
-            for row in range(rows-self.numberOfBlankLines):
+            aranan = self.ui.le_searchMember.text()
+            if self.ui.radio_tc.isChecked()         :  col = 5
+            elif self.ui.radio_isim.isChecked()     :  col = 3
+            elif self.ui.radio_okulNo.isChecked()   :  col = 2
+            rows = self.ui.table_membersList.rowCount() - self.numberOfBlankLines
+            for row in range(rows):
                 item = self.ui.table_membersList.item(row,col)
                 if item is not None:
-                    if ara.lower() not in item.text().lower():
+                    if aranan.lower() not in item.text().lower():
                         self.ui.table_membersList.hideRow(row)
                     else:
                         self.ui.table_membersList.showRow(row)

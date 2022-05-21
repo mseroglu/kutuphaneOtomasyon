@@ -21,7 +21,6 @@ class SaveBook(QMainWindow):
 
 
         self.duration = 20_000
-        #self.newBarkodeNumber = "7661130000000"
 
 
 
@@ -84,11 +83,15 @@ class SaveBook(QMainWindow):
 
     def setBarkodeNumber(self) -> None:
         try:
-            self.newBarkodeNumber   = db.createBarkodeNumber()
-            barkodNumberFull        = db.createBarkodeImg( self.newBarkodeNumber )
-            self.ui.le_barkode.setText( barkodNumberFull )
-            self.ui.label_barcodeImg.setPixmap(QtGui.QPixmap(f"imgBarkode/{barkodNumberFull}.png"))
+            newBarkodeNumber12   = db.createBarkodeNumber()
+            newBarkodeNumber13, self.imgByte   = db.createBarkodeImg( newBarkodeNumber12 )
+            self.ui.le_barkode.setText( newBarkodeNumber13 )
+            pixmap = QtGui.QPixmap()
+            pixmap.loadFromData(self.imgByte, "png")
+            # pixmap = QtGui.QPixmap(f"imgBarkode/{newBarkodeNumber13}.png")
+            self.ui.label_barcodeImg.setPixmap(pixmap)
         except Exception as E:
+            print(E)
             self.ui.statusbar.showMessage(f"Fonk: setBarkodeNumber     Hata Kodu : {E}", self.duration)
 
     def getBookInfo(self) -> dict:
@@ -105,7 +108,8 @@ class SaveBook(QMainWindow):
                 "Aciklama"  : self.ui.plain_description.toPlainText(),
                 "DisariVerme": self.ui.combo_exportability.currentIndex(),
                 "KayitTarihi": datetime.now().date(),
-                "Durum"     : 1     }
+                "Durum"     : 1,
+                "ImgBarcod" : self.imgByte}
 
 
     def showBookInfoInForm(self):
@@ -114,7 +118,6 @@ class SaveBook(QMainWindow):
             cameData = db.getBookDataWithId(Id=Id)
             self.selectedIdForUpdate = Id
             self.ui.le_barkode.setText( cameData[1] )
-            self.ui.label_barcodeImg.setPixmap(QtGui.QPixmap(f"imgBarkode/{cameData[1]}.png"))
             self.ui.le_isbn.setText( cameData[2] )
             self.ui.le_bookName.setText( cameData[3] )
             self.ui.combo_authorName.setCurrentIndex(self.ui.combo_authorName.findData( cameData[4] ) )
@@ -126,6 +129,11 @@ class SaveBook(QMainWindow):
             self.ui.le_publicationYear.setText( cameData[10] )
             self.ui.plain_description.setPlainText(cameData[11])
             self.ui.combo_exportability.setCurrentIndex(cameData[12])
+            self.ui.label_barcodeImg.clear()
+            if cameData[15] is not None:
+                pixmap = QtGui.QPixmap()
+                pixmap.loadFromData(cameData[15], "png")
+                self.ui.label_barcodeImg.setPixmap(pixmap)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBookInfoInForm \t\t Hata Kodu : {E}", self.duration)
 
@@ -176,8 +184,8 @@ class SaveBook(QMainWindow):
                     mesaj = "Kayıt başarısız ! ! !\t\t\tGüncellemeyi deneyiniz."
                 self.ui.statusbar.showMessage(mesaj, self.duration)
         except Exception as E:
-            print(f"Fonk: saveNewBook    Veri alınamadı ! ! !    Hata Kodu : {E}")
-            self.ui.statusbar.showMessage(f"Fonk: saveNewBook    Veri alınamadı ! ! !    Hata Kodu : {E}", self.duration)
+            print(f"Fonk: saveNewBook   Hata Kodu : {E}")
+            self.ui.statusbar.showMessage(f"Fonk: saveNewBook      Hata Kodu : {E}", self.duration)
 
     def showAuthorsOnCombo(self):
         try:

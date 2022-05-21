@@ -10,6 +10,7 @@ app = QtWidgets.QApplication([])
 label = QtWidgets.QLabel()
 # create QImage from numpy array
 image = QtGui.QImage(bytes(RGBarray), width, height, 3*width, QtGui.QImage.Format_RGB888)
+print("https://i.idefix.com/cache/500x400-0/originals/0001746603001-1.jpg")
 print(bytes(RGBarray))
 pixmap = QtGui.QPixmap(image)
 label.setPixmap(pixmap)

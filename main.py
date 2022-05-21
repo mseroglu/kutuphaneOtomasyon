@@ -1,9 +1,14 @@
 import datetime
+import math
 import sys, os, locale
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
+from PIL.Image import Image
+
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCheckBox, QComboBox
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, Qt
+from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog
+
 from ui.anasayfaUI import Ui_MainWindow
 
 from member_save import SaveMember
@@ -13,6 +18,7 @@ from settings_page import Settings_page
 
 from database import db, curs, tableWidgetResize
 from messageBox import msg
+from reports import Reports
 
 
 
@@ -24,6 +30,11 @@ class MainWindow(QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.ui.le_searchOutsides.setVisible(False)
+        self.ui.le_searchExpired.setVisible(False)
+        self.ui.le_searchGivenToday.setVisible(False)
+        self.ui.le_searchMember.setVisible(False)
+        self.ui.le_searchBook.setVisible(False)
         self.numberOfBlankLines = 20
         self.duration           = 20_000
         self.dictEscrowBookInfos= {}
@@ -43,6 +54,62 @@ class MainWindow(QMainWindow):
         self.ui.btn_openSettings.clicked.connect(winSettings.show)
         self.ui.btn_openSettings.clicked.connect(self.openWindowControl)
         self.ui.btn_quit.clicked.connect(sys.exit)
+
+        self.ui.btn_searchOutside.clicked.connect(self.handlePreview)
+
+    def handlePreview(self):
+        try:
+            dialog = QPrintPreviewDialog()
+            dialog.paintRequested.connect(self.handlePaintRequest)
+            dialog.exec_()
+        except Exception as E:
+            print(f"Fonk: handlePreview   \t\t{E}")
+
+
+    # ve son olarak belgeyi oluşturmak ve yazdırmak için bazı yöntemler:
+
+    def handlePaintRequest(self, printer):
+        try:
+            document = self.makeTableDocument()
+            document.print_(printer)
+        except Exception as E:
+            print(f"Fonk: handlePaintRequest   \t\t{E}")
+
+    def imgData(self, imgData) -> QtGui.QImage :
+        imgData = open("./imgBarkode/7661130000242.png", "rb").read()
+        image = QtGui.QImage()
+        image.loadFromData(imgData)
+        return image.scaledToWidth(200)
+
+
+    def makeTableDocument(self):
+        try:
+            # setPixmap(pixmap.scaled(width, width, Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
+            document    = QtGui.QTextDocument()
+            cursor      = QtGui.QTextCursor(document)
+            # math.ceil(rows/6)
+            rows    = 16
+            columns = 3
+
+            table   = cursor.insertTable(rows, columns)
+            formatT = table.format()
+            formatT.setAlignment( QtCore.Qt.AlignCenter )
+            table.setFormat(formatT)
+            formatC = cursor.blockCharFormat()
+            formatC.setFontWeight(QtGui.QFont.Bold)
+            for row in range(rows):
+                for column in range(columns):
+                    if not row % 2:
+                        cursor.setCharFormat(formatC)
+                        cursor.insertText(f"   Bölüm  : {'A12'}    Raf No   : {'A123'}\n   ISBN     : {9876543210}\n   {3*'Kitap Adı'}")
+                    else:
+                        image = self.imgData(imgData="")
+                        cursor.insertImage(image)
+                    cursor.movePosition(QtGui.QTextCursor.NextCell)
+            return document
+        except Exception as E:
+            print(f"Fonk: makeTableDocument   \t\t{E}")
+
 
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
@@ -86,12 +153,12 @@ class MainWindow(QMainWindow):
         try:
             barkod = self.ui.le_searchBarcode.text()
             bookStateData = db.getBookState(Barkod=barkod)
-            print(bookStateData)
             if bookStateData:
                 if bookStateData[0]:
                     winEntrust.show()
                     winEntrust.ui.le_searchBook.setText(barkod)
-                    winEntrust.ui.le_searchBook.setFocus()
+                    # self.ui.le_searchBarcode.clear()
+                    # winEntrust.ui.le_searchBook.setFocus()
                 else:
                     self.filterBooksOnTablewidget()
         except Exception as E:

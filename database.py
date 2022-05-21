@@ -1,7 +1,11 @@
+import sys
 from datetime import datetime
 import time, math
-from barcode import EAN13
+from barcode import EAN13, writer, BinaryIO
 from barcode.writer import ImageWriter
+import barcode
+
+from io import BytesIO
 from PyQt5 import QtCore
 from PyQt5.QtCore import QVariant
 
@@ -25,7 +29,7 @@ class Db:
         self.cameId                 = 0
         self.maxDayBooksStay        = 7    # gün
         self.maxNumberOfBooksGiven  = 3    # adet
-
+        self.byteImg                = None
 
         IdInfo = " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE"
         self.createTable("YazarTablosu", "yazarId"+IdInfo, "YazarAdi TEXT NOT NULL UNIQUE")
@@ -83,7 +87,8 @@ class Db:
                         "Aciklama TEXT",
                         "DisariVerme INTEGER",
                         "KayitTarihi TEXT",
-                        "Durum INTEGER" )
+                        "Durum INTEGER",
+                        "ImgBarcod BLOB" )
 
         conn.commit()
         self.setVeriablesValue()
@@ -338,8 +343,7 @@ class Db:
 
     def getBookDataWithId(self, Id):
         try:
-            sql =f"""SELECT kitapId, Barkod, ISBN, KitapAdi, YazarId, KategoriId, BolumId, RafId, YayinEvi,
-                    SayfaSayisi, BasimYili, Aciklama, DisariVerme, KayitTarihi, Durum FROM KitapTablosu WHERE kitapId={Id}"""
+            sql =f"""SELECT * FROM KitapTablosu WHERE kitapId={Id}"""
             curs.execute(sql)
             return curs.fetchone()
         except Exception as E:
@@ -483,9 +487,13 @@ class Db:
 
     def createBarkodeImg(self, number) -> str :
         try:
+            options = {"quiet_zone": 3, "font_size": 16, "text_distance": 2, 'module_height': 15.0}
+            byteImg = BytesIO()
             my_code = EAN13(number, writer=ImageWriter())
-            my_code.save("imgBarkode/"+number)
-            return my_code.get_fullcode()
+            my_code.write(byteImg, options)                                    # resmi  BytesIO nesnesine yazıyoruz.
+            self.byteImg = byteImg.getvalue()                                  # resmin binary şeklini alıyoruz
+            my_code.save("imgBarkode/"+my_code.get_fullcode(), options)
+            return my_code.get_fullcode(), byteImg.getvalue()
         except Exception as E:
             print(f"Fonk: createBarkodeImg \t\tHata Kodu : {E}")
 
