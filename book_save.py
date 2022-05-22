@@ -17,11 +17,7 @@ class SaveBook(QMainWindow):
         super(SaveBook, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-
-
         self.duration = 20_000
-
 
 
         self.showAuthorsOnCombo()
@@ -72,7 +68,6 @@ class SaveBook(QMainWindow):
                 self.ui.table_bookList.setRowCount(len(books)+20)
                 for row, book in enumerate(books):
                     for col, item in enumerate(book[1:]):
-                        if col==0: item = item[6:]
                         self.ui.table_bookList.setItem(row,col,QTableWidgetItem(str(item)))
                         if col==1:
                             self.ui.table_bookList.item(row,col).setData(QtCore.Qt.UserRole,book)
@@ -88,7 +83,6 @@ class SaveBook(QMainWindow):
             self.ui.le_barkode.setText( newBarkodeNumber13 )
             pixmap = QtGui.QPixmap()
             pixmap.loadFromData(self.imgByte, "png")
-            # pixmap = QtGui.QPixmap(f"imgBarkode/{newBarkodeNumber13}.png")
             self.ui.label_barcodeImg.setPixmap(pixmap)
         except Exception as E:
             print(E)

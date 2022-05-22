@@ -279,7 +279,7 @@
                </font>
               </property>
               <property name="maxLength">
-               <number>13</number>
+               <number>8</number>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

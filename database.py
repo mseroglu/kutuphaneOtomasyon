@@ -1,10 +1,9 @@
 import sys
 from datetime import datetime
 import time, math
-from barcode import EAN13, writer, BinaryIO
+from barcode import EAN13, EAN8, writer
 from barcode.writer import ImageWriter
 import barcode
-
 from io import BytesIO
 from PyQt5 import QtCore
 from PyQt5.QtCore import QVariant
@@ -94,9 +93,12 @@ class Db:
         self.setVeriablesValue()
 
     def setVeriablesValue(self):
-        maxValues = self.getData("OkulBilgiTablosu", "MaxCount", "MaxDay")
-        self.maxNumberOfBooksGiven  = maxValues[0][0]
-        self.maxDayBooksStay        = maxValues[0][1]
+        try:
+            maxValues = self.getData("OkulBilgiTablosu", "MaxCount", "MaxDay")
+            self.maxNumberOfBooksGiven  = maxValues[0][0]
+            self.maxDayBooksStay        = maxValues[0][1]
+        except Exception as E:
+            print(E)
 
     def createTable(self, TableName, *cols) -> None:
         curs.execute( f"""CREATE TABLE IF NOT EXISTS {TableName} ( {",".join(cols)} )""" )
@@ -474,25 +476,29 @@ class Db:
             getMaxId = db.getData("KitapTablosu", "max(kitapId)+1")  # enbüyük ID noyu getirir ve ona 1 ekler
             newId = getMaxId[0][0]
             if newId is None: newId = 1
-            barcode12 = f"{kurumKodu[0][0]}{newId :0>6}"
-            return barcode12
+            barcode7 = f"{newId :0>7}"
+            self.createControlNumber(barcode7)
+            return barcode7
         except Exception as E:
             print(f"Fonk: createBarkodeNumber \t\tHata Kodu : {E}")
 
-    def createControlNumber(self, barcode12) -> str:
+    def createControlNumber(self, barcode7) -> str:
         toplam = 0
-        for i, num in enumerate(barcode12):
+        for i, num in enumerate(barcode7):
             toplam += (int(num) * 3 if i % 2 == 1 else int(num))
-        return str(math.ceil(toplam / 10) * 10 - toplam)
+        controlNumber = str(math.ceil(toplam / 10) * 10 - toplam)
+        print("controlNumber: ", controlNumber)
+        return controlNumber
 
-    def createBarkodeImg(self, number) -> str :
+    def createBarkodeImg(self, number7) -> str :
         try:
-            options = {"quiet_zone": 3, "font_size": 16, "text_distance": 2, 'module_height': 15.0}
+            options = {"quiet_zone": 5, "font_size": 16, "text_distance": 2, 'module_height': 12.0}
             byteImg = BytesIO()
-            my_code = EAN13(number, writer=ImageWriter())
+            my_code = EAN8(number7, writer=ImageWriter())
             my_code.write(byteImg, options)                                    # resmi  BytesIO nesnesine yazıyoruz.
             self.byteImg = byteImg.getvalue()                                  # resmin binary şeklini alıyoruz
             my_code.save("imgBarkode/"+my_code.get_fullcode(), options)
+            print(my_code.get_fullcode())
             return my_code.get_fullcode(), byteImg.getvalue()
         except Exception as E:
             print(f"Fonk: createBarkodeImg \t\tHata Kodu : {E}")

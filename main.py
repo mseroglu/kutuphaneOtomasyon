@@ -1,13 +1,16 @@
 import datetime
 import math
 import sys, os, locale
+import threading
+import time
+
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
 from PIL.Image import Image
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCheckBox, QComboBox
 from PyQt5 import QtGui, QtCore, Qt
-from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog
+from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog, QPrinter
 
 from ui.anasayfaUI import Ui_MainWindow
 
@@ -41,7 +44,8 @@ class MainWindow(QMainWindow):
 
 
         self.ui.tabWidget.currentChanged.connect(self.showEvent)
-        self.ui.le_searchBarcode.textChanged.connect(self.bookStateControl)
+        # self.ui.le_searchBarcode.textChanged.connect(self.bookStateControl)
+        self.ui.le_searchBarcode.cursorPositionChanged.connect(self.bookStateControl)
 
 
 
@@ -56,6 +60,15 @@ class MainWindow(QMainWindow):
         self.ui.btn_quit.clicked.connect(sys.exit)
 
         self.ui.btn_searchOutside.clicked.connect(self.handlePreview)
+
+
+
+    def enterEvent(self, a0: QtCore.QEvent) -> None:
+        print("enter event")
+        self.ui.le_searchBarcode.setFocus()
+        key_press = QtGui.QKeyEvent(QtGui.QKeyEvent.KeyPress, QtCore.Qt.Key_Return, QtCore.Qt.NoModifier, "X")
+        QApplication.sendEvent(self.ui.le_searchBarcode, key_press)
+
 
     def handlePreview(self):
         try:
@@ -75,12 +88,11 @@ class MainWindow(QMainWindow):
         except Exception as E:
             print(f"Fonk: handlePaintRequest   \t\t{E}")
 
-    def imgData(self, imgData) -> QtGui.QImage :
-        imgData = open("./imgBarkode/7661130000242.png", "rb").read()
+    def imgDataToQImageObj(self, imgData) -> QtGui.QImage :
+        imgDataToQImageObj = open("./imgBarkode/00000246.png", "rb").read()
         image = QtGui.QImage()
-        image.loadFromData(imgData)
-        return image.scaledToWidth(200)
-
+        image.loadFromData(imgDataToQImageObj)
+        return image.scaledToWidth(150)
 
     def makeTableDocument(self):
         try:
@@ -89,23 +101,25 @@ class MainWindow(QMainWindow):
             cursor      = QtGui.QTextCursor(document)
             # math.ceil(rows/6)
             rows    = 16
-            columns = 3
+            columns = 4
 
             table   = cursor.insertTable(rows, columns)
             formatT = table.format()
             formatT.setAlignment( QtCore.Qt.AlignCenter )
             table.setFormat(formatT)
             formatC = cursor.blockCharFormat()
-            formatC.setFontWeight(QtGui.QFont.Bold)
+            formatC.setFontWeight(QtGui.QFont.Normal)
             for row in range(rows):
                 for column in range(columns):
                     if not row % 2:
                         cursor.setCharFormat(formatC)
-                        cursor.insertText(f"   Bölüm  : {'A12'}    Raf No   : {'A123'}\n   ISBN     : {9876543210}\n   {3*'Kitap Adı'}")
+                        cursor.insertText(f"   Bölüm\t: {'A12'}\n   Raf No\t: {'A123'}\n   ISBN\t: {9876543210123}\n   {3*'Kitap Adı'}")
                     else:
-                        image = self.imgData(imgData="")
+                        image = self.imgDataToQImageObj(imgData="")
                         cursor.insertImage(image)
                     cursor.movePosition(QtGui.QTextCursor.NextCell)
+                print("\a")
+
             return document
         except Exception as E:
             print(f"Fonk: makeTableDocument   \t\t{E}")
@@ -149,18 +163,19 @@ class MainWindow(QMainWindow):
             winSaveMember.close()
             winEntrust.close()
 
-    def bookStateControl(self):
+    def bookStateControl(self, old, new):
         try:
-            barkod = self.ui.le_searchBarcode.text()
-            bookStateData = db.getBookState(Barkod=barkod)
-            if bookStateData:
-                if bookStateData[0]:
-                    winEntrust.show()
-                    winEntrust.ui.le_searchBook.setText(barkod)
-                    # self.ui.le_searchBarcode.clear()
-                    # winEntrust.ui.le_searchBook.setFocus()
-                else:
-                    self.filterBooksOnTablewidget()
+            if new==13:
+                barkod = self.ui.le_searchBarcode.text()
+                bookStateData = db.getBookState(Barkod=barkod)
+                if bookStateData:
+                    if bookStateData[0]:
+                        winEntrust.show()
+                        winEntrust.ui.le_searchBook.setText(barkod)
+                        # self.ui.le_searchBarcode.clear()
+                        # winEntrust.ui.le_searchBook.setFocus()
+                    else:
+                        self.filterBooksOnTablewidget()
         except Exception as E:
             print(E)
 
@@ -260,7 +275,6 @@ class MainWindow(QMainWindow):
                 self.ui.table_bookList.setRowCount(len(books)+20)
                 for row, book in enumerate(books):
                     for col, item in enumerate(book):
-                        if col == 0: item = item[6:]
                         self.ui.table_bookList.setItem(row,col,QTableWidgetItem(str(item if item else "")))
                         if book[11] == "Okunuyor":
                             self.ui.table_bookList.item(row, col).setBackground(QtGui.QColor("#d9ead3"))
@@ -284,7 +298,6 @@ class MainWindow(QMainWindow):
                 self.ui.table_givenToday.setRowCount(len(todayEntrusted)+20)
                 for row, book in enumerate(todayEntrusted):
                     for col, item in enumerate(book):
-                        if col == 0: item = item[6:]
                         self.ui.table_givenToday.setItem(row,col,QTableWidgetItem(str(item if item else '')))
                         if col in (0,3,4,7,8,9,10,11):
                             self.ui.table_givenToday.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
@@ -308,7 +321,6 @@ class MainWindow(QMainWindow):
                     self.ui.table_outsides.setCellWidget(row,0, self.createButtonForTablewidget( book ))        # Tablewidgwta buton yerleştirme
                     for index, item in enumerate(book[2:]):
                         col = index+1
-                        if index == 0: item = item[6:]
                         self.ui.table_outsides.setItem(row,col,QTableWidgetItem(str(item if item!=None else '')))
                         if col in (1,4,5,6,7,8,11,12):
                             self.ui.table_outsides.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
@@ -332,7 +344,6 @@ class MainWindow(QMainWindow):
                     self.ui.table_expaired.setCellWidget(row, 0, self.createButtonForTablewidget(book))
                     for index, item in enumerate(book[2:]):
                         col = index+1
-                        if index==0: item = item[6:]
                         self.ui.table_expaired.setItem(row, col, QTableWidgetItem(str(item)))
                         if col in (1,4,5,6,7,8,11,12):
                             self.ui.table_expaired.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
