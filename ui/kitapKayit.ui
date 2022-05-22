@@ -175,7 +175,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
+                   <normaloff>../img/add.png</normaloff>../img/add.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -240,7 +240,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
+                   <normaloff>../img/add.png</normaloff>../img/add.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -368,7 +368,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
+                   <normaloff>../img/add.png</normaloff>../img/add.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -433,7 +433,7 @@
                  </property>
                  <property name="icon">
                   <iconset>
-                   <normaloff>../../../Users/msero/.designer/img/add2.png</normaloff>../../../Users/msero/.designer/img/add2.png</iconset>
+                   <normaloff>../img/add.png</normaloff>../img/add.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>

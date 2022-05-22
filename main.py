@@ -118,7 +118,6 @@ class MainWindow(QMainWindow):
                         image = self.imgDataToQImageObj(imgData="")
                         cursor.insertImage(image)
                     cursor.movePosition(QtGui.QTextCursor.NextCell)
-                print("\a")
 
             return document
         except Exception as E:
@@ -165,7 +164,7 @@ class MainWindow(QMainWindow):
 
     def bookStateControl(self, old, new):
         try:
-            if new==13:
+            if new==8:
                 barkod = self.ui.le_searchBarcode.text()
                 bookStateData = db.getBookState(Barkod=barkod)
                 if bookStateData:
@@ -174,8 +173,8 @@ class MainWindow(QMainWindow):
                         winEntrust.ui.le_searchBook.setText(barkod)
                         # self.ui.le_searchBarcode.clear()
                         # winEntrust.ui.le_searchBook.setFocus()
-                    else:
-                        self.filterBooksOnTablewidget()
+            else:
+                self.filterBooksOnTablewidget()
         except Exception as E:
             print(E)
 
@@ -217,22 +216,21 @@ class MainWindow(QMainWindow):
         try:
             barkod      = self.sender().objectName()
             bookInfo    = self.dictEscrowBookInfos[barkod]
-            print("Geri alınan kitap : ", bookInfo)
             bookId, escrowId, bookName, name, lastname = bookInfo[0], bookInfo[1], bookInfo[3], bookInfo[10], bookInfo[11]
-            cevap,_     = msg.MesajBox("Geri alma işlemi", f"BARKOD NO\t:  {barkod[7:]} \nKİTAP ADI\t:  {bookName} \n\n"
+            cevap, _    = msg.MesajBox("Geri alma işlemi", f"BARKOD NO\t:  {barkod} \nKİTAP ADI\t:  {bookName} \n\n"
                                                            f"'{name+' '+lastname}' isimli üyeden yukardaki kitabı teslim alıyorsunuz.\t\n\n"
                                                            "Emin misiniz?\n")
             if cevap:
                 returnDate  = datetime.date.today()
-                db.updateBookTableState( Durum=(1,), kitapId=(bookId,) )            # Durum=1 'Rafta', Durum=0 "Okunuyor"
+                db.updateBookState( Durum=(1,), kitapId=(bookId,) )            # Durum=1 'Rafta', Durum=0 "Okunuyor"
                 kitapDurum = curs.rowcount
                 db.updateEntrustTableEscrowState( "EmanetTablosu", DonusTarihi=returnDate, emanetId=escrowId )
                 emanetDurum= curs.rowcount
-                if kitapDurum==1 and emanetDurum==1:
+                if kitapDurum == 1 and emanetDurum == 1 :
                     title,mesaj = "Başarılı","Geri alma işlemi başarılı. Kitabı rafına koyunuz !\t\t\n"
                     self.showOutsidesOnTablewidget()
-                elif kitapDurum<1 and emanetDurum==1:
-                    title,mesaj = "Dikkat Problem", "Kitap geri alımı gerçekleşti.\n" \
+                elif kitapDurum < 1 and emanetDurum == 1:
+                    title, mesaj = "Dikkat Problem", "Kitap geri alımı gerçekleşti.\n" \
                                                     "Ancak kitap durumu 'Okunuyor' dan 'Rafta' haline gelmedi !\n" \
                                                     "Kitap 'Rafta' gözükmezse onu listede göremez ve artık veremezsiniz\n"
                 else:
@@ -265,7 +263,7 @@ class MainWindow(QMainWindow):
 
     def showBooksOnTablewidget(self):
         try:
-            colLabels = ('Barkod', f"{'ISBN':^20}", f"{'Eser Adı':^30}", f'{"Yazarı":^20}', 'Kategori', 'Bölüm',
+            colLabels = ('Barkod ', f"{'ISBN':^20}", f"{'Eser Adı':^30}", f'{"Yazarı":^20}', 'Kategori', 'Bölüm',
                          'Raf No', 'Yayınevi', 'Sayfa Sayısı', 'Basım Yılı', 'Kayıt Tarihi', 'Durum', 'Açıklama')
             self.ui.table_bookList.clear()
             self.ui.table_bookList.setColumnCount(len(colLabels))

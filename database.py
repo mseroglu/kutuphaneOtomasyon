@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 import time, math
-from barcode import EAN13, EAN8, writer
+from barcode import EAN8, writer
 from barcode.writer import ImageWriter
 import barcode
 from io import BytesIO
@@ -57,7 +57,7 @@ class Db:
                         "UyelikTarihi TEXT",
                         "Photo TEXT"    )
         self.createTable("GorevliTablosu", "gorevliId"+IdInfo,
-                        "GorevliTipi TEXT NOT NULL",
+                        "GorevliTipi INTEGER NOT NULL",
                         "TCNo TEXT NOT NULL UNIQUE",
                         "OkulNo TEXT",
                         "Ad TEXT NOT NULL",
@@ -73,7 +73,7 @@ class Db:
                         "MaxCount INTEGER",
                         "MaxDay INTEGER")
         self.createTable("KitapTablosu", "kitapId"+IdInfo,
-                        "Barkod TEXT NOT NULL UNIQUE",
+                        "Barkod TEXT UNIQUE",
                         "ISBN TEXT",
                         "KitapAdi TEXT NOT NULL",
                         "YazarId INTEGER",
@@ -87,7 +87,8 @@ class Db:
                         "DisariVerme INTEGER",
                         "KayitTarihi TEXT",
                         "Durum INTEGER",
-                        "ImgBarcod BLOB" )
+                        "ImgBarcod BLOB",
+                        "ImgBook BLOB" )
 
         conn.commit()
         self.setVeriablesValue()
@@ -108,7 +109,7 @@ class Db:
             cols        = ', '.join( cols_datas.keys() )
             veriler     = tuple( cols_datas.values() )
             soruIsareti = ", ".join( ["?"] * len(cols_datas) )
-            sql = f"""INSERT INTO {TableName} ( { cols } ) VALUES( {soruIsareti} )"""
+            sql         = f"""INSERT INTO {TableName} ( { cols } ) VALUES( {soruIsareti} )"""
             curs.execute(sql, veriler)
             conn.commit()
         except sqlite3.Error as E:
@@ -156,8 +157,8 @@ class Db:
             df_xls["UyeTipi"]   = 0
             df_xls["Durum"]     = 1
             df_xls["UyelikTarihi"]=datetime.now().date()
-            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1")
-            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0")
+            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1")
+            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0")
             df_xls.to_sql("UyeTablosu", engine, if_exists="append", index=False)
             msg.popup_mesaj("Toplu Üye Kaydı Başarılı", f"{len(df_xls)} üye kaydınız başarı ile gerçekleşti")
         except Exception as E:
@@ -173,19 +174,19 @@ class Db:
             #   excel den gelen sutun isimlerini sql tablolardaki duruma çeviriyoruz. Bu sayede df leri MERGE edebiliyoruz.
             forRename = dict(zip(df_xls.columns[2:6], ["YazarAdi", "Kategori", "Bolum", "RafNo"]))
             df_xls.rename(columns=forRename, inplace=True)
-            print(1)
-            #   Verilerin boşluklaını alıyor, sadece ilk hafleri büyük yapıyor ve dönüşürken oluşan i harfi sorununu gideriyoruz. Ayrıca null durumunu kontrol ediyoruz
 
-            df_xls['YazarAdi'] = df_xls[df_xls['YazarAdi'].notnull()]['YazarAdi'].str.strip().str.title().str.replace(
-                "i", "ı").str.replace("ı̇", "i")
-            df_xls['Kategori'] = df_xls[df_xls['Kategori'].notnull()]['Kategori'].str.strip().str.title().str.replace(
-                "i", "ı").str.replace("ı̇", "i")
-            df_xls['Bolum'] = df_xls[df_xls['Bolum'].notnull()]['Bolum'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
+            #   Verilerin boşluklaını alıyor, sadece ilk hafleri büyük yapıyor ve
+            #   dönüşürken oluşan i harfi sorununu gideriyoruz. Ayrıca null durumunu kontrol ediyoruz
+            df_xls['YazarAdi'] = df_xls[df_xls['YazarAdi'].notnull()]['YazarAdi'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+            df_xls['Kategori'] = df_xls[df_xls['Kategori'].notnull()]['Kategori'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+            df_xls['Bolum']    = df_xls[df_xls['Bolum'].notnull()]['Bolum'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
             # df_xls['RafNo'] = df_xls[df_xls['RafNo'].notnull()]['RafNo'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
+            veriDict = {'Kategori':df_xls["Kategori"].unique()}
             #   Yazar, Kategori, Bölüm ve Raf Bilgisi kayıt edilmemişse kayıt ediyoruz
 
-            self.forceInsertMultiData("KategoriTablosu", "Kategori", list(df_xls["Kategori"].unique()))
-            self.forceInsertMultiData("YazarTablosu", "YazarAdi", list(df_xls["YazarAdi"].unique()))
+            # df_xls['YazarAdi'].to_sql("YazarTablosu", engine, if_exists="append", index=False)
+            # self.forceInsertMultiData("YazarTablosu", "YazarAdi", list(df_xls["YazarAdi"].unique()))
+            # self.forceInsertMultiData("KategoriTablosu", "Kategori", list(df_xls["Kategori"].unique()))
             #   Yazar, kategori, Bolum ve Raf bilgilerini çağırıyoruz
             print(2)
             df_sql_yazar    = pd.read_sql("YazarTablosu", engine, columns=("YazarAdi", "yazarId"))
@@ -195,38 +196,41 @@ class Db:
             # df leri MERGE ediyoruz
             print(3)
             result = pd.merge(df_xls, df_sql_yazar, how="left")
-            result = pd.merge(result, df_sql_kategori, how="left")
-            result = pd.merge(result, df_sql_bolum, how="left")
-            result = pd.merge(result, df_sql_raf, how="left")
+            result1 = pd.merge(result, df_sql_kategori, how="left")
+            result2 = pd.merge(result1, df_sql_bolum, how="left")
+            result3 = pd.merge(result2, df_sql_raf, how="left")
             # gereksiz sütunları siliyoruz
-            del result["YazarAdi"], result["Kategori"], result["Bolum"], result["RafNo"]
+            del result3["YazarAdi"], result3["Kategori"], result3["Bolum"], result3["RafNo"]
 
-            newColNames = dict(zip(result.columns[2:6], df_sql.columns[8:12]))
+            newColNames = dict(zip(result.columns[6:10], df_sql.columns[8:12]))
             newColNames[result.columns[1]] = df_sql.columns[3]
-            result.rename(columns=newColNames, inplace=True)
+            result3.rename(columns=newColNames, inplace=True)
+            print(result3.columns)
+            result3["KitapAdi"] = result3["KitapAdi"].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+            result3["Yayinevi"] = result3["Yayinevi"].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+            result3["DisariVerme"] = 1
+            newBarkod = int(self.createBarkodeNumber())+1
 
-            result["KitapAdi"] = result["KitapAdi"].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
-            result["Yayinevi"] = result["Yayinevi"].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
-            result["DisariVerme"] = 1
-            newBarkod = int(self.createBarkodeNumber())
+            result3["Barkod"]    = [str(i)+self.createControlNumber(str(i)) for i in range(newBarkod, newBarkod + len(result3))]
+            result3["Durum"]     = 1
+            result3['KayitTarihi'] = datetime.today().date()
+            print(result3[['yazarId', 'kategoriId', 'bolumId', 'rafId']])
+            result3.to_sql("KitapTablosu", engine, if_exists="append", index=False)
+            print("yapılan kayıt sayısı: ", len(result3))
 
-            result["Barkod"]    = [str(i)+self.createControlNumber(str(i)) for i in range(newBarkod, newBarkod + len(result))]
-            result["Durum"]     = 1
-            result['KayitTarihi'] = datetime.today().date()
-            print(result['Barkod'])
-            result.to_sql("KitapTablosu", engine, if_exists="append", index=False)
-            print("yapılan kayıt sayısı: ", len(result))
-            msg.popup_mesaj("Toplu Kitap Kaydı Başarılı", f"{len(df_xls)} kitap kaydınız başarı ile gerçekleşti")
+            msg.popup_mesaj("Toplu Kitap Kaydı Başarılı", f"{len(result3)} kitap kaydınız başarı ile gerçekleşti")
             mesaj, _ = msg.MesajBox("Uyarı", "Excel dosyasını temizlemek aynı verilerin tekrar kaydolmasını önler.\n\n"
                                              "Excel dosyanız temizlensin mi?")
             if mesaj:
                 self.delExcelData()
         except Exception as E:
-            msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
+            print(f"Hata Kodu : {E}")
+            # msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
 
 
     def delExcelData(self):
         pass
+
 
     def updateData(self, TableName, **cols_datas):
         try:
@@ -257,9 +261,9 @@ class Db:
             curs.execute(sql, veriler)
             conn.commit()
         except Exception as E:
-            print(f"FONK: updateData, HATA KODU : {E}")
+            print(f"FONK: updateEntrustTableEscrowState, HATA KODU : {E}")
 
-    def updateBookTableState(self, Durum: list, kitapId: list):
+    def updateBookState(self, Durum: list, kitapId: list):
         try:
             sql = f""" UPDATE KitapTablosu SET Durum=? WHERE kitapId=? """
             curs.executemany(sql, zip( Durum*len(kitapId), kitapId))
@@ -277,7 +281,7 @@ class Db:
                 msg.popup_mesaj("Görevli durumu",
                             f"""Görevli durumu '{"Pasif" if Durum == "Aktif" else "Aktif"}' olarak değiştirildi""")
         except Exception as E:
-            print(f"FONK: updateUserTableState, HATA KODU : {E}")
+            print(f"FONK: updateUserState, HATA KODU : {E}")
 
     def updateSchoolInfo(self, maxCount=3, maxDay=7):
         try:
@@ -359,13 +363,12 @@ class Db:
         except Exception as E:
             print("Fonk: getBookState => ", E)
 
-
     def getUserInfoWithCase(self) -> list :
         gorevliTipi = ("Öğrenci", "Personel", "Admin")
         try:
             sql =f"""SELECT Username, 
             CASE WHEN GorevliTipi=0 THEN '{gorevliTipi[0]}' WHEN GorevliTipi=1 THEN '{gorevliTipi[1]}' ELSE '{gorevliTipi[2]}' END,
-            CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END FROM GorevliTablosu ORDER BY GorevliTipi DESC """
+            CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END, * FROM GorevliTablosu ORDER BY GorevliTipi DESC """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -470,14 +473,31 @@ class Db:
         except Exception as E:
             print("Fonk: getId => ", E)
 
+
+
+    ###########################           BARKOD İŞLEMLERİ         ##########################
+
+    def insertBarkod(self, TableName, **cols_datas):
+        try:
+            colsInList  = '=?, '.join( cols_datas.keys() ).rsplit(" ", 1)
+            veriler     = tuple( cols_datas.values() )
+            sql = f""" UPDATE {TableName} SET { colsInList[0][0:-1] } WHERE {colsInList[1]}=? """
+            curs.execute(sql, veriler)
+            conn.commit()
+        except Exception as E:
+            msg.popup_mesaj("Hata ! ! !", f"FONK: insertBarkod    \nHATA KODU : {E}")
+
+    def saveBarkod(self, Id):
+        barkode7 = self.createBarkodeNumber()
+        barkode8, imgData = self.createBarkodeImg( barkode7 )
+        self.insertBarkod( TableName="KitapTablosu", Barkod=barkode8, ImgBarcod=imgData, kitapId=Id )
+
     def createBarkodeNumber(self) -> str:
         try:
-            kurumKodu = db.getData("OkulBilgiTablosu", "KurumKodu")
-            getMaxId = db.getData("KitapTablosu", "max(kitapId)+1")  # enbüyük ID noyu getirir ve ona 1 ekler
+            getMaxId = db.getData("KitapTablosu", "max(kitapId)")  # enbüyük ID noyu getirir
             newId = getMaxId[0][0]
             if newId is None: newId = 1
             barcode7 = f"{newId :0>7}"
-            self.createControlNumber(barcode7)
             return barcode7
         except Exception as E:
             print(f"Fonk: createBarkodeNumber \t\tHata Kodu : {E}")
@@ -485,12 +505,11 @@ class Db:
     def createControlNumber(self, barcode7) -> str:
         toplam = 0
         for i, num in enumerate(barcode7):
-            toplam += (int(num) * 3 if i % 2 == 1 else int(num))
+            toplam += (int(num) * 3 if i % 2 == 0 else int(num))
         controlNumber = str(math.ceil(toplam / 10) * 10 - toplam)
-        print("controlNumber: ", controlNumber)
         return controlNumber
 
-    def createBarkodeImg(self, number7) -> str :
+    def createBarkodeImg(self, number7) -> tuple :
         try:
             options = {"quiet_zone": 5, "font_size": 16, "text_distance": 2, 'module_height': 12.0}
             byteImg = BytesIO()
@@ -498,8 +517,7 @@ class Db:
             my_code.write(byteImg, options)                                    # resmi  BytesIO nesnesine yazıyoruz.
             self.byteImg = byteImg.getvalue()                                  # resmin binary şeklini alıyoruz
             my_code.save("imgBarkode/"+my_code.get_fullcode(), options)
-            print(my_code.get_fullcode())
-            return my_code.get_fullcode(), byteImg.getvalue()
+            return (my_code.get_fullcode(), self.byteImg)
         except Exception as E:
             print(f"Fonk: createBarkodeImg \t\tHata Kodu : {E}")
 

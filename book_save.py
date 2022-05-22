@@ -78,9 +78,9 @@ class SaveBook(QMainWindow):
 
     def setBarkodeNumber(self) -> None:
         try:
-            newBarkodeNumber12   = db.createBarkodeNumber()
-            newBarkodeNumber13, self.imgByte   = db.createBarkodeImg( newBarkodeNumber12 )
-            self.ui.le_barkode.setText( newBarkodeNumber13 )
+            newBarkodeNumber7   = db.createBarkodeNumber()
+            self.newBarkodeNumber8, self.imgByte   = db.createBarkodeImg( newBarkodeNumber7 )
+            self.ui.le_barkode.setText( self.newBarkodeNumber8 )
             pixmap = QtGui.QPixmap()
             pixmap.loadFromData(self.imgByte, "png")
             self.ui.label_barcodeImg.setPixmap(pixmap)
@@ -89,7 +89,7 @@ class SaveBook(QMainWindow):
             self.ui.statusbar.showMessage(f"Fonk: setBarkodeNumber     Hata Kodu : {E}", self.duration)
 
     def getBookInfo(self) -> dict:
-        return {"Barkod"    : self.ui.le_barkode.text(),
+        return {
                 "ISBN"      : self.ui.le_isbn.text().strip(),
                 "KitapAdi"  : self.ui.le_bookName.text().strip().title(),
                 "YazarId"   : self.ui.combo_authorName.currentData(QtCore.Qt.UserRole), #yazarId,
@@ -102,8 +102,7 @@ class SaveBook(QMainWindow):
                 "Aciklama"  : self.ui.plain_description.toPlainText(),
                 "DisariVerme": self.ui.combo_exportability.currentIndex(),
                 "KayitTarihi": datetime.now().date(),
-                "Durum"     : 1,
-                "ImgBarcod" : self.imgByte}
+                "Durum"     : 1 }
 
 
     def showBookInfoInForm(self):
@@ -169,8 +168,9 @@ class SaveBook(QMainWindow):
                 for i in range(self.ui.spinBox_bookCount.value()):          # kaç adet kaydetmek istiyoruz
                     db.insertData(TableName="KitapTablosu", **cols_datas)
                     saved += curs.rowcount
-                    cols_datas["Barkod"] = int(cols_datas["Barkod"]) +1
-                if saved>0:
+                    if curs.rowcount > 0:
+                        db.saveBarkod( curs.lastrowid )
+                if saved > 0 :
                     mesaj = f"{saved} kitap başarı ile kayıt edildi"
                     saved = 0
                     self.showBooksOnTablewidget()

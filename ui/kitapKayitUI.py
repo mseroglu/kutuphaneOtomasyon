@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
         self.btn_addAuthor.setMaximumSize(QtCore.QSize(25, 16777215))
         self.btn_addAuthor.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("ui\\../../../Users/msero/.designer/img/add2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("ui\\../img/add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_addAuthor.setIcon(icon)
         self.btn_addAuthor.setIconSize(QtCore.QSize(16, 16))
         self.btn_addAuthor.setObjectName("btn_addAuthor")

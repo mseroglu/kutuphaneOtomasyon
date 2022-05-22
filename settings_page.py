@@ -16,6 +16,7 @@ class Settings_page(QWidget):
 
         self.setWindowIcon(QtGui.QIcon("img/ayar.jpg"))
         self.duration = 15_000
+        self.selectedUserId = None
 
 
         self.listAuthors()
@@ -27,6 +28,9 @@ class Settings_page(QWidget):
         self.ui.btn_saveInstutionInfo.clicked.connect(self.saveSchoolInfos)
 
         self.ui.btn_userSave.clicked.connect(self.createNewUser )
+        self.ui.btn_updateUser.clicked.connect(self.updateUser )
+        self.ui.btn_delUser.clicked.connect(self.delUser)
+
         self.ui.btn_clear.clicked.connect(self.clearForm)
 
 
@@ -44,7 +48,7 @@ class Settings_page(QWidget):
         self.ui.btn_delBookshelf.clicked.connect(self.delBookshelf)
         self.ui.btn_delSection.clicked.connect(self.delSection)
 
-        self.ui.btn_levelup.clicked.connect(self.takeEveryoneItToNextLevel)
+        self.ui.btn_levelup.clicked.connect(self.takeEveryoneToNextLevel)
 
         self.showInstitutionInfo()
         db.maxNumberOfBooksGiven = self.ui.spinBox_maxNumberOfBooksGiven.value()
@@ -59,11 +63,9 @@ class Settings_page(QWidget):
     def whenMaxChanged(self):
         db.maxDayBooksStay  = self.ui.spinBox_maxDayBooksStay.value()
         db.maxNumberOfBooksGiven = self.ui.spinBox_maxNumberOfBooksGiven.value()
-        db.updateSchoolInfo(
-            maxCount= db.maxNumberOfBooksGiven,
-            maxDay  = db.maxDayBooksStay    )
+        db.updateSchoolInfo(maxCount= db.maxNumberOfBooksGiven, maxDay  = db.maxDayBooksStay)
 
-    def takeEveryoneItToNextLevel(self):
+    def takeEveryoneToNextLevel(self):
         try:
             mezunSinif = self.ui.combo_chooseGrade.currentIndex()
             if not mezunSinif:
@@ -84,13 +86,32 @@ class Settings_page(QWidget):
         except Exception as E:
             print(E)
 
+    def showUserInfoInForm(self):
+        try:
+            row      = self.ui.tableWidget.currentItem().row()
+            userData = self.ui.tableWidget.item(row, 2).data(QtCore.Qt.UserRole)[3:]
+            self.selectedUserId = userData[0]
+            self.ui.combo_userType.setCurrentIndex(userData[1])
+            self.ui.le_tcno.setText(userData[2])
+            self.ui.le_studentNumber.setText(userData[3])
+            self.ui.le_name.setText(userData[4])
+            self.ui.le_lastname.setText(userData[5])
+            self.ui.le_sinif.setText(userData[6])
+            self.ui.le_sube.setText(userData[7])
+            self.ui.le_username.setText(userData[8])
+            self.ui.le_password.setText(userData[9])
+            self.ui.combo_userState.setCurrentIndex(userData[10])
+        except Exception as E:
+            print(f"Fonk: showUserInfoInForm \tHata Kodu : {E}")
+
     def showUserInfoInTablewidget(self) -> None :
         try:
             self.ui.tableWidget.clearContents()
             self.ui.tableWidget.itemDoubleClicked.connect(self.clickedTablewidgetItemForChangeUserState)
+            self.ui.tableWidget.itemClicked.connect(self.showUserInfoInForm)
             data = db.getUserInfoWithCase()
             for row, rowData in enumerate(data):
-                for col, colData in enumerate(rowData):
+                for col, colData in enumerate(rowData[:3]):
                     self.ui.tableWidget.setItem(row, col,QTableWidgetItem(colData))
                     if col==2:
                         self.ui.tableWidget.item(row,col).setData(QtCore.Qt.UserRole, rowData)
@@ -100,7 +121,6 @@ class Settings_page(QWidget):
     def clickedTablewidgetItemForChangeUserState(self, item):
         try:
             userInfo = item.data(QtCore.Qt.UserRole)
-            print("tıklanan kullanıcı bilgileri : ", userInfo)
             if userInfo is not None:
                 db.updateUserState(Durum=userInfo[2], Username=userInfo[0])
                 self.showUserInfoInTablewidget()
@@ -155,6 +175,35 @@ class Settings_page(QWidget):
                 "Username"  : self.ui.le_username.text().strip(),
                 "Password"  : self.ui.le_password.text().strip(),
                 "Durum"     : self.ui.combo_userState.currentIndex()}
+
+    def updateUser(self) -> None :
+        try:
+            if self.selectedUserId:
+                cols_datas = self.getUserInfo()
+                cols_datas['gorevliId'] = self.selectedUserId
+                db.updateData(TableName="GorevliTablosu", **cols_datas)
+                self.showUserInfoInTablewidget()
+                self.clearForm()
+            else:
+                msg.popup_mesaj("Dikkat", "Güncellenecek kullanıcı verisi yok !\t")
+        except Exception as E:
+            print(E)
+
+    def delUser(self):
+        try:
+            if self.selectedUserId:
+                result, _ = msg.MesajBox("DİKKAT : Kullanıcı silinecek",
+                                         f"Seçili kullanıcıyı silmek istediğinizden emin misiniz?\t\t\n")
+                if result:
+                    db.delData("GorevliTablosu", gorevliId=self.selectedUserId)
+                    if curs.rowcount > 0:
+                        msg.popup_mesaj('Silindi', "Kullanıcı silindi. Hadi hayırlı olsun. ;-)\t\n")
+                    self.showUserInfoInTablewidget()
+                    self.clearForm()
+            else:
+                msg.popup_mesaj('Seçim yapılmadı', f'Silinecek kullanıcıyı seçmediniz. \t\t\n')
+        except Exception as E:
+            print(f"Fonk: delUser \t\t Hata Kodu : {E}")
 
     def createNewUser(self) -> None :
         try:
@@ -255,15 +304,19 @@ class Settings_page(QWidget):
             print(E)
 
     def clearForm(self) -> None:
-        self.ui.combo_userType.setCurrentIndex(0)
-        self.ui.le_tcno.clear()
-        self.ui.le_studentNumber.clear()
-        self.ui.le_name.clear()
-        self.ui.le_lastname.clear()
-        self.ui.le_sinif.clear()
-        self.ui.le_sube.clear()
-        self.ui.le_username.clear()
-        self.ui.le_password.clear()
+        try:
+            self.ui.combo_userType.setCurrentIndex(0)
+            self.ui.le_tcno.clear()
+            self.ui.le_studentNumber.clear()
+            self.ui.le_name.clear()
+            self.ui.le_lastname.clear()
+            self.ui.le_sinif.clear()
+            self.ui.le_sube.clear()
+            self.ui.le_username.clear()
+            self.ui.le_password.clear()
+            self.selectedUserId = None
+        except Exception as E:
+            print(E)
 
 
 

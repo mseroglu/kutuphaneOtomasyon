@@ -20,7 +20,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         self.duration           = 20_000
         self.dictBooksInfos     = {}
         self.dictMembersInfos   = {}
-        self.barkodList         = []
+        self.selectedBarkodList         = []
         self.selectedBooksDict = {'KitapId':None,'KitapAdi':None}
 
         self.yenile()
@@ -38,8 +38,8 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
 
     def editBarkodNumberOnLineedit(self, text):
         try:
-            if len(text)>=13:
-                if len(text.split()[-1])==13:
+            if len(text)>=8:
+                if len(text.split()[-1])==8:
                     text += ", "
                     self.ui.le_searchBook.setText(text)
         except Exception as E:
@@ -100,7 +100,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             self.selectedBooksDict = {'KitapId':None,'KitapAdi':None}  # Bu silinmeli, yoksa son seçili kitaplar birden çok üyeye verilir.
             self.showBooksOnTablewidget()
             self.showMembersInTablewidget()
-            self.barkodList = []  # Bu liste sıfırlanmalı, yoksa önceki seçilmiş kitaplar gitmez
+            self.selectedBarkodList = []  # Bu liste sıfırlanmalı, yoksa önceki seçilmiş kitaplar gitmez
         except Exception as E:
             print(f"Fonk: clearSelection    \tHata: {E}")
 
@@ -130,7 +130,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                                           VerilisTarihi = datetime.today().date(),
                                           MaxKalmaSuresi= db.maxDayBooksStay        )
                             addedData += curs.rowcount
-                        db.updateBookTableState( Durum=(0,)*len(listBooksId), kitapId=listBooksId)     # Durum=0 kitap müsait değil demek
+                        db.updateBookState( Durum=(0,)*len(listBooksId), kitapId=listBooksId)     # Durum=0 kitap müsait değil demek
                         self.clearSelection()
                         self.ui.le_searchBook.clear()
                         self.ui.le_searchMember.clear()
@@ -142,12 +142,12 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         try:
             barcod = self.sender().objectName()
             if state:
-                self.barkodList.append(barcod)
+                self.selectedBarkodList.append(barcod)
             else:
-                if barcod in self.barkodList:
-                    self.barkodList.remove(barcod)
-            listBookId   = tuple(self.dictBooksInfos[b][0] for b in self.barkodList)
-            listBookName = tuple(self.dictBooksInfos[b][2] for b in self.barkodList)
+                if barcod in self.selectedBarkodList:
+                    self.selectedBarkodList.remove(barcod)
+            listBookId   = tuple(self.dictBooksInfos[b][0] for b in self.selectedBarkodList)
+            listBookName = tuple(self.dictBooksInfos[b][2] for b in self.selectedBarkodList)
             self.selectedBooksDict["KitapId"] = listBookId
             self.selectedBooksDict["KitapAdi"] = listBookName
 
@@ -186,7 +186,6 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                     self.ui.table_booksList.setCellWidget(row, 0, self.createCheckboxForTablewidget(book))
                     for index, item in enumerate(book[1:]):
                         col = index+1
-                        if index==0: item = item[6:]
                         self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item if item else "")))
                         if col in (1,4):
                             self.ui.table_booksList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
@@ -232,7 +231,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
     def showMembersInTablewidget(self) -> None:
         try:
             cols = ("uyeId", "OkulNo", f"{'Ad':^30}", f"{'Soyad':^15}", "TCNo", "Sinif", "Sube", "EldekiSayi")
-            colLabels = ("Tıkla", 'Verilebilir', "Okul No", f"{'Ad':^35}", f"{'Soyad':^20}", f"{'TC Kimlik No':^20}", "Sınıf", "Şube")
+            colLabels = ("Tıkla", 'Alabilir', "Okul No", f"{'Ad':^35}", f"{'Soyad':^20}", f"{'TC Kimlik No':^20}", "Sınıf", "Şube")
             self.ui.table_membersList.clear()
             self.ui.table_membersList.setColumnCount(len(cols))
             self.ui.table_membersList.setHorizontalHeaderLabels(colLabels)
