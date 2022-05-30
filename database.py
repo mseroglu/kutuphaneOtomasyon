@@ -1,3 +1,4 @@
+import struct
 import sys
 from datetime import datetime
 import time, math
@@ -31,6 +32,7 @@ class Db:
         self.byteImg                = None
 
         IdInfo = " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE"
+        # self.createTable("YazdirmaKuyruguTablosu", "Id" + IdInfo, "KitapId INTEGER NOT NULL UNIQUE")
         self.createTable("YazarTablosu", "yazarId"+IdInfo, "YazarAdi TEXT NOT NULL UNIQUE")
         self.createTable("BolumTablosu", "bolumId"+IdInfo, "Bolum TEXT NOT NULL UNIQUE")
         self.createTable("RafTablosu", "rafId"+IdInfo, "RafNo TEXT NOT NULL UNIQUE")
@@ -39,8 +41,10 @@ class Db:
                          "KitapId INTEGER NOT NULL",
                          "UyeId INTEGER NOT NULL",
                          "VerilisTarihi TEXT NOT NULL",
+                         "VerenGorevliId INTEGER",
                          "MaxKalmaSuresi INTEGER NOT NULL",
                          "DonusTarihi TEXT",
+                         "TeslimGorevliId INTEGER",
                          "FOREIGN KEY(KitapId) REFERENCES KitapTablosu(kitapId)")
         self.createTable("UyeTablosu", "uyeId"+IdInfo,
                         "UyeTipi INTEGER NOT NULL",
@@ -55,7 +59,8 @@ class Db:
                         "Tel TEXT",
                         "DogumTarihi TEXT",
                         "UyelikTarihi TEXT",
-                        "Photo TEXT"    )
+                        "Photo BLOB",
+                        "UyeKartiPrint INTEGER")
         self.createTable("GorevliTablosu", "gorevliId"+IdInfo,
                         "GorevliTipi INTEGER NOT NULL",
                         "TCNo TEXT NOT NULL UNIQUE",
@@ -88,7 +93,8 @@ class Db:
                         "KayitTarihi TEXT",
                         "Durum INTEGER",
                         "ImgBarcod BLOB",
-                        "ImgBook BLOB" )
+                        "ImgBook BLOB",
+                        "BarkodPrint INTEGER")
 
         conn.commit()
         self.setVeriablesValue()
@@ -136,65 +142,105 @@ class Db:
                         counter += curs.rowcount
                         ekle()
                 except sqlite3.Error as E:
-                    print(E)
+                    print(f"Fonk: forceInsertMultiData  \tHata: {E}")
                     ekle()
             ekle()
         except Exception as E:
             print("Eklenen kayıt sayısı : ", counter)
-            msg.popup_mesaj("Başlık", f"Eklenen {Col} sayısı : {counter}")
+            if counter:
+                msg.popup_mesaj("Başlık", f"Eklenen {Col} sayısı : {counter}")
+
+    def forceInsertMultiMember(self, cols, dataList) -> None:
+        try:
+            global liste, counter
+            liste = list(dataList)
+            counter = 0
+            eklenmeyenler = []
+            def ekle():
+                global counter, liste, eklenmeyenler
+                try:
+                    veri = liste.pop()
+                    veri = list(veri)
+                    veri[7] = veri[7].date()
+                    sql = f"""INSERT INTO UyeTablosu {cols} VALUES({', '.join(["?"]*len(veri))} )"""
+                    curs.execute(sql, veri)
+                    conn.commit()
+                    counter += curs.rowcount
+                    ekle()
+                except sqlite3.Error as E:
+                    msg.popup_mesaj("Hata", f"Okul No\t:  {veri[1]}\nİsim\t:  {veri[2]} {veri[3].upper()}\n\n"
+                                            f"üyenin TC kimlik numarası kullanılmaktadır. Bu üyenin kaydı yapılmadı!\n")
+                    print(f"Fonk: ekle  \tHata: {E}")
+                    ekle()
+            ekle()
+        except AttributeError as E:
+            msg.popup_mesaj("Dikkat", f"Doğum Tarihi vb bir sütunda uygun olmayan veri tipi işlemi engelliyor!\n"
+                                      f"Lütfen Excel tablosunda sütun veri tiplerini değiştirmeden \n"
+                                      f"(özellikle Doğum Tarihi sütunu) doğru veri giriniz veya boş bırakınız.")
+        except Exception as E:
+            print("Eklenen kayıt sayısı : ", counter)
+            print(f"Fonk: forceInsertMultiMember  \tHata: {E}")
+            msg.popup_mesaj("Başlık", f"Eklenen Üye sayısı : {counter}")
 
     def insertMembersDataFromExcel(self):
         try:
             engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')
             df_sql = pd.read_sql("UyeTablosu", engine)
-            df_xls = pd.read_excel("excel/Örnek Öğrenci Listesi.xls")
-            del df_sql["Tel"]
-            del df_sql['Photo']
+            df_xls = pd.read_excel("excel/Örnek_Öğrenci_Listesi.xls")
+            del df_sql["Tel"], df_sql['Photo']
             newColNames = dict(zip(df_xls, df_sql.columns[3:]))
             df_xls.rename(columns=newColNames, inplace=True)
             df_xls["Ad"]        = df_xls["Ad"].str.title().str.replace("i","ı").str.replace("ı̇", "i")
             df_xls["Soyad"]     = df_xls["Soyad"].str.title().str.replace("i","ı").str.replace("ı̇", "i")
             df_xls["UyeTipi"]   = 0
             df_xls["Durum"]     = 1
-            df_xls["UyelikTarihi"]=datetime.now().date()
+            df_xls["UyeKartiPrint"] = 1
+            df_xls["UyelikTarihi"]=datetime.today().date()
             df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1")
             df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0")
-            df_xls.to_sql("UyeTablosu", engine, if_exists="append", index=False)
-            msg.popup_mesaj("Toplu Üye Kaydı Başarılı", f"{len(df_xls)} üye kaydınız başarı ile gerçekleşti")
+            df_xls["DogumTarihi"] = df_xls["DogumTarihi"].fillna(datetime.today())      # Boş alanları bugun tarihi ile dolduruyoruz
+            cols = str(tuple(df_xls.columns)).replace("'", "")
+            self.forceInsertMultiMember(cols, df_xls.values)
         except Exception as E:
-            print("Daha önce kaydedilmiş bir TC kimlik umarası tekrar kullanılmaya çalışıyor.\nHata : ", E)
+            msg.popup_mesaj("İşlem Başarısız", "Eklemeye çalıştığınız veri içerisinde kayıtlı bir TC kimlik numarası tekrar kayıt edilmeye çalışıyor.")
+            print("Daha önce kaydedilmiş bir TC kimlik numarası tekrar kullanılmaya çalışıyor.\nHata : ", E)
 
-    def insertBookDataFromExcel(self):
+    def insertBookDatasFromExcel(self):
         try:
-            kitapTablosuCols = ['ISBN', 'KitapAdi', 'YazarId', 'KategoriId', 'BolumId', 'RafId', 'Yayinevi',
-                                'SayfaSayisi', 'BasimYili', 'Aciklama', 'DisariVerme', 'KayitTarihi', 'Durum']
-            engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')
-            df_sql = pd.read_sql("KitapTablosu", engine)
-            df_xls = pd.read_excel("excel/Örnek Kitap Listesi.xls")
+            df_xls = pd.read_excel("excel/Örnek_Kitap_Listesi.xls")
             #   excel den gelen sutun isimlerini sql tablolardaki duruma çeviriyoruz. Bu sayede df leri MERGE edebiliyoruz.
             forRename = dict(zip(df_xls.columns[2:6], ["YazarAdi", "Kategori", "Bolum", "RafNo"]))
             df_xls.rename(columns=forRename, inplace=True)
+            self.insertYazarFromExcel(df_xls)
+            self.insertKategoriFromExcel(df_xls)
+            self.insertBolumFromExcel(df_xls)
+            self.insertRafFromExcel(df_xls)
+            self.insertBookFromExcel(df_xls)
+        except Exception as E:
+            print(f"Fonk: insertBookDatasFromExcel   \nHata: {E}")
 
+    def insertBookFromExcel(self, df_xls):
+        try:
+            engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')
+            df_sql = pd.read_sql("KitapTablosu", engine)
             #   Verilerin boşluklaını alıyor, sadece ilk hafleri büyük yapıyor ve
             #   dönüşürken oluşan i harfi sorununu gideriyoruz. Ayrıca null durumunu kontrol ediyoruz
-            df_xls['YazarAdi'] = df_xls[df_xls['YazarAdi'].notnull()]['YazarAdi'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
-            df_xls['Kategori'] = df_xls[df_xls['Kategori'].notnull()]['Kategori'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
-            df_xls['Bolum']    = df_xls[df_xls['Bolum'].notnull()]['Bolum'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
-            # df_xls['RafNo'] = df_xls[df_xls['RafNo'].notnull()]['RafNo'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
-            veriDict = {'Kategori':df_xls["Kategori"].unique()}
-            #   Yazar, Kategori, Bölüm ve Raf Bilgisi kayıt edilmemişse kayıt ediyoruz
 
-            # df_xls['YazarAdi'].to_sql("YazarTablosu", engine, if_exists="append", index=False)
-            # self.forceInsertMultiData("YazarTablosu", "YazarAdi", list(df_xls["YazarAdi"].unique()))
-            # self.forceInsertMultiData("KategoriTablosu", "Kategori", list(df_xls["Kategori"].unique()))
+            if not df_xls[df_xls['YazarAdi'].notnull()].empty:
+                df_xls['YazarAdi'] = df_xls[df_xls['YazarAdi'].notnull()]['YazarAdi'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+            if not df_xls[df_xls['Bolum'].notnull()]['Bolum'].empty:
+                df_xls['Kategori'] = df_xls[df_xls['Kategori'].notnull()]['Kategori'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+            if not df_xls[df_xls['Bolum'].notnull()]['Bolum'].empty:
+                df_xls['Bolum']    = df_xls[df_xls['Bolum'].notnull()]['Bolum'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
+            if not df_xls[df_xls['RafNo'].notnull()]['RafNo'].empty:
+                df_xls['RafNo']    = df_xls[df_xls['RafNo'].notnull()]['RafNo'].str.strip().str.title().str.replace("i","ı").str.replace("ı̇", "i")
+
             #   Yazar, kategori, Bolum ve Raf bilgilerini çağırıyoruz
-            print(2)
             df_sql_yazar    = pd.read_sql("YazarTablosu", engine, columns=("YazarAdi", "yazarId"))
             df_sql_kategori = pd.read_sql("KategoriTablosu", engine, columns=("Kategori", "kategoriId"))
             df_sql_bolum    = pd.read_sql("BolumTablosu", engine, columns=("Bolum", "bolumId"))
             df_sql_raf      = pd.read_sql("RafTablosu", engine, columns=("RafNo", "rafId"))
             # df leri MERGE ediyoruz
-            print(3)
             result = pd.merge(df_xls, df_sql_yazar, how="left")
             result1 = pd.merge(result, df_sql_kategori, how="left")
             result2 = pd.merge(result1, df_sql_bolum, how="left")
@@ -205,28 +251,88 @@ class Db:
             newColNames = dict(zip(result.columns[6:10], df_sql.columns[8:12]))
             newColNames[result.columns[1]] = df_sql.columns[3]
             result3.rename(columns=newColNames, inplace=True)
-            print(result3.columns)
+
             result3["KitapAdi"] = result3["KitapAdi"].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
             result3["Yayinevi"] = result3["Yayinevi"].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
             result3["DisariVerme"] = 1
-            newBarkod = int(self.createBarkodeNumber())+1
-
-            result3["Barkod"]    = [str(i)+self.createControlNumber(str(i)) for i in range(newBarkod, newBarkod + len(result3))]
+            result3["BarkodPrint"] = 1
+            newBarkod = int(self.createBarkodeNumber())
+            newBarkod = newBarkod if newBarkod == 1 else newBarkod + 1                # 1 gelmişse ekleme yapmadan kullanıyoruz
+            barkodNumbers = [f"{str(i) :0>7}" for i in range(newBarkod, newBarkod + len(result3))]
+            barkodPlusImg = tuple(map(self.createBarkodeImg, barkodNumbers))
+            barkods     = [b[0] for b in barkodPlusImg]
+            imgBarkod   = [b[1] for b in barkodPlusImg]
+            result3["Barkod"]    = barkods
+            result3['ImgBarcod'] = imgBarkod
             result3["Durum"]     = 1
             result3['KayitTarihi'] = datetime.today().date()
-            print(result3[['yazarId', 'kategoriId', 'bolumId', 'rafId']])
-            result3.to_sql("KitapTablosu", engine, if_exists="append", index=False)
-            print("yapılan kayıt sayısı: ", len(result3))
-
-            msg.popup_mesaj("Toplu Kitap Kaydı Başarılı", f"{len(result3)} kitap kaydınız başarı ile gerçekleşti")
+            cols        = str(tuple(result3.columns))
+            soruIsareti = ", ".join(["?"]*len(result3.columns))
+            sql         = f"""INSERT INTO KitapTablosu {cols} VALUES({soruIsareti})"""
+            curs.executemany(sql, result3.values)
+            conn.commit()
+            msg.popup_mesaj("Toplu Kitap Kaydı Başarılı", f"{curs.rowcount} kitap kaydı gerçekleşti\t\t")
             mesaj, _ = msg.MesajBox("Uyarı", "Excel dosyasını temizlemek aynı verilerin tekrar kaydolmasını önler.\n\n"
                                              "Excel dosyanız temizlensin mi?")
             if mesaj:
                 self.delExcelData()
         except Exception as E:
-            print(f"Hata Kodu : {E}")
+            print(f"Fonk: insertBookDatasFromExcel  \nHata Kodu : {E}")
+            msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
+
+    def insertYazarFromExcel(self, df_xls):
+        try:
+            df_yazar = pd.DataFrame()
+            df_yazar['YazarAdi'] = df_xls['YazarAdi'].dropna()      # NaN verileri siliyoruz
+            #   Verilerin boşluklaını alıyor, sadece ilk hafleri büyük yapıyor ve
+            #   dönüşürken oluşan i harfi sorununu gideriyoruz. Ayrıca null durumunu kontrol ediyoruz
+            if not df_yazar['YazarAdi'].empty:
+                df_yazar['YazarAdi'] = df_yazar['YazarAdi'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+                listYazar = list(df_yazar.YazarAdi.unique())
+                if "" in listYazar: listYazar.remove("")
+                if listYazar: self.forceInsertMultiData("YazarTablosu", "YazarAdi", listYazar)
+        except Exception as E:
+            print(f"Fonk: insertYazarFromExcel  \nHata Kodu : {E}")
             # msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
 
+    def insertKategoriFromExcel(self, df_xls):
+        try:
+            df_kategori = pd.DataFrame()
+            df_kategori['Kategori'] = df_xls['Kategori'].dropna()
+            if not df_kategori['Kategori'].empty:
+                df_kategori['Kategori'] = df_kategori['Kategori'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+                listKategori = list(df_kategori.Kategori.unique())
+                if "" in listKategori: listKategori.remove("")
+                if listKategori: self.forceInsertMultiData("KategoriTablosu", "Kategori", listKategori)
+        except Exception as E:
+            print(f"Fonk: insertKategoriFromExcel  \nHata Kodu : {E}")
+            # msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
+
+    def insertBolumFromExcel(self, df_xls):
+        try:
+            df_bolum = pd.DataFrame()
+            df_bolum['Bolum'] = df_xls['Bolum'].dropna()
+            if not df_bolum['Bolum'].empty:
+                df_bolum['Bolum'] = df_bolum['Bolum'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+                listBolum = list(df_bolum.Bolum.unique())
+                if "" in listBolum: listBolum.remove("")
+                if listBolum: self.forceInsertMultiData("BolumTablosu", "Bolum", listBolum)
+        except Exception as E:
+            print(f"Fonk: insertBolumFromExcel  \nHata Kodu : {E}")
+            # msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
+
+    def insertRafFromExcel(self, df_xls):
+        try:
+            df_raf = pd.DataFrame()
+            df_raf['RafNo'] = df_xls['RafNo'].dropna()
+            if not df_raf['RafNo'].empty:
+                df_raf['RafNo'] = df_raf['RafNo'].str.strip().str.title().str.replace("i", "ı").str.replace("ı̇", "i")
+                listRaf = list(df_raf.RafNo.unique())
+                if "" in listRaf: listRaf.remove("")
+                if listRaf: self.forceInsertMultiData("RafTablosu", "RafNo", list(df_raf.RafNo.unique()))
+        except Exception as E:
+            print(f"Fonk: insertRafFromExcel  \nHata Kodu : {E}")
+            # msg.popup_mesaj("HATA", f"Hata Kodu : {E}")
 
     def delExcelData(self):
         pass
@@ -346,6 +452,15 @@ class Db:
             return curs.fetchone()
         except Exception as E:
             print("Fonk: getMemberDataWithTcno => ", E)
+
+    def checkBook(self, isbn) -> int :
+        try:
+            sql =f"""SELECT count(*) FROM KitapTablosu WHERE ISBN = {isbn}"""
+            curs.execute(sql)
+            result = curs.fetchone()
+            return result[0]
+        except Exception as E:
+            print("Fonk: getBookDataWithId => ", E)
 
     def getBookDataWithId(self, Id):
         try:
@@ -487,7 +602,7 @@ class Db:
         except Exception as E:
             msg.popup_mesaj("Hata ! ! !", f"FONK: insertBarkod    \nHATA KODU : {E}")
 
-    def saveBarkod(self, Id):
+    def saveBarkod(self, Id) -> None:
         barkode7 = self.createBarkodeNumber()
         barkode8, imgData = self.createBarkodeImg( barkode7 )
         self.insertBarkod( TableName="KitapTablosu", Barkod=barkode8, ImgBarcod=imgData, kitapId=Id )
@@ -524,25 +639,20 @@ class Db:
 
 
 #print(createBarkodeNumber())
-def deneme():
-    a = [1,2,3,4]
-    b = ("a","b","c")
-    print(dict(zip(a, b)))
+
 
 
 
 db = Db()
 
 if __name__=="__main__":
-    #db.getget()
-    #db.insertBookDataFromExcel()
+    db.insertBookDatasFromExcel()
     # veri = db.getId("YazarTablosu", "YazarAdi", "Ali")
     # print("veri : ", veri)
     #db.insertMembersDataFromExcel()
     #print(db.getData("OkulBilgiTablosu", *("*")))
     #print(db.getData("OkulBilgiTablosu", *("KurumKodu", "OkulAdi")))
     # print(db.getDataWithWhere("UyeTablosu", *("TCNo", "OkulNo", "Ad", 'Soyad'), **{"TCNo": '98765432105'}))
-    # db.deneme()
     # db.updateData("UyeTablosu", **{"TCNo":"987", "OkulNo":"123", "Id":1})
 
     pass
@@ -553,7 +663,7 @@ cols = ['Barkod', 'ISBN', 'KitapAdi', 'KayitTarihi', 'Durum']           # sadece
 engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')         
 df_sql = pd.read_sql("KitapTablosu", engine, columns=cols)
 print(df_sql.columns)                                                   # columns
-df_xls = pd.read_excel("excel/Örnek Kitap Listesi.xls")
+df_xls = pd.read_excel("excel/Örnek_Kitap_Listesi.xls")
 df_xls.rename(columns={"KayitTarihi":"Kayıt Tarihi","KitapAdi":"Kitap Adı", "SayfaSayisi":"Sayfa Sayısı"}, inplace=True)
 df_xls.to_sql("KitapTablosu", engine, if_exists="append", index=False)
 """

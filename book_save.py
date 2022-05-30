@@ -18,7 +18,7 @@ class SaveBook(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.duration = 20_000
-
+        self.ui.le_isbn.setFocus()
 
         self.showAuthorsOnCombo()
         self.showCategoriesOnCombo()
@@ -36,22 +36,20 @@ class SaveBook(QMainWindow):
         self.ui.btn_addSection.clicked.connect(self.saveNewSection)
         self.ui.btn_addBookshelf.clicked.connect(self.saveNewBookshelf)
 
-        self.ui.btn_getDataFromExcel.clicked.connect(db.insertBookDataFromExcel)
+        self.ui.btn_getDataFromExcel.clicked.connect(db.insertBookDatasFromExcel)
+        self.ui.btn_getDataFromExcel.clicked.connect(self.showEvent)
         self.ui.table_bookList.itemDoubleClicked.connect(self.showBookInfoInForm)
         self.ui.btn_update.clicked.connect(self.updateBookInfo)
         self.ui.btn_del.clicked.connect(self.delBook)
 
-
-
-
-
-    def enterEvent(self, a0: QtCore.QEvent) -> None:
+    def showEvent(self, a0: QtGui.QShowEvent) -> None:
         try:
-            self.ui.le_isbn.setFocus()
+            self.showAuthorsOnCombo()
+            self.showCategoriesOnCombo()
+            self.showSectionsOnCombo()
+            self.showBookshelfsOnCombo()
             self.showBooksOnTablewidget()
-            text = self.ui.le_barkode.text()
-            if not text:
-                self.setBarkodeNumber()
+            self.setBarkodeNumber()
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: enterEvent\t\tHata Kodu : {E}", self.duration)
 
@@ -79,6 +77,7 @@ class SaveBook(QMainWindow):
     def setBarkodeNumber(self) -> None:
         try:
             newBarkodeNumber7   = db.createBarkodeNumber()
+            newBarkodeNumber7 = f"{int(newBarkodeNumber7) + 1:0>7}"
             self.newBarkodeNumber8, self.imgByte   = db.createBarkodeImg( newBarkodeNumber7 )
             self.ui.le_barkode.setText( self.newBarkodeNumber8 )
             pixmap = QtGui.QPixmap()
@@ -160,22 +159,37 @@ class SaveBook(QMainWindow):
 
     def saveNewBook(self) -> None:
         try:
+            def saveBooks(quantityBooks, cols_datas):
+                saved = 0
+                for i in range(quantityBooks):                              # kaç adet kaydetmek istiyoruz
+                    db.insertData(TableName="KitapTablosu", **cols_datas)
+                    saved += curs.rowcount
+                    if curs.rowcount > 0:
+                        db.saveBarkod(curs.lastrowid)
+                return saved
+
+            kacKitap = self.ui.spinBox_bookCount.value()
             cols_datas = self.getBookInfo()
             if not cols_datas["KitapAdi"]:
                 msg.popup_mesaj("Boş alan uyarısı", "Eser adı boş olmamalı ! ! !\t\t")
             else:
+                count = db.checkBook( cols_datas['ISBN'] )        # aynı isbn no ile kayıtlı kitap sayısını döndürür int
                 saved = 0
-                for i in range(self.ui.spinBox_bookCount.value()):          # kaç adet kaydetmek istiyoruz
-                    db.insertData(TableName="KitapTablosu", **cols_datas)
-                    saved += curs.rowcount
-                    if curs.rowcount > 0:
-                        db.saveBarkod( curs.lastrowid )
+                if count:
+                    result, _ = msg.MesajBox("Kayıt kontrol",
+                                             f"'{cols_datas['ISBN']}'  ISBN numarası ile kayıtlı {count} adet eser mevcut. \t\n\n"
+                                             f"Aynı kitaptan ekleme yapmak istiyor musunuz?\n")
+                    if result:
+                        saved = saveBooks(quantityBooks=kacKitap, cols_datas=cols_datas)
+                else:
+                    saved = saveBooks(quantityBooks=kacKitap, cols_datas=cols_datas)
+
                 if saved > 0 :
                     mesaj = f"{saved} kitap başarı ile kayıt edildi"
                     saved = 0
                     self.showBooksOnTablewidget()
                 else:
-                    mesaj = "Kayıt başarısız ! ! !\t\t\tGüncellemeyi deneyiniz."
+                    mesaj = "Kayıt işlemi yapılmadı ! ! !"
                 self.ui.statusbar.showMessage(mesaj, self.duration)
         except Exception as E:
             print(f"Fonk: saveNewBook   Hata Kodu : {E}")

@@ -29,7 +29,7 @@
        <attribute name="title">
         <string>Kitap Kayıt</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
@@ -740,9 +740,6 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="topMargin">
-           <number>20</number>
-          </property>
           <item>
            <widget class="QPushButton" name="btn_clear">
             <property name="minimumSize">
@@ -798,6 +795,19 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="btn_getDataFromExcel">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Excelden Veri Aktar</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="btn_update">
             <property name="minimumSize">
              <size>
@@ -830,125 +840,6 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
             </property>
             <property name="text">
              <string>Sil</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_topluKayit">
-       <attribute name="title">
-        <string>Toplu Kayıt</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QTableWidget" name="table_topluKayit">
-          <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>100</number>
-          </attribute>
-          <attribute name="horizontalHeaderMinimumSectionSize">
-           <number>30</number>
-          </attribute>
-          <attribute name="horizontalHeaderStretchLastSection">
-           <bool>true</bool>
-          </attribute>
-          <attribute name="verticalHeaderStretchLastSection">
-           <bool>false</bool>
-          </attribute>
-          <row>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>3</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>4</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>5</string>
-           </property>
-          </row>
-          <column>
-           <property name="text">
-            <string>ISBN</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Eser Adı</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Yazarı</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Kategori</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Dolap-Bölüm</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Raf Bilgisi</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Yayınevi</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Sayfa Sayısı</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Basım Yılı</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Açıklama</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="spacing">
-           <number>30</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="btn_getDataFromExcel">
-            <property name="text">
-             <string>Excelden Veri Aktar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_saveAll">
-            <property name="text">
-             <string>Kaydet</string>
             </property>
            </widget>
           </item>

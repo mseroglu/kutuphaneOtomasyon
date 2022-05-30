@@ -1,6 +1,6 @@
 import locale
 locale.setlocale(locale.LC_ALL, "")                                             # Yerel ayarları uygular
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QMessageBox, QInputDialog
 from PyQt5 import Qt, QtCore, QtGui
 from ui.ayarlarUI import Ui_Form
 
@@ -17,13 +17,6 @@ class Settings_page(QWidget):
         self.setWindowIcon(QtGui.QIcon("img/ayar.jpg"))
         self.duration = 15_000
         self.selectedUserId = None
-
-
-        self.listAuthors()
-        self.listCategories()
-        self.listSections()
-        self.listBookshelfs()
-        self.showUserInfoInTablewidget()
 
         self.ui.btn_saveInstutionInfo.clicked.connect(self.saveSchoolInfos)
 
@@ -56,9 +49,38 @@ class Settings_page(QWidget):
         self.ui.spinBox_maxDayBooksStay.valueChanged.connect(self.whenMaxChanged)
         self.ui.spinBox_maxNumberOfBooksGiven.valueChanged.connect(self.whenMaxChanged)
 
-    def showEvent(self, a0: QtGui.QShowEvent) -> None:
-        pass
+        self.ui.list_categories.itemDoubleClicked.connect(self.updateAuthorCategoriSection)
+        self.ui.list_author.itemDoubleClicked.connect(self.updateAuthorCategoriSection)
+        self.ui.list_section.itemDoubleClicked.connect(self.updateAuthorCategoriSection)
+        self.ui.list_bookshelf.itemDoubleClicked.connect(self.updateAuthorCategoriSection)
 
+
+    def showEvent(self, a0: QtGui.QShowEvent) -> None:
+        self.listDataOnListwidgets()
+        self.showUserInfoInTablewidget()
+
+    def listDataOnListwidgets(self):
+        self.listAuthors()
+        self.listCategories()
+        self.listSections()
+        self.listBookshelfs()
+
+    def updateAuthorCategoriSection(self, item):
+        try:
+            eskiVeri    = item.text()
+            veriAlani   = {"list_categories":("KategoriTablosu", "Kategori"), "list_author":("YazarTablosu","YazarAdi"),
+                         "list_section":("BolumTablosu","Bolum"), "list_bookshelf":("RafTablosu","RafNo")}
+            secilenAlan = self.sender().objectName()
+            table, col  = veriAlani[secilenAlan]
+            yeniVeri, result = QInputDialog.getText(self, "Düzenleme", "Düzenleyiniz", text=eskiVeri)
+            if result:
+                sql = f""" UPDATE {table} SET {col}=? WHERE {col}=? """
+                curs.execute(sql, (yeniVeri, eskiVeri))
+                conn.commit()
+                if curs.rowcount > 0:
+                    self.listDataOnListwidgets()
+        except Exception as E:
+            print(E)
 
     def whenMaxChanged(self):
         db.maxDayBooksStay  = self.ui.spinBox_maxDayBooksStay.value()
@@ -222,30 +244,38 @@ class Settings_page(QWidget):
 
     def addNewAuthor(self) -> None:
         try:
-            cols_datas = {"YazarAdi": self.ui.le_author.text().strip().title()}
-            db.insertData("YazarTablosu", **cols_datas)
-            self.ui.le_author.clear()
-            self.listAuthors()
+            author  = self.ui.le_author.text().strip().title()
+            if author:
+                cols_datas = {"YazarAdi": author}
+                db.insertData("YazarTablosu", **cols_datas)
+                self.ui.le_author.clear()
+                self.listAuthors()
         except Exception as E:
             print(f"Fonk: addNewAuthor  \t\tHata Kodu : {E}", self.duration)
 
     def addNewCategory(self) -> None:
-        cols_datas = {"Kategori": self.ui.le_kategori.text().strip().capitalize()}
-        db.insertData("KategoriTablosu", **cols_datas)
-        self.ui.le_kategori.clear()
-        self.listCategories()
+        category   = self.ui.le_kategori.text().strip().capitalize()
+        if category:
+            cols_datas = {"Kategori": category}
+            db.insertData("KategoriTablosu", **cols_datas)
+            self.ui.le_kategori.clear()
+            self.listCategories()
 
     def addNewSection(self) -> None:
-        cols_datas = {"Bolum": self.ui.le_section.text().strip().capitalize()}
-        db.insertData("BolumTablosu", **cols_datas)
-        self.ui.le_section.clear()
-        self.listSections()
+        section    = self.ui.le_section.text().strip().capitalize()
+        if section:
+            cols_datas = {"Bolum": section}
+            db.insertData("BolumTablosu", **cols_datas)
+            self.ui.le_section.clear()
+            self.listSections()
 
     def addNewBookshelf(self) -> None:
-        cols_datas = {"RafNo": self.ui.le_bookshelf.text().strip().capitalize()}
-        db.insertData("RafTablosu", **cols_datas)
-        self.ui.le_bookshelf.clear()
-        self.listBookshelfs()
+        bookself = self.ui.le_bookshelf.text().strip().capitalize()
+        if bookself:
+            cols_datas = {"RafNo": bookself}
+            db.insertData("RafTablosu", **cols_datas)
+            self.ui.le_bookshelf.clear()
+            self.listBookshelfs()
 
     def delAuthor(self):
         cols_datas = {"YazarAdi": self.ui.list_author.currentItem().text()}

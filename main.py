@@ -8,8 +8,9 @@ locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
 from PIL.Image import Image
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCheckBox, QComboBox
-from PyQt5 import QtGui, QtCore, Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCheckBox, \
+    QComboBox, QHeaderView
+from PyQt5 import QtGui, QtCore
 from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog, QPrinter
 
 from ui.anasayfaUI import Ui_MainWindow
@@ -18,10 +19,11 @@ from member_save import SaveMember
 from book_save import SaveBook
 from transactions_entrust import Entrust
 from settings_page import Settings_page
+from reports import ReportsPage
 
 from database import db, curs, tableWidgetResize
 from messageBox import msg
-from reports import Reports
+
 
 
 
@@ -38,14 +40,31 @@ class MainWindow(QMainWindow):
         self.ui.le_searchGivenToday.setVisible(False)
         self.ui.le_searchMember.setVisible(False)
         self.ui.le_searchBook.setVisible(False)
+        self.ui.combo_searchCriteriaOutside.setVisible(False)
+        self.ui.combo_searchCriteriaExpired.setVisible(False)
+        self.ui.combo_searchCriteriaTodayGiven.setVisible(False)
+        self.ui.combo_searchCriteriaMember.setVisible(False)
+        self.ui.combo_searchCriteriaBook.setVisible(False)
         self.numberOfBlankLines = 20
         self.duration           = 20_000
         self.dictEscrowBookInfos= {}
 
+        self.addItemsInCombos()
+
+        self.ui.btn_searchOutside.clicked['bool'].connect(self.clearSearching)
+        self.ui.btn_searchBook.clicked['bool'].connect(self.clearSearching)
+        self.ui.btn_searchMember.clicked['bool'].connect(self.clearSearching)
+        self.ui.btn_searchExpired.clicked['bool'].connect(self.clearSearching)
+        self.ui.btn_searchGivenToday.clicked['bool'].connect(self.clearSearching)
 
         self.ui.tabWidget.currentChanged.connect(self.showEvent)
-        # self.ui.le_searchBarcode.textChanged.connect(self.bookStateControl)
         self.ui.le_searchBarcode.cursorPositionChanged.connect(self.bookStateControl)
+
+        self.ui.le_searchMember.textChanged.connect(self.genelfilter)
+        self.ui.le_searchBook.textChanged.connect(self.genelfilter)
+        self.ui.le_searchGivenToday.textChanged.connect(self.genelfilter)
+        self.ui.le_searchExpired.textChanged.connect(self.genelfilter)
+        self.ui.le_searchOutsides.textChanged.connect(self.genelfilter)
 
 
 
@@ -57,17 +76,18 @@ class MainWindow(QMainWindow):
         self.ui.btn_openTransactions.clicked.connect(self.openWindowControl)
         self.ui.btn_openSettings.clicked.connect(winSettings.show)
         self.ui.btn_openSettings.clicked.connect(self.openWindowControl)
+        self.ui.btn_openReports.clicked.connect(winReports.show)
+        self.ui.btn_openReports.clicked.connect(self.openWindowControl)
         self.ui.btn_quit.clicked.connect(sys.exit)
 
-        self.ui.btn_searchOutside.clicked.connect(self.handlePreview)
+        # self.ui.btn_searchOutside.clicked.connect(self.handlePreview)
 
-
+    def tusaBasYaziYazdir(self):
+        key_press = QtGui.QKeyEvent(QtGui.QKeyEvent.KeyPress, QtCore.Qt.Key_X, QtCore.Qt.NoModifier, "X")
+        QApplication.sendEvent(self.ui.le_searchBarcode, key_press)
 
     def enterEvent(self, a0: QtCore.QEvent) -> None:
-        print("enter event")
         self.ui.le_searchBarcode.setFocus()
-        key_press = QtGui.QKeyEvent(QtGui.QKeyEvent.KeyPress, QtCore.Qt.Key_Return, QtCore.Qt.NoModifier, "X")
-        QApplication.sendEvent(self.ui.le_searchBarcode, key_press)
 
 
     def handlePreview(self):
@@ -149,21 +169,39 @@ class MainWindow(QMainWindow):
             winSaveMember.close()
             winEntrust.close()
             winSettings.close()
+            winReports.close()
         elif winSaveMember.isActiveWindow():
             winSaveBook.close()
             winEntrust.close()
             winSettings.close()
+            winReports.close()
         elif winEntrust.isActiveWindow():
             winSaveBook.close()
             winSaveMember.close()
             winSettings.close()
+            winReports.close()
         elif winSettings.isActiveWindow():
             winSaveBook.close()
             winSaveMember.close()
             winEntrust.close()
+            winReports.close()
+        elif winReports.isActiveWindow():
+            winSaveBook.close()
+            winSaveMember.close()
+            winEntrust.close()
+            winSettings.close()
+
+    def clearSearching(self, state):
+        if not state:
+            self.ui.le_searchBook.clear()
+            self.ui.le_searchMember.clear()
+            self.ui.le_searchExpired.clear()
+            self.ui.le_searchOutsides.clear()
+            self.ui.le_searchGivenToday.clear()
 
     def bookStateControl(self, old, new):
         try:
+            self.ui.le_searchOutsides.clear()
             if new==8:
                 barkod = self.ui.le_searchBarcode.text()
                 bookStateData = db.getBookState(Barkod=barkod)
@@ -171,13 +209,11 @@ class MainWindow(QMainWindow):
                     if bookStateData[0]:
                         winEntrust.show()
                         winEntrust.ui.le_searchBook.setText(barkod)
-                        # self.ui.le_searchBarcode.clear()
-                        # winEntrust.ui.le_searchBook.setFocus()
+                        self.ui.le_searchBarcode.clear()
             else:
-                self.filterBooksOnTablewidget()
+                self.genelfilter()
         except Exception as E:
             print(E)
-
 
     def filterBooksOnTablewidget(self):
         try:
@@ -193,6 +229,49 @@ class MainWindow(QMainWindow):
                         self.ui.table_outsides.hideRow(row)
         except Exception as E:
             print(E)
+
+    def addItemsInCombos(self):
+        try:
+            for item in (("Barkod", 1), ("Eser Adı", 2), ("Yazar Adı", 3), ("TC Kimlik No", 7), ("Okul No", 8), ("Üye Adı", 9), ("Üye Soyadı", 10)):
+                self.ui.combo_searchCriteriaOutside.addItem(*item)
+            for item in (("Eser Adı", 2), ("Yazar Adı", 3), ("Barkod", 1), ("TC Kimlik No", 7), ("Okul No", 8), ("Üye Adı", 9),("Üye Soyadı", 10)):
+                self.ui.combo_searchCriteriaExpired.addItem(*item)
+            for item in (("Eser Adı", 1), ("Yazar Adı", 2), ("Barkod", 0), ("TC Kimlik No", 3), ("Okul No", 4), ("Üye Adı", 5),("Üye Soyadı", 6)):
+                self.ui.combo_searchCriteriaTodayGiven.addItem(*item)
+            for item in (("Okul No", 3), ("Üye Adı", 4), ("Üye Soyadı", 5), ("TC Kimlik No", 2)):
+                self.ui.combo_searchCriteriaMember.addItem(*item)
+            for item in (("Eser Adı", 2), ("Yazar Adı", 3), ("Barkod", 0), ("ISBN", 1)):
+                self.ui.combo_searchCriteriaBook.addItem(*item)
+        except Exception as E:
+            print(f"Fonk: addItemsInCombos  \tHata: {E}")
+
+    def genelfilter(self):
+        filtreKaynagiObj = {"le_searchMember"       : (self.ui.le_searchMember,     self.ui.table_memberList,   self.ui.combo_searchCriteriaMember),
+                            "le_searchBook"         : (self.ui.le_searchBook,       self.ui.table_bookList,     self.ui.combo_searchCriteriaBook),
+                            "le_searchOutsides"     : (self.ui.le_searchOutsides,   self.ui.table_outsides,     self.ui.combo_searchCriteriaOutside),
+                            "le_searchExpired"      : (self.ui.le_searchExpired,    self.ui.table_expaired,     self.ui.combo_searchCriteriaExpired),
+                            "le_searchGivenToday"   : (self.ui.le_searchGivenToday, self.ui.table_givenToday,   self.ui.combo_searchCriteriaTodayGiven),
+                            "le_searchBarcode"      : (self.ui.le_searchBarcode,    self.ui.table_outsides,     self.ui.combo_searchCriteriaOutside)}
+        sinyalObj   = self.sender().objectName()
+        print("sinyalobj : ",sinyalObj)
+        filtreKaynagi = filtreKaynagiObj[ sinyalObj ]
+        if sinyalObj == "le_searchBarcode":
+            self.ui.combo_searchCriteriaOutside.setCurrentIndex(0)
+            self.ui.tabWidget.setCurrentWidget(self.ui.tab_outsides)
+        try:
+            ara     = filtreKaynagi[0].text()
+            rows    = filtreKaynagi[1].rowCount() - self.numberOfBlankLines
+            combo   = filtreKaynagi[2]
+            col     = combo.currentData(QtCore.Qt.UserRole)
+            for row in range(rows):
+                item = filtreKaynagi[1].item(row, col)
+                if item is not None:
+                    if ara.lower() in item.text().lower():
+                        filtreKaynagi[1].showRow(row)
+                    else:
+                        filtreKaynagi[1].hideRow(row)
+        except Exception as E:
+            print(f"Fonk: genelFiltre Hata: {E}")
 
     def createButtonForTablewidget(self, data: list ) -> QWidget :
         try:
@@ -241,13 +320,13 @@ class MainWindow(QMainWindow):
 
     def showMembersInTablewidget(self):
         try:
-            colLabels   = ("Üye Tipi", "Durum", f"{'TC Kimlik No':^20}", "Okul No", f"{'Ad':^35}", f"{'Soyad':^15}", "Cinsiyet", "Sınıf", "Şube",
-                           f"{'Telefon':^20}", "Doğum Tarihi", "Üyelik Tarihi", f"{'Foto':^20}")
+            colLabels   = ("Üye Tipi", "Durum", f"{'TC Kimlik No':^20}", "Okul No", f"{'Ad':^35}", f"{'Soyad':^15}",
+                "Cinsiyet", "Sınıf", "Şube", f"{'Telefon':^20}", "Doğum Tarihi", "Üyelik Tarihi", f"{'Foto':^20}")
             self.ui.table_memberList.clear()
             self.ui.table_memberList.setColumnCount(len(colLabels))
             self.ui.table_memberList.setHorizontalHeaderLabels(colLabels)
             cameData = db.getMemberDataWithWhere()
-            self.ui.table_memberList.setRowCount(len(cameData) + 10)
+            self.ui.table_memberList.setRowCount(len(cameData) + self.numberOfBlankLines)
             for row, uye in enumerate(cameData):
                 for col, info in enumerate(uye):
                     self.ui.table_memberList.setItem(row, col, QTableWidgetItem(str(info if info else '')))
@@ -270,7 +349,7 @@ class MainWindow(QMainWindow):
             self.ui.table_bookList.setHorizontalHeaderLabels(colLabels)
             books = db.getBookDataWithJoinTables()
             if books:
-                self.ui.table_bookList.setRowCount(len(books)+20)
+                self.ui.table_bookList.setRowCount(len(books)+self.numberOfBlankLines)
                 for row, book in enumerate(books):
                     for col, item in enumerate(book):
                         self.ui.table_bookList.setItem(row,col,QTableWidgetItem(str(item if item else "")))
@@ -293,7 +372,7 @@ class MainWindow(QMainWindow):
             self.ui.table_givenToday.setHorizontalHeaderLabels(colLabels)
             todayEntrusted = db.getEntrustToday()
             if todayEntrusted:
-                self.ui.table_givenToday.setRowCount(len(todayEntrusted)+20)
+                self.ui.table_givenToday.setRowCount(len(todayEntrusted)+self.numberOfBlankLines)
                 for row, book in enumerate(todayEntrusted):
                     for col, item in enumerate(book):
                         self.ui.table_givenToday.setItem(row,col,QTableWidgetItem(str(item if item else '')))
@@ -314,7 +393,7 @@ class MainWindow(QMainWindow):
             # self.ui.table_outsides.setHorizontalHeaderLabels(colLabels)
             outsides = db.getOutsides()
             if outsides:
-                self.ui.table_outsides.setRowCount(len(outsides)+20)
+                self.ui.table_outsides.setRowCount(len(outsides)+self.numberOfBlankLines)
                 for row, book in enumerate(outsides):
                     self.ui.table_outsides.setCellWidget(row,0, self.createButtonForTablewidget( book ))        # Tablewidgwta buton yerleştirme
                     for index, item in enumerate(book[2:]):
@@ -337,7 +416,7 @@ class MainWindow(QMainWindow):
             self.ui.table_expaired.setHorizontalHeaderLabels(colLabels)
             booksReturnToday = db.getEscrowBooksReturnToday()
             if booksReturnToday:
-                self.ui.table_expaired.setRowCount(len(booksReturnToday) + 20)
+                self.ui.table_expaired.setRowCount(len(booksReturnToday) + self.numberOfBlankLines)
                 for row, book in enumerate(booksReturnToday):
                     self.ui.table_expaired.setCellWidget(row, 0, self.createButtonForTablewidget(book))
                     for index, item in enumerate(book[2:]):
@@ -360,12 +439,13 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    winSaveBook = SaveBook()
-    winSaveMember = SaveMember()
-    winEntrust = Entrust()
-    winSettings = Settings_page()
+    winSaveBook     = SaveBook()
+    winSaveMember   = SaveMember()
+    winEntrust      = Entrust()
+    winSettings     = Settings_page()
+    winReports      = ReportsPage()
 
-    winMain = MainWindow()
+    winMain         = MainWindow()
 
     winMain.show()
 

@@ -21,6 +21,21 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QFrame" name="frame_side">
       <property name="frameShape">
@@ -251,7 +266,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="rightMargin">
-             <number>30</number>
+             <number>100</number>
             </property>
             <item>
              <widget class="QLineEdit" name="le_searchBarcode">
@@ -331,7 +346,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap>../img/logo.jpg</pixmap>
+             <pixmap>../img/logo.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -352,6 +367,27 @@
        </item>
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="styleSheet">
+          <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font-size: 11pt}
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+         </property>
          <property name="tabShape">
           <enum>QTabWidget::Rounded</enum>
          </property>
@@ -370,6 +406,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
               <widget class="QPushButton" name="btn_searchBook">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -389,6 +428,42 @@
               </widget>
              </item>
              <item>
+              <widget class="QComboBox" name="combo_searchCriteriaBook">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="le_searchBook">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -404,32 +479,25 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>10</pointsize>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
                </property>
                <property name="placeholderText">
                 <string>ara</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -457,6 +525,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
               <widget class="QPushButton" name="btn_searchMember">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -476,6 +547,42 @@
               </widget>
              </item>
              <item>
+              <widget class="QComboBox" name="combo_searchCriteriaMember">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="le_searchMember">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -491,32 +598,25 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>10</pointsize>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
                </property>
                <property name="placeholderText">
                 <string>ara</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -555,6 +655,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
               <widget class="QPushButton" name="btn_searchGivenToday">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -574,6 +677,48 @@
               </widget>
              </item>
              <item>
+              <widget class="QComboBox" name="combo_searchCriteriaTodayGiven">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="le_searchGivenToday">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -589,32 +734,25 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>10</pointsize>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
                </property>
                <property name="placeholderText">
                 <string>ara</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -653,6 +791,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
               <widget class="QPushButton" name="btn_searchExpired">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -672,6 +813,42 @@
               </widget>
              </item>
              <item>
+              <widget class="QComboBox" name="combo_searchCriteriaExpired">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px;}
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="le_searchExpired">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -687,32 +864,25 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>10</pointsize>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
                </property>
                <property name="placeholderText">
                 <string>ara</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -748,6 +918,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
               <widget class="QPushButton" name="btn_searchOutside">
+               <property name="styleSheet">
+                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -770,6 +943,44 @@
               </widget>
              </item>
              <item>
+              <widget class="QComboBox" name="combo_searchCriteriaOutside">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+
+
+</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QLineEdit" name="le_searchOutsides">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -785,37 +996,28 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
                <property name="font">
                 <font>
-                 <pointsize>10</pointsize>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
                </property>
                <property name="placeholderText">
                 <string>ara</string>
                </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -1123,6 +1325,7 @@
          <property name="title">
           <string/>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6"/>
         </widget>
        </item>
       </layout>
@@ -1221,6 +1424,86 @@
     <hint type="destinationlabel">
      <x>253</x>
      <y>90</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchOutside</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>combo_searchCriteriaOutside</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>253</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchMember</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>combo_searchCriteriaMember</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchGivenToday</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>combo_searchCriteriaTodayGiven</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchExpired</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>combo_searchCriteriaExpired</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_searchBook</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>combo_searchCriteriaBook</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>

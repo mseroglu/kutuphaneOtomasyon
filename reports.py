@@ -1,9 +1,19 @@
 from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog
 from PyQt5 import QtGui
 from PyQt5.QtGui import QImage, QTextImageFormat
+from PyQt5.QtWidgets import QMainWindow
 from PIL import Image
 
-class Reports:
+from ui.raporlarUI import Ui_MainWindow
+
+class ReportsPage(QMainWindow):
+    def __init__(self):
+        super(ReportsPage, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+
+class CreateReports:
     def handlePrint(self):
         try:
             dialog = QtGui.QPrintDialog()

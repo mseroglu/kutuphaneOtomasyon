@@ -73,9 +73,9 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             bugun = datetime.today()
             iadeTarihi = self.returnDateXDayLater( db.maxDayBooksStay )
             self.ui.label_verilisTarihi.setText(bugun.strftime("%d %b %Y"))
-            self.ui.label_verilisTarihi.setStyleSheet("QLabel{background-color:green;color:white; padding:10px }")
+            # self.ui.label_verilisTarihi.setStyleSheet("QLabel{background-color:rgba(133,194,38,255);color:white; padding:10px; border-radius: 5px; font-size: 14pt }")
             self.ui.label_iadeTarihi.setText(iadeTarihi)
-            self.ui.label_iadeTarihi.setStyleSheet("QLabel{background-color:red;color:white; padding:10px}")
+            # self.ui.label_iadeTarihi.setStyleSheet("QLabel{background-color: rgba(66,146,157,255); color:white; padding:10px; border-radius: 5px; font-size: 14pt}")
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: giveBooksToMembers \t\tHata Kodu : {E}", self.duration)
 

@@ -1,15 +1,23 @@
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem
+import base64
+import io
+import os
+
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QFileDialog
 from PyQt5 import QtGui, QtCore
 from ui.uyeKayitUI import Ui_Form
 from datetime import datetime
 from messageBox import msg
 from database import conn, curs, db
+from PIL import Image
 
 class SaveMember(QWidget):
     def __init__(self):
         super(SaveMember, self).__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.ui.btn_addImg.setStyleSheet("QPushButton {border: None; background: transparent; border-radius: 20px }")
+        self.memberPhotoData = None
+        self.selectedIdForUpdate = None
         # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)      # hep üstte kalması için
 
 
@@ -23,20 +31,33 @@ class SaveMember(QWidget):
 
 
         self.ui.btn_clear.clicked.connect(self.clearForm)
+        self.ui.btn_addImg.clicked.connect(self.addMemberPhoto)
+
+    def showMemberPhoto(self, data):
+        try:
+            pixmap = QtGui.QPixmap()
+            pixmap.loadFromData( data )
+            self.ui.btn_addImg.setIcon( QtGui.QIcon(pixmap) )
+        except Exception as E:
+            print(f"Fonk: showMemberPhoto   \tHata: {E} ")
+
+    def addMemberPhoto(self):
+        try:
+            filePath, _ = QFileDialog.getOpenFileName(self, caption= "Fotoğraf Seçimi", filter= "Image (*.png *.jpeg *.jpg)")
+            if filePath.endswith(".png") or filePath.endswith(".jpg") or filePath.endswith(".jpeg"):
+                print(filePath)
+                with Image.open(filePath) as pict:
+                    pict = pict.resize((150,200), Image.ANTIALIAS)
+                    byteIO_Object = io.BytesIO()
+                    pict.save(byteIO_Object)
+                    self.memberPhotoData = byteIO_Object.getvalue()
+                self.showMemberPhoto(self.memberPhotoData)
+        except Exception as E:
+            print(f"Fonk: addMemberPhoto    Hata: {E}")
 
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         self.showMembersInTablewidget()
-
-    def dosyadan_aktar(self):
-        try:
-            file_path, _ = QFileDialog.getOpenFileName(self, "Dosyadan al", self.filePath, "Excel Belgesi (*.xls *.xlsx)")
-            self.filePath = "/".join(file_path.split("/")[:(len(file_path.split("/"))-1)])   # son açılan dosya konumu hatırlamak için
-            if file_path.endswith("xls") or file_path.endswith("xlsx"):
-                # todo
-                pass
-        except Exception as E:
-            self.ui.statusbar.showMessage(f"FONK: dosyadan_aktar HATA KODU : {E}")
 
     def delMember(self):
         try:
@@ -71,6 +92,8 @@ class SaveMember(QWidget):
             y,m,d = cameData[11][:10].split("-")
             self.ui.dateEdit_birthDate.setDate(QtCore.QDate(int(y),int(m),int(d)))
             self.ui.le_beMemberDate.setText(datetime.strftime( datetime.strptime(cameData[12], "%Y-%m-%d"), '%d.%m.%Y'))
+            self.showMemberPhoto( cameData[13] )
+            self.ui.checkBox_uyeKartiYazdirma.setCheckState( cameData[14])
         except Exception as E:
             print(E)
 
@@ -103,20 +126,25 @@ class SaveMember(QWidget):
                 "Sinif"     : self.ui.le_sinif.text().strip(),
                 "Sube"      : self.ui.le_sube.text().strip().upper(),
                 "Tel"       : self.ui.le_phoneNumber.text().strip(),
-                "DogumTarihi": self.ui.dateEdit_birthDate.date().toPyDate()
+                "DogumTarihi": self.ui.dateEdit_birthDate.date().toPyDate(),
+                "UyeKartiPrint": self.ui.checkBox_uyeKartiYazdirma.checkState(),
+                "Photo"     : self.memberPhotoData
                 }
 
     def updateMemberInfo(self):
         try:
-            cols_datas = self.getMemberInfo()
-            if bool(cols_datas["TCNo"]) and bool(cols_datas['Ad']) and bool(cols_datas['Soyad']):
-                cols_datas["uyeId"] = self.selectedIdForUpdate
-                db.updateData(TableName="UyeTablosu", **cols_datas)
-                if curs.rowcount>0:
-                    self.clearForm()
-                    self.showMembersInTablewidget()
+            if not self.selectedIdForUpdate:
+                msg.popup_mesaj("Dikkat", "Seçili bir üye yok, güncelleme yapmak için bir üyeyi çift tıklayınız ! ! !")
             else:
-                msg.popup_mesaj("Dikkat", "TC kimlik no, isim ve soyadı alanı boş olmamalıdır ! ! !")
+                cols_datas = self.getMemberInfo()
+                if bool(cols_datas["TCNo"]) and bool(cols_datas['Ad']) and bool(cols_datas['Soyad']):
+                    cols_datas["uyeId"] = self.selectedIdForUpdate
+                    db.updateData(TableName="UyeTablosu", **cols_datas)
+                    if curs.rowcount>0:
+                        self.clearForm()
+                        self.showMembersInTablewidget()
+                else:
+                    msg.popup_mesaj("Dikkat", "TC kimlik no, isim ve soyadı alanı boş olmamalıdır ! ! !")
         except Exception as E:
             print(E)
 
@@ -150,8 +178,12 @@ class SaveMember(QWidget):
             self.ui.combo_sex.setCurrentIndex(0)
             self.ui.le_sinif.clear()
             self.ui.le_sube.clear()
-            self.ui.le_phoneNumber.setText("0")
+            self.ui.le_phoneNumber.clear()
             self.ui.le_beMemberDate.clear()
+            self.ui.checkBox_uyeKartiYazdirma.setCheckState(True)
+            self.ui.btn_addImg.setIcon(QtGui.QIcon("img/kitap-kurdu.jpg"))
+            self.memberPhotoData = None
+            self.selectedIdForUpdate = 0
         except Exception as E:
             print(E)
 
