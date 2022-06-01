@@ -1,6 +1,4 @@
-import base64
-import io
-import os
+import os, io
 
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QFileDialog
 from PyQt5 import QtGui, QtCore
@@ -9,6 +7,7 @@ from datetime import datetime
 from messageBox import msg
 from database import conn, curs, db
 from PIL import Image
+
 
 class SaveMember(QWidget):
     def __init__(self):
@@ -43,14 +42,13 @@ class SaveMember(QWidget):
 
     def addMemberPhoto(self):
         try:
-            filePath, _ = QFileDialog.getOpenFileName(self, caption= "Fotoğraf Seçimi", filter= "Image (*.png *.jpeg *.jpg)")
+            filePath, _ = QFileDialog.getOpenFileName(self, caption= "Fotoğraf Seçimi", filter= "Görsel (*.png *.jpeg *.jpg)")
             if filePath.endswith(".png") or filePath.endswith(".jpg") or filePath.endswith(".jpeg"):
-                print(filePath)
-                with Image.open(filePath) as pict:
-                    pict = pict.resize((150,200), Image.ANTIALIAS)
-                    byteIO_Object = io.BytesIO()
-                    pict.save(byteIO_Object)
-                    self.memberPhotoData = byteIO_Object.getvalue()
+                with Image.open(filePath) as resim:
+                    resim = resim.resize( (150,200), Image.ANTIALIAS)
+                    IO_Object = io.BytesIO()
+                    resim.save(IO_Object, "png")
+                    self.memberPhotoData = IO_Object.getvalue()
                 self.showMemberPhoto(self.memberPhotoData)
         except Exception as E:
             print(f"Fonk: addMemberPhoto    Hata: {E}")

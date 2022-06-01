@@ -205,11 +205,14 @@ class MainWindow(QMainWindow):
             if new==8:
                 barkod = self.ui.le_searchBarcode.text()
                 bookStateData = db.getBookState(Barkod=barkod)
+                print(bookStateData)
                 if bookStateData:
                     if bookStateData[0]:
                         winEntrust.show()
                         winEntrust.ui.le_searchBook.setText(barkod)
                         self.ui.le_searchBarcode.clear()
+                    else:
+                        self.genelfilter()
             else:
                 self.genelfilter()
         except Exception as E:
@@ -253,7 +256,6 @@ class MainWindow(QMainWindow):
                             "le_searchGivenToday"   : (self.ui.le_searchGivenToday, self.ui.table_givenToday,   self.ui.combo_searchCriteriaTodayGiven),
                             "le_searchBarcode"      : (self.ui.le_searchBarcode,    self.ui.table_outsides,     self.ui.combo_searchCriteriaOutside)}
         sinyalObj   = self.sender().objectName()
-        print("sinyalobj : ",sinyalObj)
         filtreKaynagi = filtreKaynagiObj[ sinyalObj ]
         if sinyalObj == "le_searchBarcode":
             self.ui.combo_searchCriteriaOutside.setCurrentIndex(0)
@@ -452,3 +454,9 @@ if __name__ == "__main__":
 
     app.setStyle("Fusion")
     sys.exit(app.exec_())
+
+
+# .\pyrcc5 C:\PythonProje\kitaplik\icons.qrc -o C:\PythonProje\kitaplik\icons_rc.py
+
+#------------------- pyinstaller --noconsole --onefile -i "img/kitaplik.ico" main.py ------------------#
+#------------------------ pyinstaller --noconsole -i "img/kitaplik.ico" main.py -----------------------#

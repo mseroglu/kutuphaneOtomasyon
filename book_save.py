@@ -27,7 +27,6 @@ class SaveBook(QMainWindow):
         self.showBooksOnTablewidget()
 
 
-        self.ui.tabWidget.currentChanged.connect(self.setBarkodeNumber)
 
         self.ui.btn_save.clicked.connect(self.saveNewBook)
         self.ui.btn_clear.clicked.connect(self.clearForm)

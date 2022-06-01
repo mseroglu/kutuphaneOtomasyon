@@ -1,4 +1,4 @@
-import struct
+
 import sys
 from datetime import datetime
 import time, math
@@ -7,7 +7,6 @@ from barcode.writer import ImageWriter
 import barcode
 from io import BytesIO
 from PyQt5 import QtCore
-from PyQt5.QtCore import QVariant
 
 from messageBox import msg
 import sqlite3, pandas as pd, sqlalchemy
@@ -617,6 +616,19 @@ class Db:
         except Exception as E:
             print(f"Fonk: createBarkodeNumber \t\tHata Kodu : {E}")
 
+    def createBarkodeImg(self, number7) -> tuple :
+        try:
+            options = {"quiet_zone": 5, "font_size": 16, "font_path":"arial.qrr", "text_distance": 2, 'module_height': 12.0}
+            IO_Object = BytesIO()
+            my_code = EAN8(number7, writer=ImageWriter())
+
+            my_code.write(IO_Object, options)                                    # resmi  BytesIO nesnesine yazıyoruz.
+            self.byteImg = IO_Object.getvalue()                                  # resmin binary şeklini alıyoruz
+            # my_code.save("imgBarkode/"+my_code.get_fullcode(), options)
+            return (my_code.get_fullcode(), self.byteImg)
+        except Exception as E:
+            print(f"Fonk: createBarkodeImg \t\tHata Kodu : {E}")
+
     def createControlNumber(self, barcode7) -> str:
         toplam = 0
         for i, num in enumerate(barcode7):
@@ -624,21 +636,6 @@ class Db:
         controlNumber = str(math.ceil(toplam / 10) * 10 - toplam)
         return controlNumber
 
-    def createBarkodeImg(self, number7) -> tuple :
-        try:
-            options = {"quiet_zone": 5, "font_size": 16, "text_distance": 2, 'module_height': 12.0}
-            byteImg = BytesIO()
-            my_code = EAN8(number7, writer=ImageWriter())
-            my_code.write(byteImg, options)                                    # resmi  BytesIO nesnesine yazıyoruz.
-            self.byteImg = byteImg.getvalue()                                  # resmin binary şeklini alıyoruz
-            my_code.save("imgBarkode/"+my_code.get_fullcode(), options)
-            return (my_code.get_fullcode(), self.byteImg)
-        except Exception as E:
-            print(f"Fonk: createBarkodeImg \t\tHata Kodu : {E}")
-
-
-
-#print(createBarkodeNumber())
 
 
 
