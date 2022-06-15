@@ -1,8 +1,6 @@
-import datetime
-import math
+import datetime, time, math
 import sys, os, locale
 import threading
-import time
 
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
@@ -14,10 +12,9 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog, QPrinter
 
 from ui.anasayfaUI import Ui_MainWindow
-
 from member_save import SaveMember
 from book_save import SaveBook
-from transactions_entrust import Entrust
+from transactions_entrust import Entrust, ConfirmationUI
 from settings_page import Settings_page
 from reports import ReportsPage
 
@@ -205,7 +202,6 @@ class MainWindow(QMainWindow):
             if new==8:
                 barkod = self.ui.le_searchBarcode.text()
                 bookStateData = db.getBookState(Barkod=barkod)
-                print(bookStateData)
                 if bookStateData:
                     if bookStateData[0]:
                         winEntrust.show()
@@ -218,22 +214,7 @@ class MainWindow(QMainWindow):
         except Exception as E:
             print(E)
 
-    def filterBooksOnTablewidget(self):
-        try:
-            ara     = self.ui.le_searchBarcode.text()
-            rows    = self.ui.table_outsides.rowCount() - self.numberOfBlankLines
-            self.ui.tabWidget.setCurrentWidget(self.ui.tab_outsides)
-            for row in range(rows):
-                item = self.ui.table_outsides.item(row, 1)
-                if item is not None:
-                    if item.text().lower() in ara.lower() or ara.lower() in item.text().lower():
-                        self.ui.table_outsides.showRow(row)
-                    else:
-                        self.ui.table_outsides.hideRow(row)
-        except Exception as E:
-            print(E)
-
-    def addItemsInCombos(self):
+    def addItemsInCombos(self):                 #       *item  Bu kullanım tuple olan itemı parçalara böler. Burada 2 parçaya bölünecek
         try:
             for item in (("Barkod", 1), ("Eser Adı", 2), ("Yazar Adı", 3), ("TC Kimlik No", 7), ("Okul No", 8), ("Üye Adı", 9), ("Üye Soyadı", 10)):
                 self.ui.combo_searchCriteriaOutside.addItem(*item)
@@ -255,8 +236,8 @@ class MainWindow(QMainWindow):
                             "le_searchExpired"      : (self.ui.le_searchExpired,    self.ui.table_expaired,     self.ui.combo_searchCriteriaExpired),
                             "le_searchGivenToday"   : (self.ui.le_searchGivenToday, self.ui.table_givenToday,   self.ui.combo_searchCriteriaTodayGiven),
                             "le_searchBarcode"      : (self.ui.le_searchBarcode,    self.ui.table_outsides,     self.ui.combo_searchCriteriaOutside)}
-        sinyalObj   = self.sender().objectName()
-        filtreKaynagi = filtreKaynagiObj[ sinyalObj ]
+        sinyalObj       = self.sender().objectName()
+        filtreKaynagi   = filtreKaynagiObj[ sinyalObj ]
         if sinyalObj == "le_searchBarcode":
             self.ui.combo_searchCriteriaOutside.setCurrentIndex(0)
             self.ui.tabWidget.setCurrentWidget(self.ui.tab_outsides)
@@ -297,12 +278,14 @@ class MainWindow(QMainWindow):
         try:
             barkod      = self.sender().objectName()
             bookInfo    = self.dictEscrowBookInfos[barkod]
-            bookId, escrowId, bookName, name, lastname = bookInfo[0], bookInfo[1], bookInfo[3], bookInfo[10], bookInfo[11]
+            print(bookInfo)
+            bookId, escrowId, bookName, tcno, name, lastname = bookInfo[0], bookInfo[1], bookInfo[3], bookInfo[8], bookInfo[10], bookInfo[11]
             cevap, _    = msg.MesajBox("Geri alma işlemi", f"BARKOD NO\t:  {barkod} \nKİTAP ADI\t:  {bookName} \n\n"
                                                            f"'{name+' '+lastname}' isimli üyeden yukardaki kitabı teslim alıyorsunuz.\t\n\n"
                                                            "Emin misiniz?\n")
             if cevap:
                 returnDate  = datetime.date.today()
+                db.updateNumberOfBookAtMember(AldigiEserSayisi=-1, TCNo=tcno)
                 db.updateBookState( Durum=(1,), kitapId=(bookId,) )            # Durum=1 'Rafta', Durum=0 "Okunuyor"
                 kitapDurum = curs.rowcount
                 db.updateEntrustTableEscrowState( "EmanetTablosu", DonusTarihi=returnDate, emanetId=escrowId )

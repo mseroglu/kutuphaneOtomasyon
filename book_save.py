@@ -1,8 +1,8 @@
-import locale, os
+import locale, os, io
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
 import PyQt5.Qt
-from PyQt5.QtWidgets import QMainWindow, QInputDialog, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QInputDialog, QTableWidgetItem, QFileDialog
 from PyQt5 import QtGui, QtCore
 from ui.kitapKayitUI import Ui_MainWindow
 from database import db, curs
@@ -10,6 +10,7 @@ from datetime import datetime
 from messageBox import msg
 from barcode import EAN13
 from barcode.writer import ImageWriter
+from PIL import Image
 
 
 class SaveBook(QMainWindow):
@@ -18,6 +19,7 @@ class SaveBook(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.duration = 20_000
+        self.bookPhotoData = None
         self.ui.le_isbn.setFocus()
 
         self.showAuthorsOnCombo()
@@ -37,9 +39,42 @@ class SaveBook(QMainWindow):
 
         self.ui.btn_getDataFromExcel.clicked.connect(db.insertBookDatasFromExcel)
         self.ui.btn_getDataFromExcel.clicked.connect(self.showEvent)
+        self.ui.btn_showExcelFile.clicked.connect(self.openSampleExcelPage)
         self.ui.table_bookList.itemDoubleClicked.connect(self.showBookInfoInForm)
         self.ui.btn_update.clicked.connect(self.updateBookInfo)
         self.ui.btn_del.clicked.connect(self.delBook)
+
+        self.ui.btn_addImg.clicked.connect(self.addBookPhoto)
+
+    def addBookPhoto(self):
+        try:
+            filePath, _ = QFileDialog.getOpenFileName(self, caption= "Fotoğraf Seçimi", filter= "Görsel (*.png *.jpeg *.jpg)")
+            if filePath.endswith(".png") or filePath.endswith(".jpg") or filePath.endswith(".jpeg"):
+                with Image.open(filePath) as resim:
+                    resim = resim.resize( (150,200), Image.ANTIALIAS)
+                    IO_Object = io.BytesIO()
+                    resim.save(IO_Object, "png")
+                    self.bookPhotoData = IO_Object.getvalue()
+                self.showBookPhoto(self.bookPhotoData)
+        except Exception as E:
+            print(f"Fonk: addMemberPhoto    Hata: {E}")
+
+    def showBookPhoto(self, data):
+        try:
+            pixmap = QtGui.QPixmap()
+            pixmap.loadFromData( data )
+            if not data:
+                pixmap = "img/book_cover.png"
+            self.ui.btn_addImg.setIcon( QtGui.QIcon(pixmap) )
+            self.ui.btn_addImg.setStyleSheet("QPushButton {border-radius: 20px}")
+        except Exception as E:
+            print(f"Fonk: showBookPhoto   \tHata: {E} ")
+
+    def openSampleExcelPage(self):
+        try:
+            os.startfile("excel_pages")
+        except Exception as E:
+            print(f"Fonk: openSampleExcelPage   \tHata: {E} ")
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         try:
@@ -100,13 +135,15 @@ class SaveBook(QMainWindow):
                 "Aciklama"  : self.ui.plain_description.toPlainText(),
                 "DisariVerme": self.ui.combo_exportability.currentIndex(),
                 "KayitTarihi": datetime.now().date(),
-                "Durum"     : 1 }
+                "Durum"     : 1,
+                "ImgBook"   : self.bookPhotoData}
 
 
     def showBookInfoInForm(self):
         try:
             Id, Barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
             cameData = db.getBookDataWithId(Id=Id)
+            print(cameData)
             self.selectedIdForUpdate = Id
             self.ui.le_barkode.setText( cameData[1] )
             self.ui.le_isbn.setText( cameData[2] )
@@ -125,6 +162,8 @@ class SaveBook(QMainWindow):
                 pixmap = QtGui.QPixmap()
                 pixmap.loadFromData(cameData[15], "png")
                 self.ui.label_barcodeImg.setPixmap(pixmap)
+            self.showBookPhoto(cameData[16])
+            self.bookPhotoData = cameData[16]
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBookInfoInForm \t\t Hata Kodu : {E}", self.duration)
 
@@ -149,12 +188,20 @@ class SaveBook(QMainWindow):
                 cols_datas["kitapId"] = self.selectedIdForUpdate
                 db.updateData(TableName="KitapTablosu", **cols_datas)
                 if curs.rowcount>0:
+                    self.saveBookImage(isbn=cols_datas["ISBN"], imgData=cols_datas["ImgBook"])
                     self.clearForm()
                     self.showBooksOnTablewidget()
             else:
                 msg.popup_mesaj("Dikkat", "Eser adı boş olmamalı ! ! !\t\t")
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: updateBookInfo \t\t Hata Kodu : {E}", self.duration)
+
+    def saveBookImage(self, isbn, imgData=None):
+        try:
+            if imgData is not None and len(isbn)==13:
+                db.insertData("KitapFotoTablosu", ISBN=isbn, ImgBook=imgData)
+        except Exception as E:
+            self.ui.statusbar.showMessage(f"Fonk: saveBookImage \t\t Hata Kodu : {E}", self.duration)
 
     def saveNewBook(self) -> None:
         try:
@@ -177,13 +224,14 @@ class SaveBook(QMainWindow):
                 if count:
                     result, _ = msg.MesajBox("Kayıt kontrol",
                                              f"'{cols_datas['ISBN']}'  ISBN numarası ile kayıtlı {count} adet eser mevcut. \t\n\n"
-                                             f"Aynı kitaptan ekleme yapmak istiyor musunuz?\n")
+                                             f"Aynı eserden ekleme yapmak istiyor musunuz?\n")
                     if result:
                         saved = saveBooks(quantityBooks=kacKitap, cols_datas=cols_datas)
                 else:
                     saved = saveBooks(quantityBooks=kacKitap, cols_datas=cols_datas)
 
                 if saved > 0 :
+                    self.saveBookImage(isbn=cols_datas["ISBN"], imgData= cols_datas["ImgBook"])
                     mesaj = f"{saved} kitap başarı ile kayıt edildi"
                     saved = 0
                     self.showBooksOnTablewidget()
@@ -288,6 +336,8 @@ class SaveBook(QMainWindow):
             self.ui.plain_description.clear()
             self.ui.spinBox_bookCount.setValue(1)
             self.setBarkodeNumber()
+            self.ui.btn_addImg.setIcon(QtGui.QIcon("img/book_cover.png"))
+            self.bookPhotoData = None
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: clearForm        Hata Kodu : {E}", self.duration)
 

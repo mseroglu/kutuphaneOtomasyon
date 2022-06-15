@@ -59,7 +59,8 @@ class Db:
                         "DogumTarihi TEXT",
                         "UyelikTarihi TEXT",
                         "Photo BLOB",
-                        "UyeKartiPrint INTEGER")
+                        "UyeKartiPrint INTEGER",
+                        "AldigiEserSayisi INTEGER")
         self.createTable("GorevliTablosu", "gorevliId"+IdInfo,
                         "GorevliTipi INTEGER NOT NULL",
                         "TCNo TEXT NOT NULL UNIQUE",
@@ -76,6 +77,7 @@ class Db:
                         "OkulAdi TEXT NOT NULL",
                         "MaxCount INTEGER",
                         "MaxDay INTEGER")
+        self.createTable("KitapFotoTablosu", "ISBN TEXT NOT NULL UNIQUE", "ImgBook BLOB")
         self.createTable("KitapTablosu", "kitapId"+IdInfo,
                         "Barkod TEXT UNIQUE",
                         "ISBN TEXT",
@@ -185,7 +187,7 @@ class Db:
         try:
             engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')
             df_sql = pd.read_sql("UyeTablosu", engine)
-            df_xls = pd.read_excel("excel/Örnek_Öğrenci_Listesi.xls")
+            df_xls = pd.read_excel("excel_pages/Ogrenci_Listesi.xls")
             del df_sql["Tel"], df_sql['Photo']
             newColNames = dict(zip(df_xls, df_sql.columns[3:]))
             df_xls.rename(columns=newColNames, inplace=True)
@@ -194,6 +196,7 @@ class Db:
             df_xls["UyeTipi"]   = 0
             df_xls["Durum"]     = 1
             df_xls["UyeKartiPrint"] = 1
+            df_xls["AldigiEserSayisi"] = 0
             df_xls["UyelikTarihi"]=datetime.today().date()
             df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1")
             df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0")
@@ -206,8 +209,8 @@ class Db:
 
     def insertBookDatasFromExcel(self):
         try:
-            df_xls = pd.read_excel("excel/Örnek_Kitap_Listesi.xls")
-            #   excel den gelen sutun isimlerini sql tablolardaki duruma çeviriyoruz. Bu sayede df leri MERGE edebiliyoruz.
+            df_xls = pd.read_excel("excel_pages/Kitap_Listesi.xls")
+            #   excel_pages den gelen sutun isimlerini sql tablolardaki duruma çeviriyoruz. Bu sayede df leri MERGE edebiliyoruz.
             forRename = dict(zip(df_xls.columns[2:6], ["YazarAdi", "Kategori", "Bolum", "RafNo"]))
             df_xls.rename(columns=forRename, inplace=True)
             self.insertYazarFromExcel(df_xls)
@@ -376,6 +379,18 @@ class Db:
         except Exception as E:
             print(f"FONK: updateBookState, HATA KODU : {E}")
 
+    def updateNumberOfBookAtMember(self, AldigiEserSayisi, **kwargs):
+        try:
+            key = tuple(kwargs.keys())[0]
+            val = tuple(kwargs.values())[0]
+            kosul2 = "AldigiEserSayisi > 0" if AldigiEserSayisi<0 else "AldigiEserSayisi < 5"
+            sql = f""" UPDATE UyeTablosu SET AldigiEserSayisi = AldigiEserSayisi+{AldigiEserSayisi} 
+                    WHERE {key}={val} AND {kosul2} """
+            curs.execute(sql)
+            conn.commit()
+        except Exception as E:
+            print(f"FONK: updateNumberOfBookAtMember     HATA KODU : {E}")
+
     def updateUserState(self, Durum: str, Username: str):
         try:
             durum = {"Aktif": 0, "Pasif": 1}
@@ -398,7 +413,7 @@ class Db:
 
     def getData(self, TableName, *cols):
         try:
-            getCols = ', '.join( cols )                          # ['col1', 'col2', 'col3'] --> ' col1, col2, col3 ' (iter to str)
+            getCols = ', '.join( cols )                          # ['col1', 'col2', 'col3'] --> 'col1, col2, col3' (iter to str)
             curs.execute(f"SELECT {getCols} FROM {TableName}")
             return curs.fetchall()
         except Exception as E:
@@ -406,7 +421,7 @@ class Db:
 
     def getDataWithOrderBy(self, TableName, *cols):
         try:
-            getCols = ', '.join( cols )                          # ['col1', 'col2', 'col3'] --> ' col1, col2, col3 ' (iter to str)
+            getCols = ', '.join( cols )                          # ['col1', 'col2', 'col3'] --> 'col1, col2, col3' (iter to str)
             curs.execute(f"SELECT {getCols} FROM {TableName} ORDER BY {getCols}")
             return curs.fetchall()
         except Exception as E:
@@ -423,10 +438,8 @@ class Db:
 
     def getMemberDataNumberOfRead(self):
         try:
-            sql = f"""SELECT UyeTablosu.uyeId, {self.maxNumberOfBooksGiven}-count(EmanetTablosu.UyeId), 
-                        OkulNo, Ad, Soyad, TCNo, Sinif, Sube FROM UyeTablosu 
-                        LEFT JOIN EmanetTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId 
-                        WHERE Durum=1 AND DonusTarihi is NULL GROUP By UyeTablosu.uyeId"""
+            sql = f"""SELECT uyeId, {self.maxNumberOfBooksGiven}-AldigiEserSayisi, 
+                        OkulNo, Ad, Soyad, TCNo, Sinif, Sube FROM UyeTablosu WHERE Durum=1"""
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -451,6 +464,17 @@ class Db:
             return curs.fetchone()
         except Exception as E:
             print("Fonk: getMemberDataWithTcno => ", E)
+
+    def getImageData(self, TableName, Col, **condition):
+        try:
+            col = tuple(condition.keys())
+            val = tuple(condition.values())
+            sql =f"""SELECT {Col} FROM {TableName} WHERE {col[0]}={val[0]}"""
+            curs.execute(sql)
+            dataImg = curs.fetchone()
+            return dataImg[0]
+        except Exception as E:
+            print("Fonk: getImageData => ", E)
 
     def checkBook(self, isbn) -> int :
         try:
@@ -618,7 +642,7 @@ class Db:
 
     def createBarkodeImg(self, number7) -> tuple :
         try:
-            options = {"quiet_zone": 5, "font_size": 16, "font_path":"arial.qrr", "text_distance": 2, 'module_height': 12.0}
+            options = {"quiet_zone": 5, "font_size": 16, "text_distance": 2, 'module_height': 12.0}
             IO_Object = BytesIO()
             my_code = EAN8(number7, writer=ImageWriter())
 
@@ -660,7 +684,7 @@ cols = ['Barkod', 'ISBN', 'KitapAdi', 'KayitTarihi', 'Durum']           # sadece
 engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')         
 df_sql = pd.read_sql("KitapTablosu", engine, columns=cols)
 print(df_sql.columns)                                                   # columns
-df_xls = pd.read_excel("excel/Örnek_Kitap_Listesi.xls")
+df_xls = pd.read_excel("excel_pages/Kitap_Listesi.xls")
 df_xls.rename(columns={"KayitTarihi":"Kayıt Tarihi","KitapAdi":"Kitap Adı", "SayfaSayisi":"Sayfa Sayısı"}, inplace=True)
 df_xls.to_sql("KitapTablosu", engine, if_exists="append", index=False)
 """

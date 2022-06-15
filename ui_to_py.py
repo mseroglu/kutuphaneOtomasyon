@@ -20,3 +20,6 @@ with open("ui/uyeKayitUI.py", "w", encoding='utf-8') as fout:
 with open("ui/raporlarUI.py", "w", encoding='utf-8') as fout:
     uic.compileUi('ui/raporlar.ui', fout)
 
+with open("ui/confirmationUI.py", "w", encoding='utf-8') as fout:
+    uic.compileUi('ui/confirmation.ui', fout)
+

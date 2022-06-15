@@ -21,22 +21,33 @@ class SaveMember(QWidget):
 
 
 
-        self.ui.btn_saveMembers.clicked.connect(db.insertMembersDataFromExcel)
-        self.ui.btn_saveMembers.clicked.connect(self.showMembersInTablewidget)
+        self.ui.btn_getFromExcel.clicked.connect(db.insertMembersDataFromExcel)
+        self.ui.btn_getFromExcel.clicked.connect(self.showMembersInTablewidget)
+        self.ui.btn_openSampleExcel.clicked.connect(self.openSampleExcelPage)
         self.ui.btn_save.clicked.connect(self.createNewMember)
         self.ui.btn_update.clicked.connect(self.updateMemberInfo)
         self.ui.table_members.itemDoubleClicked.connect(self.showMemberInfoInForm)
         self.ui.btn_del.clicked.connect(self.delMember)
 
 
+
         self.ui.btn_clear.clicked.connect(self.clearForm)
         self.ui.btn_addImg.clicked.connect(self.addMemberPhoto)
+
+    def openSampleExcelPage(self):
+        try:
+            os.startfile("excel_pages")
+        except Exception as E:
+            print(f"Fonk: openSampleExcelPage   \tHata: {E} ")
 
     def showMemberPhoto(self, data):
         try:
             pixmap = QtGui.QPixmap()
             pixmap.loadFromData( data )
+            if not data:
+                pixmap = "img/kitap-kurdu.jpg"
             self.ui.btn_addImg.setIcon( QtGui.QIcon(pixmap) )
+            self.ui.btn_addImg.setStyleSheet("QPushButton {border-radius: 20px}")
         except Exception as E:
             print(f"Fonk: showMemberPhoto   \tHata: {E} ")
 
@@ -153,6 +164,7 @@ class SaveMember(QWidget):
                 result, _ = msg.MesajBox("Yeni üye kaydı", f"{cols_datas['Ad']+' '+cols_datas['Soyad']} isimli üyeyi kaydetmek istiyor musunuz?")
                 if result:
                     cols_datas["UyelikTarihi"] = datetime.now().date()
+                    cols_datas["AldigiEserSayisi"] = 0
                     db.insertData(TableName="UyeTablosu", **cols_datas)
                     if curs.rowcount>0:
                         msg.popup_mesaj("Yeni üye kaydı", f"Yeni üye kaydı başarı ile yapılmıştır")
@@ -179,7 +191,7 @@ class SaveMember(QWidget):
             self.ui.le_phoneNumber.clear()
             self.ui.le_beMemberDate.clear()
             self.ui.checkBox_uyeKartiYazdirma.setCheckState(True)
-            self.ui.btn_addImg.setIcon(QtGui.QIcon("img/kitap-kurdu.jpg"))
+            self.ui.btn_addImg.setIcon(QtGui.QIcon("img/member.png"))
             self.memberPhotoData = None
             self.selectedIdForUpdate = 0
         except Exception as E:
