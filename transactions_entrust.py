@@ -29,6 +29,7 @@ class ConfirmationUI(QWidget):
         self.result = None
         self.ui.btn_ok.clicked.connect(self.returnResult)
         self.ui.btn_escape.clicked.connect(self.close)
+        # self.ui.btn_escape.clicked.connect(Entrust().show())
 
     def returnResult(self):
         try:
@@ -106,17 +107,18 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
 
     def editBarkodNumberOnLineedit(self, text):
         try:
-            sonEklenen = text.split()[-1]
-            if len(sonEklenen)==8:
-                try:
-                    Entrust.bookCheckboxObjectsForSelection[sonEklenen].click()
-                    text += ", "
-                    self.ui.le_searchBook.setText(text)
-                except Exception as E:
-                    print("Bu kitap rafta bulunamadı")
-                    msg.popup_mesaj("Barkod bulunamadı", "Okuttuğunuz barkoda ait kitap rafta bulunamadı. Olası sebepler:\n\n"
-                                                         "   1- Üyedeki bir kitap barkodunu okuttunuz ise önce geri almalısınız.\t\n"
-                                                         "   2- Ya da kayıtlı olmayan bir barkod okuttunuz.\n")
+            if self.ui.radio_barkod.isChecked():
+                sonEklenen = text.split()[-1]
+                if len(sonEklenen) == 8 :
+                    try:
+                        Entrust.bookCheckboxObjectsForSelection[sonEklenen].click()
+                        text += ", "
+                        self.ui.le_searchBook.setText(text)
+                    except Exception as E:
+                        print("Bu kitap rafta bulunamadı")
+                        msg.popup_mesaj("Barkod bulunamadı", "Okuttuğunuz barkoda ait kitap rafta bulunamadı. Olası sebepler:\n\n"
+                                                             "   1- Üyedeki bir kitap barkodunu okuttunuz ise önce geri almalısınız.\t\n"
+                                                             "   2- Ya da kayıtlı olmayan bir barkod okuttunuz.\n")
         except Exception as E:
             print(f"Fonk: editBarkodNumberOnLineedit    \tHata: {E}")
 
@@ -133,7 +135,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         self.ui.le_searchBook.setFocus()
         self.setDateOnLabel()
         self.resizeEvent(QtGui.QResizeEvent)
-        self.ui.btn_clearSelection.click()
+        self.ui.btn_clearSelection.click()          # bu da iş yapmıyor
 
     def returnDateXDayLater(self, xDay=7):
         try:
