@@ -1,14 +1,14 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import locale
 locale.setlocale(locale.LC_ALL, "")
 
-from PyQt5.QtWidgets import QMainWindow, QWidget, QTableWidgetItem, QHBoxLayout, QWidget, QCheckBox, QRadioButton, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QHBoxLayout, QWidget, QCheckBox, QPushButton
 from PyQt5 import QtGui, QtCore
 from ui.emanetVermeUI import Ui_MainWindow
 from database import db, curs, tableWidgetResize
 from messageBox import msg
 from ui.confirmationUI import Ui_Form
-import sys, os
+
 
 class ConfirmationUI(QWidget):
     def __init__(self):

@@ -1,20 +1,18 @@
-import datetime, time, math
-import sys, os, locale
-import threading
+import datetime
+import sys, locale
 
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
-from PIL.Image import Image
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCheckBox, \
-    QComboBox, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget
+
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog, QPrinter
 
 from ui.anasayfaUI import Ui_MainWindow
 from member_save import SaveMember
 from book_save import SaveBook
-from transactions_entrust import Entrust, ConfirmationUI
+from transactions_entrust import Entrust
 from settings_page import Settings_page
 from reports import ReportsPage
 
