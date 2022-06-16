@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(846, 600)
+        MainWindow.resize(1308, 771)
         MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -25,8 +25,8 @@ class Ui_MainWindow(object):
         self.gridLayout.setHorizontalSpacing(30)
         self.gridLayout.setObjectName("gridLayout")
         self.groupBox_6 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_6.setMinimumSize(QtCore.QSize(0, 50))
-        self.groupBox_6.setMaximumSize(QtCore.QSize(16777215, 100))
+        self.groupBox_6.setMinimumSize(QtCore.QSize(0, 100))
+        self.groupBox_6.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.groupBox_6.setTitle("")
         self.groupBox_6.setObjectName("groupBox_6")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.groupBox_6)
@@ -269,7 +269,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.groupBox_5, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 846, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1308, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

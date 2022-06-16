@@ -5,7 +5,7 @@ from PyQt5 import QtGui, QtCore
 from ui.uyeKayitUI import Ui_Form
 from datetime import datetime
 from messageBox import msg
-from database import conn, curs, db
+from database import curs, db, tableWidgetResize
 from PIL import Image
 
 
@@ -18,6 +18,7 @@ class SaveMember(QWidget):
         self.memberPhotoData = None
         self.selectedIdForUpdate = None
         # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)      # hep üstte kalması için
+
 
 
 
@@ -48,6 +49,7 @@ class SaveMember(QWidget):
                 pixmap = "img/kitap-kurdu.jpg"
             self.ui.btn_addImg.setIcon( QtGui.QIcon(pixmap) )
             self.ui.btn_addImg.setStyleSheet("QPushButton {border-radius: 20px}")
+            self.memberPhotoData = data
         except Exception as E:
             print(f"Fonk: showMemberPhoto   \tHata: {E} ")
 
@@ -64,9 +66,12 @@ class SaveMember(QWidget):
         except Exception as E:
             print(f"Fonk: addMemberPhoto    Hata: {E}")
 
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        tableWidgetResize(self.ui.table_members, (3,2,4,2,1,1), blank=12)
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         self.showMembersInTablewidget()
+        self.resizeEvent(QtGui.QResizeEvent)
 
     def delMember(self):
         try:

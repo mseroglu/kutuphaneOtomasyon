@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>520</height>
+    <width>1000</width>
+    <height>729</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
-    <height>520</height>
+    <width>1000</width>
+    <height>750</height>
    </size>
   </property>
   <property name="font">
@@ -32,12 +32,23 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QGroupBox" name="groupBox">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Verilen Eserler</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
          <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>11</number>
         </property>
         <item>
          <spacer name="verticalSpacer_2">
@@ -75,6 +86,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>Barkod</string>
              </property>
@@ -88,6 +106,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -95,6 +120,13 @@
            </item>
            <item row="0" column="2">
             <widget class="QLabel" name="label_barkod1">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -107,6 +139,13 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
              <property name="text">
               <string>Eser Adı</string>
@@ -121,6 +160,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -128,6 +174,13 @@
            </item>
            <item row="1" column="2">
             <widget class="QLabel" name="label_eserAdi1">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -151,39 +204,6 @@
            <set>Qt::AlignCenter</set>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_18">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Barkod</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_19">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="label_barkod2">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_20">
              <property name="sizePolicy">
@@ -191,6 +211,13 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
              <property name="text">
               <string>Eser Adı</string>
@@ -205,6 +232,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -212,6 +246,67 @@
            </item>
            <item row="1" column="2">
             <widget class="QLabel" name="label_eserAdi2">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_19">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_18">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Barkod</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_barkod2">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -243,6 +338,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>Barkod</string>
              </property>
@@ -256,6 +358,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -263,6 +372,13 @@
            </item>
            <item row="0" column="2">
             <widget class="QLabel" name="label_barkod3">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -275,6 +391,13 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
              <property name="text">
               <string>Eser Adı</string>
@@ -289,6 +412,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -296,6 +426,13 @@
            </item>
            <item row="1" column="2">
             <widget class="QLabel" name="label_eserAdi3">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -327,6 +464,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>Barkod</string>
              </property>
@@ -340,6 +484,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -347,6 +498,13 @@
            </item>
            <item row="0" column="2">
             <widget class="QLabel" name="label_barkod4">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -359,6 +517,13 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
              <property name="text">
               <string>Eser Adı</string>
@@ -373,6 +538,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -380,6 +552,13 @@
            </item>
            <item row="1" column="2">
             <widget class="QLabel" name="label_eserAdi4">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -411,6 +590,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>Barkod</string>
              </property>
@@ -424,6 +610,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -431,6 +624,13 @@
            </item>
            <item row="0" column="2">
             <widget class="QLabel" name="label_barkod5">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -443,6 +643,13 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
              </property>
              <property name="text">
               <string>Eser Adı</string>
@@ -457,6 +664,13 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
               <string>:</string>
              </property>
@@ -464,6 +678,13 @@
            </item>
            <item row="1" column="2">
             <widget class="QLabel" name="label_eserAdi5">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -490,6 +711,11 @@
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox_21">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Üye Bilgileri</string>
        </property>
@@ -497,8 +723,11 @@
         <property name="spacing">
          <number>0</number>
         </property>
+        <property name="topMargin">
+         <number>100</number>
+        </property>
         <property name="bottomMargin">
-         <number>20</number>
+         <number>100</number>
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -929,8 +1158,8 @@
       <widget class="QPushButton" name="btn_escape">
        <property name="minimumSize">
         <size>
-         <width>100</width>
-         <height>30</height>
+         <width>150</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -948,8 +1177,8 @@
       <widget class="QPushButton" name="btn_ok">
        <property name="minimumSize">
         <size>
-         <width>100</width>
-         <height>30</height>
+         <width>150</width>
+         <height>40</height>
         </size>
        </property>
        <property name="maximumSize">

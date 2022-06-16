@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>901</width>
-    <height>600</height>
+    <width>1050</width>
+    <height>726</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Kitap Kayıt</string>
@@ -652,6 +657,32 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="btn_showExcelFile">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Excel Dosyası</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_getDataFromExcel">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Excel'den Veri Aktar</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -694,7 +725,7 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
             <number>50</number>
            </attribute>
            <attribute name="horizontalHeaderMinimumSectionSize">
-            <number>80</number>
+            <number>120</number>
            </attribute>
            <attribute name="horizontalHeaderStretchLastSection">
             <bool>true</bool>
@@ -741,6 +772,9 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="topMargin">
+       <number>20</number>
+      </property>
       <item>
        <widget class="QPushButton" name="btn_clear">
         <property name="minimumSize">
@@ -796,32 +830,6 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_showExcelFile">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Excel Dosyası Göster</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_getDataFromExcel">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Excelden Veri Aktar</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="btn_update">
         <property name="minimumSize">
          <size>
@@ -866,8 +874,8 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>901</width>
-     <height>21</height>
+     <width>1050</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>841</width>
-    <height>600</height>
+    <width>1055</width>
+    <height>719</height>
    </rect>
   </property>
   <property name="font">
    <font>
     <family>Tahoma</family>
-    <pointsize>10</pointsize>
+    <pointsize>9</pointsize>
    </font>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,12 @@
     </property>
     <item>
      <widget class="QFrame" name="frame_side">
+      <property name="font">
+       <font>
+        <family>Tahoma</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -55,12 +61,13 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>100</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
+           <family>Tahoma</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -79,12 +86,13 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>100</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
+           <family>Tahoma</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -103,12 +111,13 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>100</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
+           <family>Tahoma</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -127,12 +136,13 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>100</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
+           <family>Tahoma</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -151,12 +161,13 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>100</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
+           <family>Tahoma</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -167,6 +178,12 @@
        </item>
        <item>
         <spacer name="verticalSpacer">
+         <property name="font">
+          <font>
+           <family>Tahoma</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -188,12 +205,13 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>100</width>
+           <height>100</height>
           </size>
          </property>
          <property name="font">
           <font>
+           <family>Tahoma</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -207,6 +225,12 @@
     </item>
     <item>
      <widget class="QFrame" name="frame_main">
+      <property name="font">
+       <font>
+        <family>Tahoma</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -219,7 +243,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>80</height>
+           <height>100</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -227,6 +251,12 @@
            <width>16777215</width>
            <height>80</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Tahoma</family>
+           <pointsize>10</pointsize>
+          </font>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -264,6 +294,12 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
             </property>
@@ -289,6 +325,12 @@
           </item>
           <item>
            <spacer name="horizontalSpacer">
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -302,6 +344,12 @@
           </item>
           <item>
            <spacer name="horizontalSpacer_6">
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -346,6 +394,7 @@
               </property>
               <property name="font">
                <font>
+                <family>Tahoma</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -374,6 +423,12 @@
                 <height>30</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <family>Tahoma</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -391,9 +446,15 @@
            <widget class="QLabel" name="label_logo">
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>100</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Tahoma</family>
+              <pointsize>10</pointsize>
+             </font>
             </property>
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
@@ -423,6 +484,12 @@
        </item>
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="font">
+          <font>
+           <family>Tahoma</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font-size: 11pt}
 
@@ -448,7 +515,7 @@ QComboBox::down-arrow {
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="documentMode">
           <bool>false</bool>
@@ -559,6 +626,11 @@ QComboBox::down-arrow {
            </item>
            <item>
             <widget class="QTableWidget" name="table_bookList">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
              <attribute name="horizontalHeaderStretchLastSection">
               <bool>true</bool>
              </attribute>
@@ -974,6 +1046,12 @@ QComboBox::down-arrow {
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <item>
               <widget class="QPushButton" name="btn_searchOutside">
+               <property name="font">
+                <font>
+                 <family>Tahoma</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
                </property>
@@ -1081,6 +1159,7 @@ QComboBox::down-arrow {
             <widget class="QTableWidget" name="table_outsides">
              <property name="font">
               <font>
+               <family>Tahoma</family>
                <pointsize>10</pointsize>
               </font>
              </property>
@@ -1375,8 +1454,14 @@ QComboBox::down-arrow {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>80</height>
+           <height>100</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Tahoma</family>
+           <pointsize>10</pointsize>
+          </font>
          </property>
          <property name="title">
           <string/>
@@ -1394,8 +1479,8 @@ QComboBox::down-arrow {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>841</width>
-     <height>21</height>
+     <width>1055</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>

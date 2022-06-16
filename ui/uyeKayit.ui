@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>976</width>
-    <height>593</height>
+    <width>1096</width>
+    <height>686</height>
    </rect>
   </property>
   <property name="font">
    <font>
     <family>Segoe UI</family>
-    <pointsize>10</pointsize>
+    <pointsize>8</pointsize>
    </font>
   </property>
   <property name="windowTitle">
@@ -29,9 +29,14 @@
       <widget class="QFrame" name="frame">
        <property name="maximumSize">
         <size>
-         <width>300</width>
+         <width>400</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">QFrame { background-color: #5dcc7f;  border-radius: 5px }</string>
@@ -68,7 +73,7 @@
          <widget class="QComboBox" name="combo_memberType">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -108,7 +113,7 @@
          <widget class="QLineEdit" name="le_tcNo">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -147,7 +152,7 @@
          <widget class="QLineEdit" name="le_studentNumber">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -180,7 +185,7 @@
          <widget class="QLineEdit" name="le_name">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -210,7 +215,7 @@
          <widget class="QLineEdit" name="le_lastname">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -240,7 +245,7 @@
          <widget class="QComboBox" name="combo_sex">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -280,7 +285,7 @@
          <widget class="QDateEdit" name="dateEdit_birthDate">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -329,7 +334,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -359,7 +364,7 @@
          <widget class="QLineEdit" name="le_phoneNumber">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -421,7 +426,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -486,7 +491,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -524,7 +529,7 @@
          <widget class="QComboBox" name="combo_memberStatus">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -571,6 +576,11 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Yazdırma kuyruğuna ekle</string>
           </property>
@@ -584,19 +594,9 @@
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
+       <property name="spacing">
+        <number>10</number>
+       </property>
        <item>
         <widget class="QPushButton" name="btn_addImg">
          <property name="sizePolicy">
@@ -648,6 +648,11 @@
        </item>
        <item>
         <spacer name="verticalSpacer_2">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -658,6 +663,42 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_openSampleExcel">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Excel Dosyası</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_getFromExcel">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Excel'den Üye Aktar</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -702,7 +743,7 @@
         <number>30</number>
        </attribute>
        <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
+        <bool>false</bool>
        </attribute>
        <attribute name="verticalHeaderVisible">
         <bool>false</bool>
@@ -768,6 +809,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="topMargin">
+      <number>30</number>
+     </property>
      <item>
       <widget class="QPushButton" name="btn_del">
        <property name="minimumSize">
@@ -819,42 +863,6 @@
        </property>
        <property name="text">
         <string>Kaydet</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_getFromExcel">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Excel'den Üye Kaydet</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_openSampleExcel">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Örnek Excel Sayfası</string>
        </property>
       </widget>
      </item>
