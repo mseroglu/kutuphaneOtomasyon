@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1055, 719)
+        MainWindow.resize(1075, 719)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(9)
@@ -146,7 +146,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_logo_2.sizePolicy().hasHeightForWidth())
         self.label_logo_2.setSizePolicy(sizePolicy)
-        self.label_logo_2.setMaximumSize(QtCore.QSize(400, 16777215))
+        self.label_logo_2.setMaximumSize(QtCore.QSize(500, 16777215))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -735,7 +735,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.frame_main)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1055, 24))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1075, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

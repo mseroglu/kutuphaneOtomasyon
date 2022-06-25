@@ -1,15 +1,12 @@
 import locale, os, io
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
-import PyQt5.Qt
 from PyQt5.QtWidgets import QMainWindow, QInputDialog, QTableWidgetItem, QFileDialog
 from PyQt5 import QtGui, QtCore
 from ui.kitapKayitUI import Ui_MainWindow
 from database import db, curs
 from datetime import datetime
 from messageBox import msg
-from barcode import EAN13
-from barcode.writer import ImageWriter
 from PIL import Image
 
 
@@ -136,14 +133,14 @@ class SaveBook(QMainWindow):
                 "DisariVerme": self.ui.combo_exportability.currentIndex(),
                 "KayitTarihi": datetime.now().date(),
                 "Durum"     : 1,
-                "ImgBook"   : self.bookPhotoData}
+                "ImgBook"   : self.bookPhotoData,
+                "BarkodPrint": self.ui.checkBox_barkodYazdirma.checkState()}
 
 
     def showBookInfoInForm(self):
         try:
             Id, Barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
             cameData = db.getBookDataWithId(Id=Id)
-            print(cameData)
             self.selectedIdForUpdate = Id
             self.ui.le_barkode.setText( cameData[1] )
             self.ui.le_isbn.setText( cameData[2] )
@@ -164,6 +161,7 @@ class SaveBook(QMainWindow):
                 self.ui.label_barcodeImg.setPixmap(pixmap)
             self.showBookPhoto(cameData[16])
             self.bookPhotoData = cameData[16]
+            self.ui.checkBox_barkodYazdirma.setChecked(bool(cameData[17]))
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBookInfoInForm \t\t Hata Kodu : {E}", self.duration)
 

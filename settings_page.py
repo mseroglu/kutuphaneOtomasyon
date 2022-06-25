@@ -1,7 +1,7 @@
 import locale
 locale.setlocale(locale.LC_ALL, "")                                             # Yerel ayarları uygular
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QMessageBox, QInputDialog
-from PyQt5 import Qt, QtCore, QtGui
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QInputDialog
+from PyQt5 import QtCore, QtGui
 from ui.ayarlarUI import Ui_Form
 
 from database import conn, curs, db

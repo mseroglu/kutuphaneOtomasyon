@@ -29,7 +29,6 @@ class ConfirmationUI(QWidget):
         self.result = None
         self.ui.btn_ok.clicked.connect(self.returnResult)
         self.ui.btn_escape.clicked.connect(self.close)
-        # self.ui.btn_escape.clicked.connect(Entrust().show())
 
     def returnResult(self):
         try:
@@ -39,7 +38,7 @@ class ConfirmationUI(QWidget):
         except Exception as E:
             print(f"Fonk: returnResult      Hata: {E} ")
 
-    def showConfirmationPage_B(self, memberData, booksData):
+    def showConfirmationPage(self, memberData, booksData):
         try:
             labelBarkods = (self.ui.label_barkod1, self.ui.label_barkod2, self.ui.label_barkod3, self.ui.label_barkod4, self.ui.label_barkod5)
             labelBooks   = (self.ui.label_eserAdi1, self.ui.label_eserAdi2, self.ui.label_eserAdi3, self.ui.label_eserAdi4, self.ui.label_eserAdi5)
@@ -67,7 +66,7 @@ class ConfirmationUI(QWidget):
                 i += 1
             self.show()
         except Exception as E:
-            print(f"Fonk: showConfirmationPage_B      Hata: {E} ")
+            print(f"Fonk: showConfirmationPage      Hata: {E} ")
 
 
 
@@ -151,9 +150,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             bugun = datetime.today()
             iadeTarihi = self.returnDateXDayLater( db.maxDayBooksStay )
             self.ui.label_verilisTarihi.setText(bugun.strftime("%d %b %Y"))
-            # self.ui.label_verilisTarihi.setStyleSheet("QLabel{background-color:rgba(133,194,38,255);color:white; padding:10px; border-radius: 5px; font-size: 14pt }")
             self.ui.label_iadeTarihi.setText(iadeTarihi)
-            # self.ui.label_iadeTarihi.setStyleSheet("QLabel{background-color: rgba(66,146,157,255); color:white; padding:10px; border-radius: 5px; font-size: 14pt}")
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: setDateOnLabel \t\tHata Kodu : {E}", self.duration)
 
@@ -166,8 +163,8 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             btn.setStyleSheet("QPushButton{background-color:pink}")
             btn.setMinimumSize(15, 20)
             btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            btn.clicked.connect( self.showConfirmationPage_A )
-            btn.setMaximumSize(30,20)
+            btn.clicked.connect( self.beforeShowConfirmationPage )
+            btn.setMaximumSize(30, 20)
             layout.addWidget(btn)
             widget = QWidget()
             widget.setLayout(layout)
@@ -178,13 +175,13 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
 
     def clearSelection(self):
         try:
-            Entrust.selectedBooksDict = {'KitapId':None,'KitapAdi':None}  # Bu silinmeli, yoksa son seçili kitaplar birden çok üyeye verilir.
+            Entrust.selectedBooksDict = {'KitapId':None,'KitapAdi':None}  # Bu temizlenmeli, yoksa son seçili kitaplar birden çok üyeye verilir.
             self.refreshTableWidgetItems()
-            Entrust.selectedBarkodList = []  # Bu liste sıfırlanmalı, yoksa önceki seçilmiş kitaplar gitmez
+            Entrust.selectedBarkodList = []                     # Bu liste sıfırlanmalı, yoksa önceki seçilmiş kitaplar gitmez
         except Exception as E:
             print(f"Fonk: clearSelection    \tHata: {E}")
 
-    def showConfirmationPage_A(self):                                             # Verme onay sayfası
+    def beforeShowConfirmationPage(self):                                             # Verme onay sayfası 1. aşama
         try:
             tcno        : str   = self.sender().objectName()
             memberId    : int   = Entrust.dictMembersInfos[tcno][0]
@@ -198,9 +195,9 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                 if verilebilir < len( listBooksId ):
                     msg.popup_mesaj('Dikkat', f"{memberName} isimli üye en fazla {verilebilir} kitap alabilir. \t\n\nLütfen sadece {verilebilir} kitap seçiniz!\n")
                 else:
-                    self.winConfirmation.showConfirmationPage_B(memberData=Entrust.dictMembersInfos[tcno], booksData=Entrust.selectedBooksDict)
+                    self.winConfirmation.showConfirmationPage(memberData=Entrust.dictMembersInfos[tcno], booksData=Entrust.selectedBooksDict)
         except Exception as E:
-            self.ui.statusbar.showMessage(f"Fonk: showConfirmationPage_A \t\tHata Kodu : {E}", self.duration)
+            self.ui.statusbar.showMessage(f"Fonk: beforeShowConfirmationPage \t\tHata Kodu : {E}", self.duration)
 
     def giveBooksToMembers(self):                                           # Verme onaylanırsa yapılacaklar
         addedData = 0
@@ -212,7 +209,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                 addedData += curs.rowcount
             if not addedData == -1:
                 db.updateNumberOfBookAtMember(AldigiEserSayisi=addedData, uyeId=memberId)
-                db.updateBookState(Durum=(0,) * len(listBooksId), kitapId=listBooksId)  # Durum=0 kitap müsait değil demek
+                db.updateState(TableName="KitapTablosu", Durum=(0,), kitapId=listBooksId)  # Durum=0 kitap müsait değil demek
                 self.clearSelection()           # Burası neden çalışmıyor
                 self.ui.le_searchBook.clear()
                 self.ui.le_searchMember.clear()

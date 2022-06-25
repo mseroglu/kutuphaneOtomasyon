@@ -25,11 +25,12 @@ from messageBox import msg
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.setWindowTitle("Kütüphanem")
+        self.setWindowIcon(QtGui.QIcon("img/logo.png"))
         self.setGeometry(200,50,800,600)
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        # self.setWindowTitle("Kütüphanem")
         self.ui.le_searchOutsides.setVisible(False)
         self.ui.le_searchExpired.setVisible(False)
         self.ui.le_searchGivenToday.setVisible(False)
@@ -104,14 +105,13 @@ class MainWindow(QMainWindow):
             print(f"Fonk: handlePaintRequest   \t\t{E}")
 
     def imgDataToQImageObj(self, imgData) -> QtGui.QImage :
-        imgDataToQImageObj = open("./imgBarkode/00000246.png", "rb").read()
         image = QtGui.QImage()
-        image.loadFromData(imgDataToQImageObj)
+        image.loadFromData(imgData)
         return image.scaledToWidth(150)
 
     def makeTableDocument(self):
         try:
-            # setPixmap(pixmap.scaled(width, width, Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
+            # setPixmap(pixmap.scaled(width, height, Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
             document    = QtGui.QTextDocument()
             cursor      = QtGui.QTextCursor(document)
             # math.ceil(rows/6)
@@ -130,7 +130,7 @@ class MainWindow(QMainWindow):
                         cursor.setCharFormat(formatC)
                         cursor.insertText(f"   Bölüm\t: {'A12'}\n   Raf No\t: {'A123'}\n   ISBN\t: {9876543210123}\n   {3*'Kitap Adı'}")
                     else:
-                        image = self.imgDataToQImageObj(imgData="")
+                        image = self.imgDataToQImageObj(imgData="")     # datayı ver
                         cursor.insertImage(image)
                     cursor.movePosition(QtGui.QTextCursor.NextCell)
 
@@ -284,7 +284,7 @@ class MainWindow(QMainWindow):
             if cevap:
                 returnDate  = datetime.date.today()
                 db.updateNumberOfBookAtMember(AldigiEserSayisi=-1, TCNo=tcno)
-                db.updateBookState( Durum=(1,), kitapId=(bookId,) )            # Durum=1 'Rafta', Durum=0 "Okunuyor"
+                db.updateState(TableName="KitapTablosu", Durum=(1,), kitapId=(bookId,) )            # Durum=1 'Rafta', Durum=0 "Okunuyor"
                 kitapDurum = curs.rowcount
                 db.updateEntrustTableEscrowState( "EmanetTablosu", DonusTarihi=returnDate, emanetId=escrowId )
                 emanetDurum= curs.rowcount

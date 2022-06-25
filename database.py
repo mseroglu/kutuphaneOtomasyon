@@ -369,15 +369,18 @@ class Db:
             curs.execute(sql, veriler)
             conn.commit()
         except Exception as E:
-            print(f"FONK: updateEntrustTableEscrowState, HATA KODU : {E}")
+            print(f"FONK: updateEntrustTableEscrowState  HATA KODU : {E}")
 
-    def updateBookState(self, Durum: list, kitapId: list):
+    def updateState(self, TableName, **cols_datas):
         try:
-            sql = f""" UPDATE KitapTablosu SET Durum=? WHERE kitapId=? """
-            curs.executemany(sql, zip( Durum*len(kitapId), kitapId))
+            print(cols_datas)
+            colsInList  = tuple(cols_datas.keys())
+            veriler     = tuple(cols_datas.values())
+            sql = f""" UPDATE {TableName} SET { colsInList[0] }=? WHERE {colsInList[1]}=? """
+            curs.executemany(sql, zip( veriler[0]*len(veriler[1]), veriler[1] ))
             conn.commit()
         except Exception as E:
-            print(f"FONK: updateBookState, HATA KODU : {E}")
+            print(f"FONK: updateState HATA KODU : {E}")
 
     def updateNumberOfBookAtMember(self, AldigiEserSayisi, **kwargs):
         try:
@@ -457,6 +460,15 @@ class Db:
         except Exception as E:
             print("Fonk: getMemberDataWithWhere => ", E)
 
+    def getMemberDataForReport(self):
+        try:
+            sql = f"""SELECT TCNo, OkulNo, Ad, Soyad, Sinif, Sube, strftime('%d.%m.%Y',DogumTarihi), strftime('%d.%m.%Y',UyelikTarihi)
+                      FROM UyeTablosu WHERE Durum=1 ORDER BY Sinif, Sube, OkulNo"""
+            curs.execute( sql)
+            return curs.fetchall()
+        except Exception as E:
+            print("Fonk: getMemberDataForReport => ", E)
+
     def getMemberDataWithTcno(self, tcno):
         try:
             sql =f"""SELECT * FROM UyeTablosu WHERE TCNo={tcno}"""
@@ -510,7 +522,7 @@ class Db:
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
-            print("Fonk: getBookDataWithJoinTables => ", E)
+            print("Fonk: getUserInfoWithCase => ", E)
 
     def getBookDataWithJoinTables(self) -> list :
         durum_0, durum_1 = "Okunuyor", "Rafta"
@@ -525,6 +537,17 @@ class Db:
             return curs.fetchall()
         except Exception as E:
             print("Fonk: getBookDataWithJoinTables => ", E)
+
+    def getBookDataForPrintBarkode(self, sender) -> list :
+        try:
+            sql1 =f"""SELECT kitapId, KitapAdi, Bolum, RafNo, ImgBarcod  FROM KitapTablosu 
+                    LEFT JOIN BolumTablosu ON KitapTablosu.BolumId=BolumTablosu.bolumId
+                    LEFT JOIN RafTablosu ON KitapTablosu.RafId=RafTablosu.rafId  """
+            sql2 = "WHERE BarkodPrint is True"
+            curs.execute( sql1+sql2 if sender else sql1)
+            return curs.fetchall()
+        except Exception as E:
+            print("Fonk: getBookDataForPrintBarkode => ", E)
 
     def getEntrustToday(self):
         try:
@@ -552,8 +575,8 @@ class Db:
             verTarihi = """strftime('%d.%m.%Y',VerilisTarihi)"""
             donTarihi = f"""strftime('%d.%m.%Y', date(VerilisTarihi, '+{gun} day'))"""
             kalanGun = f"""Cast ((JulianDay(date(VerilisTarihi, '+{gun} day')) - JulianDay(date('now'))) As Integer)"""
-            sql = f"""SELECT KitapTablosu.kitapId, EmanetTablosu.emanetId,Barkod,KitapAdi,YazarAdi,
-                    {verTarihi},{kalanGun},{donTarihi}, TCNo, OkulNo, Ad, Soyad, Sinif, Sube FROM EmanetTablosu 
+            sql = f"""SELECT KitapTablosu.kitapId, EmanetTablosu.emanetId, Barkod, KitapAdi, YazarAdi,
+                    {verTarihi}, {kalanGun}, {donTarihi}, TCNo, OkulNo, Ad, Soyad, Sinif, Sube FROM EmanetTablosu 
                     LEFT JOIN KitapTablosu ON KitapTablosu.kitapId=EmanetTablosu.KitapId
                     LEFT JOIN UyeTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId
                     LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId  
@@ -562,6 +585,23 @@ class Db:
             return curs.fetchall()
         except Exception as E:
             print("Fonk: getEscrowBooksReturnToday => ", E)
+
+    def getEscrowBooksReturnToday_orderBySinif(self):
+        try:
+            xGunOnceVerilen = self.bugun_tarihi().addDays(-self.maxDayBooksStay).toPyDate()
+            gun = db.maxDayBooksStay
+            verTarihi = """strftime('%d.%m.%Y',VerilisTarihi)"""
+            donTarihi = f"""strftime('%d.%m.%Y', date(VerilisTarihi, '+{gun} day'))"""
+            kalanGun = f"""Cast ((JulianDay(date(VerilisTarihi, '+{gun} day')) - JulianDay(date('now'))) As Integer)"""
+            sql = f"""SELECT Barkod,KitapAdi,YazarAdi,{verTarihi},{kalanGun},{donTarihi},TCNo,OkulNo,Ad,Soyad,Sinif,Sube FROM EmanetTablosu 
+                    LEFT JOIN KitapTablosu ON KitapTablosu.kitapId=EmanetTablosu.KitapId
+                    LEFT JOIN UyeTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId
+                    LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId  
+                    WHERE EmanetTablosu.VerilisTarihi<='{xGunOnceVerilen}' AND DonusTarihi is NULL ORDER BY Sinif, Sube, Ad"""
+            curs.execute(sql)
+            return curs.fetchall()
+        except Exception as E:
+            print("Fonk: getEscrowBooksReturnToday_orderBySinif => ", E)
 
     def bugun_tarihi(self):
         bugun = datetime.now()
@@ -574,8 +614,8 @@ class Db:
             verTarihi = """strftime('%d.%m.%Y',VerilisTarihi)"""
             donTarihi = f"""strftime('%d.%m.%Y', date(VerilisTarihi, '+{gun} day'))"""
             kalanGun  = f"""Cast ((JulianDay(date(VerilisTarihi, '+{gun} day')) - JulianDay(date('now'))) As Integer)   """
-            sql = f"""SELECT KitapTablosu.kitapId, EmanetTablosu.emanetId, Barkod, KitapAdi, YazarAdi, {verTarihi},{kalanGun},{donTarihi},
-                    TCNo, OkulNo, Ad, Soyad, Sinif, Sube FROM EmanetTablosu 
+            sql = f"""SELECT KitapTablosu.kitapId, EmanetTablosu.emanetId, Barkod, KitapAdi, YazarAdi,
+                    {verTarihi}, {kalanGun}, {donTarihi}, TCNo, OkulNo, Ad, Soyad, Sinif, Sube FROM EmanetTablosu 
                     LEFT JOIN KitapTablosu ON KitapTablosu.kitapId=EmanetTablosu.KitapId
                     LEFT JOIN UyeTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId
                     LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId  
@@ -596,20 +636,7 @@ class Db:
         except Exception as E:
             print("Fonk: delData => ", E)
 
-    def getId(self, TableName, col, searched) -> None:
-        try:
-            tableId = {"YazarTablosu":"yazarId", "KategoriTablosu":"kategoriId", "BolumTablosu":"bolumId", "RafTablosu":"rafId"}
-            self.cameId = None
-            if searched:
-                curs.execute( f"SELECT {tableId[TableName]} FROM {TableName} WHERE {col} = '{searched}' " )
-                cameData = curs.fetchone()
-                if cameData is None:
-                    if self.insertData(TableName, **{col: searched}):
-                        self.getId(TableName, col, searched)
-                else:
-                    self.cameId = cameData[0]
-        except Exception as E:
-            print("Fonk: getId => ", E)
+
 
 
 
