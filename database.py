@@ -94,7 +94,6 @@ class Db:
                         "KayitTarihi TEXT",
                         "Durum INTEGER",
                         "ImgBarcod BLOB",
-                        "ImgBook BLOB",
                         "BarkodPrint INTEGER")
 
         conn.commit()
@@ -156,9 +155,8 @@ class Db:
             global liste, counter
             liste = list(dataList)
             counter = 0
-            eklenmeyenler = []
             def ekle():
-                global counter, liste, eklenmeyenler
+                global counter, liste
                 try:
                     veri = liste.pop()
                     veri = list(veri)
@@ -175,7 +173,7 @@ class Db:
                     ekle()
             ekle()
         except AttributeError as E:
-            msg.popup_mesaj("Dikkat", f"Doğum Tarihi vb bir sütunda uygun olmayan veri tipi işlemi engelliyor!\n"
+            msg.popup_mesaj("Dikkat", f"Doğum Tarihi vb bir sütunda, uygun olmayan veri tipi işlemi engelliyor!\n"
                                       f"Lütfen Excel tablosunda sütun veri tiplerini değiştirmeden \n"
                                       f"(özellikle Doğum Tarihi sütunu) doğru veri giriniz veya boş bırakınız.")
         except Exception as E:
@@ -198,8 +196,8 @@ class Db:
             df_xls["UyeKartiPrint"] = 1
             df_xls["AldigiEserSayisi"] = 0
             df_xls["UyelikTarihi"]=datetime.today().date()
-            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1")
-            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0")
+            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1").str.replace("erkek","1")
+            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0").str.replace("kız","0")
             df_xls["DogumTarihi"] = df_xls["DogumTarihi"].fillna(datetime.today())      # Boş alanları bugun tarihi ile dolduruyoruz
             cols = str(tuple(df_xls.columns)).replace("'", "")
             self.forceInsertMultiMember(cols, df_xls.values)
@@ -339,6 +337,13 @@ class Db:
     def delExcelData(self):
         pass
 
+    def updateISBN(self, oldISBN, newISBN):
+        curs.execute("UPDATE KitapFotoTablosu SET ISBN=? WHERE ISBN=? ", (newISBN, oldISBN))
+        conn.commit()
+
+    def updateImage(self, ISBN, ImgBook):
+        curs.execute("UPDATE KitapFotoTablosu SET ImgBook=? WHERE ISBN=? ", (ImgBook, ISBN))
+        conn.commit()
 
     def updateData(self, TableName, **cols_datas):
         try:
@@ -439,6 +444,18 @@ class Db:
         except Exception as E:
             print("Fonk: getFreeBooks => ", E)
 
+    def getBooksForReport(self, tercih):
+        try:
+            sql1 = f"""SELECT Barkod, KitapAdi, YazarAdi, Kategori, RafNo FROM KitapTablosu
+            LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId
+            LEFT JOIN KategoriTablosu ON KitapTablosu.KategoriId=KategoriTablosu.kategoriId
+            LEFT JOIN RafTablosu ON KitapTablosu.RafId=RafTablosu.rafId """
+            sql2 = "ORDER BY KitapAdi"
+            curs.execute( sql1+sql2 if tercih else sql1 )
+            return curs.fetchall()
+        except Exception as E:
+            print("Fonk: getBooksForReport => ", E)
+
     def getMemberDataNumberOfRead(self):
         try:
             sql = f"""SELECT uyeId, {self.maxNumberOfBooksGiven}-AldigiEserSayisi, 
@@ -484,7 +501,7 @@ class Db:
             sql =f"""SELECT {Col} FROM {TableName} WHERE {col[0]}={val[0]}"""
             curs.execute(sql)
             dataImg = curs.fetchone()
-            return dataImg[0]
+            return dataImg[0] if dataImg else None
         except Exception as E:
             print("Fonk: getImageData => ", E)
 
@@ -499,7 +516,9 @@ class Db:
 
     def getBookDataWithId(self, Id):
         try:
-            sql =f"""SELECT * FROM KitapTablosu WHERE kitapId={Id}"""
+            sql =f"""SELECT kitapId, Barkod, KitapTablosu.ISBN, KitapAdi, YazarId, KategoriId, BolumId, RafId, Yayinevi, SayfaSayisi,   
+                BasimYili, Aciklama, DisariVerme, KayitTarihi, Durum, ImgBarcod, KitapFotoTablosu.ImgBook, BarkodPrint FROM KitapTablosu                     
+                LEFT JOIN KitapFotoTablosu ON KitapFotoTablosu.ISBN=KitapTablosu.ISBN WHERE kitapId={Id}"""
             curs.execute(sql)
             return curs.fetchone()
         except Exception as E:
@@ -537,6 +556,17 @@ class Db:
             return curs.fetchall()
         except Exception as E:
             print("Fonk: getBookDataWithJoinTables => ", E)
+
+    def getMemberDataForPrintCard(self, sender) -> list :
+        try:
+            sql1 =f"""SELECT TCNo, KitapAdi, Bolum, RafNo, ImgBarcod  FROM UyeTablosu 
+                    LEFT JOIN BolumTablosu ON KitapTablosu.BolumId=BolumTablosu.bolumId
+                    LEFT JOIN RafTablosu ON KitapTablosu.RafId=RafTablosu.rafId  """
+            sql2 = "WHERE UyeKartiPrint is True"
+            curs.execute( sql1+sql2 if sender else sql1)
+            return curs.fetchall()
+        except Exception as E:
+            print("Fonk: getBookDataForPrintBarkode => ", E)
 
     def getBookDataForPrintBarkode(self, sender) -> list :
         try:
@@ -580,7 +610,7 @@ class Db:
                     LEFT JOIN KitapTablosu ON KitapTablosu.kitapId=EmanetTablosu.KitapId
                     LEFT JOIN UyeTablosu ON UyeTablosu.uyeId=EmanetTablosu.UyeId
                     LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId  
-                    WHERE EmanetTablosu.VerilisTarihi<='{xGunOnceVerilen}' AND DonusTarihi is NULL ORDER BY emanetId DESC"""
+                    WHERE EmanetTablosu.VerilisTarihi<='{xGunOnceVerilen}' AND DonusTarihi is NULL ORDER BY emanetId ASC"""
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -695,13 +725,7 @@ db = Db()
 
 if __name__=="__main__":
     db.insertBookDatasFromExcel()
-    # veri = db.getId("YazarTablosu", "YazarAdi", "Ali")
-    # print("veri : ", veri)
-    #db.insertMembersDataFromExcel()
-    #print(db.getData("OkulBilgiTablosu", *("*")))
-    #print(db.getData("OkulBilgiTablosu", *("KurumKodu", "OkulAdi")))
-    # print(db.getDataWithWhere("UyeTablosu", *("TCNo", "OkulNo", "Ad", 'Soyad'), **{"TCNo": '98765432105'}))
-    # db.updateData("UyeTablosu", **{"TCNo":"987", "OkulNo":"123", "Id":1})
+
 
     pass
 

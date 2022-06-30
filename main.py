@@ -3,9 +3,7 @@ import sys, locale
 
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
-
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget
-
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog, QPrinter
 
@@ -76,7 +74,27 @@ class MainWindow(QMainWindow):
         self.ui.btn_openReports.clicked.connect(self.openWindowControl)
         self.ui.btn_quit.clicked.connect(sys.exit)
 
-        # self.ui.btn_searchOutside.clicked.connect(self.handlePreview)
+        # self.ui.btn_openTransactions.installEventFilter(self)           # buton üzerine gelince
+        # self.ui.label_logo.installEventFilter(self)
+        self.ui.table_memberList.installEventFilter(self)
+
+
+
+
+
+    def eventFilter(self, obj, event) -> bool:
+        try:
+            item = self.ui.table_memberList.currentItem()
+            if item is not None:
+                print(item.text())
+            if event.type() == QtCore.QEvent.Enter:
+                print("label giriş")
+            elif event.type() == QtCore.QEvent.Leave:
+                print("label çıkış")
+            return super(MainWindow, self).eventFilter(obj, event)
+        except Exception as E:
+            print(E)
+
 
     def tusaBasYaziYazdir(self):
         key_press = QtGui.QKeyEvent(QtGui.QKeyEvent.KeyPress, QtCore.Qt.Key_X, QtCore.Qt.NoModifier, "X")
@@ -141,11 +159,11 @@ class MainWindow(QMainWindow):
 
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        tableWidgetResize(self.ui.table_memberList, (2, 2, 3, 2, 6, 4, 2, 1, 1, 3, 3, 3, 3), blank=50)
-        tableWidgetResize(self.ui.table_bookList, (2, 3, 6, 4, 2, 2, 2, 3, 2, 2, 3, 2, 2), blank=50)
-        tableWidgetResize(self.ui.table_givenToday, (3, 6, 4, 3, 2, 5, 3, 1, 1, 3, 2, 3), blank=50)
-        tableWidgetResize(self.ui.table_expaired, (3, 3, 6, 4, 3, 2, 3, 4, 2, 5, 3, 1, 1), blank=50)
-        tableWidgetResize(self.ui.table_outsides, (3, 3, 6, 4, 3, 3, 3, 4, 2, 5, 3, 1, 1), blank=50)
+        tableWidgetResize(self.ui.table_memberList, (2, 2, 3, 2, 6, 4, 2, 2, 2, 4, 3, 2), blank=30)
+        tableWidgetResize(self.ui.table_bookList, (2, 3, 6, 4, 2, 2, 2, 3, 2, 2, 3, 2, 2), blank=30)
+        tableWidgetResize(self.ui.table_givenToday, (3, 6, 4, 3, 2, 5, 3, 1, 1, 3, 2, 3), blank=30)
+        tableWidgetResize(self.ui.table_expaired, (3, 3, 6, 4, 3, 2, 3, 4, 2, 5, 3, 1, 1), blank=30)
+        tableWidgetResize(self.ui.table_outsides, (3, 3, 6, 4, 3, 3, 3, 4, 2, 5, 3, 1, 1), blank=30)
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         try:
@@ -260,10 +278,11 @@ class MainWindow(QMainWindow):
             btn = QPushButton("Geri Al")
             barkod = data[2]
             btn.setObjectName(barkod)
-            if data[6] < 1: btn.setStyleSheet('QPushButton{background-color:pink}')
-            btn.setMinimumSize(15, 20)
+
+            if data[6] < 1: btn.setStyleSheet('QPushButton{background-color: #aaaaff; font-size:10pt; }')
+            btn.setMinimumSize(60, 20)
             btn.clicked.connect( self.returnTheBook )
-            btn.setMaximumSize(60,20)
+            btn.setMaximumSize(80, 20)
             layout.addWidget(btn)
             widget = QWidget()
             widget.setLayout(layout)
@@ -276,11 +295,10 @@ class MainWindow(QMainWindow):
         try:
             barkod      = self.sender().objectName()
             bookInfo    = self.dictEscrowBookInfos[barkod]
-            print(bookInfo)
             bookId, escrowId, bookName, tcno, name, lastname = bookInfo[0], bookInfo[1], bookInfo[3], bookInfo[8], bookInfo[10], bookInfo[11]
-            cevap, _    = msg.MesajBox("Geri alma işlemi", f"BARKOD NO\t:  {barkod} \nKİTAP ADI\t:  {bookName} \n\n"
-                                                           f"'{name+' '+lastname}' isimli üyeden yukardaki kitabı teslim alıyorsunuz.\t\n\n"
-                                                           "Emin misiniz?\n")
+            cevap, _    = msg.MesajBox("Geri alma işlemi", f"Barkod No :  {barkod} \nKitap Adı\t :  {bookName} \n\n"
+                                                           f"'{name+' '+lastname}' isimli üyeden eser teslim alıyorsunuz.\n"
+                                                           "İşlemin doğruluğundan emin misiniz?\n")
             if cevap:
                 returnDate  = datetime.date.today()
                 db.updateNumberOfBookAtMember(AldigiEserSayisi=-1, TCNo=tcno)
@@ -290,6 +308,7 @@ class MainWindow(QMainWindow):
                 emanetDurum= curs.rowcount
                 if kitapDurum == 1 and emanetDurum == 1 :
                     title,mesaj = "Başarılı","Geri alma işlemi başarılı. Kitabı rafına koyunuz !\t\t\n"
+                    self.ui.statusbar.showMessage("Geri alma işlemi başarılı. Kitabı rafına koyunuz !", self.duration)
                     self.showOutsidesOnTablewidget()
                 elif kitapDurum < 1 and emanetDurum == 1:
                     title, mesaj = "Dikkat Problem", "Kitap geri alımı gerçekleşti.\n" \
@@ -303,9 +322,9 @@ class MainWindow(QMainWindow):
 
     def showMembersInTablewidget(self):
         try:
-            colLabels   = ("Üye Tipi", "Durum", f"{'TC Kimlik No':^20}", "Okul No", f"{'Ad':^35}", f"{'Soyad':^15}",
-                "Cinsiyet", "Sınıf", "Şube", f"{'Telefon':^20}", "Doğum Tarihi", "Üyelik Tarihi", f"{'Foto':^20}")
-            self.ui.table_memberList.clear()
+            colLabels   = ("Üye Tipi", "Durum", 'TC Kimlik No', "Okul No", 'Ad', 'Soyad',
+                "Cinsiyet", "Sınıf", "Şube", 'Telefon', "Doğum Tarihi", "Üyelik Tarihi")
+            self.ui.table_memberList.clearContents()
             self.ui.table_memberList.setColumnCount(len(colLabels))
             self.ui.table_memberList.setHorizontalHeaderLabels(colLabels)
             cameData = db.getMemberDataWithWhere()
@@ -318,16 +337,15 @@ class MainWindow(QMainWindow):
                     if col in (2,3,7,8,10,11):
                         self.ui.table_memberList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
             self.resizeEvent(QtGui.QResizeEvent)
-            # self.ui.table_memberList.resizeColumnsToContents()
             self.ui.table_memberList.horizontalHeader().setStretchLastSection(True)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showMembersInTablewidget \t\t Hata Kodu : {E}", self.duration)
 
     def showBooksOnTablewidget(self):
         try:
-            colLabels = ('Barkod ', f"{'ISBN':^20}", f"{'Eser Adı':^30}", f'{"Yazarı":^20}', 'Kategori', 'Bölüm',
-                         'Raf No', 'Yayınevi', 'Sayfa Sayısı', 'Basım Yılı', 'Kayıt Tarihi', 'Durum', 'Açıklama')
-            self.ui.table_bookList.clear()
+            colLabels = ('Barkod No', 'ISBN', 'Eser Adı', "Yazarı", 'Kategori', 'Bölüm', 'Raf No',
+                        'Yayınevi', 'Sayfa Sayısı', 'Basım Yılı', 'Kayıt Tarihi', 'Durum', 'Açıklama')
+            self.ui.table_bookList.clearContents()
             self.ui.table_bookList.setColumnCount(len(colLabels))
             self.ui.table_bookList.setHorizontalHeaderLabels(colLabels)
             books = db.getBookDataWithJoinTables()
@@ -341,18 +359,17 @@ class MainWindow(QMainWindow):
                         if col in (0,1,8,9,10):
                             self.ui.table_bookList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
                 self.resizeEvent(QtGui.QResizeEvent)
-                # self.ui.table_bookList.resizeColumnsToContents()
                 self.ui.table_bookList.horizontalHeader().setStretchLastSection(True)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksOnTablewidget     Hata Kodu : {E}", self.duration)
 
     def showTodayEntrustOnTablewidget(self):
         try:
-            colLabels = ('Barkod', f'{"Eser Adı":^40}', f'{"Yazarı":^25}', 'TC Kimlik Nosu', 'Okul No', f'{"Ad":^25}',
-                         f'{"Soyad":^15}', 'Sınıf','Şube', 'Veriliş Tarihi', 'Kalan Gün', 'İade Tarihi')
-            self.ui.table_givenToday.clear()
+            colLabels = ('Barkod', "Eser Adı", "Yazarı", 'TC Kimlik Nosu', 'Okul No', "Ad",
+                         "Soyad", 'Sınıf', 'Şube', 'Veriliş Tarihi', 'Kalan Gün', 'İade Tarihi')
+            self.ui.table_givenToday.clearContents()
             self.ui.table_givenToday.setColumnCount(len(colLabels))
-            self.ui.table_givenToday.setHorizontalHeaderLabels(colLabels)
+            # self.ui.table_givenToday.setHorizontalHeaderLabels(colLabels)
             todayEntrusted = db.getEntrustToday()
             if todayEntrusted:
                 self.ui.table_givenToday.setRowCount(len(todayEntrusted)+self.numberOfBlankLines)
@@ -369,8 +386,8 @@ class MainWindow(QMainWindow):
 
     def showOutsidesOnTablewidget(self):
         try:
-            colLabels = ('Tıkla','Barkod No', f'{"Eser Adı":^35}', f'{"Yazarı":^30}',"Veriliş Tarihi","Kalan Gün","İade Tarihi",
-                         'TC Kimlik No','Okul No',f'{"Ad":^25}',f'{"Soyad":^15}','Sınıf','Şube')
+            colLabels = ('Tıkla', 'Barkod No', "Eser Adı", "Yazarı", "Veriliş Tarihi", "Kalan Gün", "İade Tarihi",
+                         'TC Kimlik No', 'Okul No', "Ad", "Soyad", 'Sınıf', 'Şube')
             self.ui.table_outsides.clearContents()
             self.ui.table_outsides.setColumnCount(len(colLabels))
             # self.ui.table_outsides.setHorizontalHeaderLabels(colLabels)
@@ -394,7 +411,7 @@ class MainWindow(QMainWindow):
         try:
             colLabels = ('Tıkla', 'Barkod', f'{"Eser Adı":^30}', f'{"Yazarı":^20}', "Veriliş Tarih", "Kalan Gün", "İade Tarihi",
                          'TC Kimlik No', 'Okul No', f'{"Ad":^30}', f'{"Soyad":^15}', 'Sınıf', 'Şube')
-            self.ui.table_expaired.clear()
+            self.ui.table_expaired.clearContents()
             self.ui.table_expaired.setColumnCount(len(colLabels))
             self.ui.table_expaired.setHorizontalHeaderLabels(colLabels)
             booksReturnToday = db.getEscrowBooksReturnToday()
@@ -416,9 +433,6 @@ class MainWindow(QMainWindow):
 
 
 
-
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
@@ -429,10 +443,7 @@ if __name__ == "__main__":
     winReports      = ReportsPage()
 
     winMain         = MainWindow()
-
     winMain.show()
-
-
     app.setStyle("Fusion")
     sys.exit(app.exec_())
 

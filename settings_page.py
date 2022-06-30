@@ -175,6 +175,7 @@ class Settings_page(QWidget):
                                           "Kaydetmek istediğinizden emin misiniz? \n")
                     if cevap[0]:
                         db.insertData(TableName="OkulBilgiTablosu", **infoDict)
+                        self.ui.btn_saveInstutionInfo.setEnabled(False)
                 else:
                     msg.popup_mesaj("Dikkat", "Kurum bilgileri boş olamaz !!!")
         except Exception as E:

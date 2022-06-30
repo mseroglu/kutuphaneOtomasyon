@@ -84,11 +84,6 @@ class SaveBook(QMainWindow):
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: enterEvent\t\tHata Kodu : {E}", self.duration)
 
-    def clickedTablewidgetItem(self):
-        row = self.ui.table_bookList.currentRow()
-        self.ui.table_bookList.setCurrentCell(row,0)
-        selectedId = self.ui.table_bookList.currentItem().text()
-
     def showBooksOnTablewidget(self):
         books = db.getData("KitapTablosu", "kitapId", "Barkod", "KitapAdi")
         try:
@@ -139,9 +134,13 @@ class SaveBook(QMainWindow):
 
     def showBookInfoInForm(self):
         try:
+            self.ui.btn_save.setEnabled(False)
+            self.ui.btn_update.setEnabled(True)
+            self.ui.btn_del.setEnabled(True)
             Id, Barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
             cameData = db.getBookDataWithId(Id=Id)
             self.selectedIdForUpdate = Id
+            self.selectedISBN        = cameData[2]
             self.ui.le_barkode.setText( cameData[1] )
             self.ui.le_isbn.setText( cameData[2] )
             self.ui.le_bookName.setText( cameData[3] )
@@ -167,13 +166,17 @@ class SaveBook(QMainWindow):
 
     def delBook(self):
         try:
-            bookId, barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
-            result, _ = msg.MesajBox("DİKKAT : Eser Silinecek", f"Barkod No\t: {barkod}\nEser Adı\t: {bookName} \n\neseri silmek istediğinizden emin misiniz?\t\t\n")
-            if result:
-                db.delData("KitapTablosu", kitapId=bookId)
-                if curs.rowcount>0:
-                    msg.popup_mesaj('Silindi', "Kitap kaydı silindi. Hadi hayırlı olsun. ;-)\t\n")
-                self.showBooksOnTablewidget()
+            if self.selectedIdForUpdate:
+                bookId, barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
+
+                result, _ = msg.MesajBox("DİKKAT : Eser Silinecek", f"Barkod No :  {barkod}\nEser Adı\t :  {bookName} \n\neseri silmek istediğinizden emin misiniz?\t\t\n")
+                if result:
+                    db.delData("KitapTablosu", kitapId=bookId)
+                    if curs.rowcount>0:
+                        msg.popup_mesaj('Silindi', "Kitap kaydı silindi. Hadi hayırlı olsun. ;-)\t\n")
+                    self.showBooksOnTablewidget()
+            else:
+                msg.popup_mesaj('Seçim yapılmadı', f'Silmek için bir kitap seçmediniz. \t\t\n')
         except AttributeError as E:
             msg.popup_mesaj('Seçim yapılmadı', f'Silmek için bir kitap seçmediniz. \t\t\n')
         except Exception as E:
@@ -182,11 +185,15 @@ class SaveBook(QMainWindow):
     def updateBookInfo(self):
         try:
             cols_datas = self.getBookInfo()
+            if self.selectedISBN != cols_datas['ISBN']:
+                db.updateISBN(oldISBN=self.selectedISBN, newISBN=cols_datas['ISBN'])
+            imageData  = cols_datas["ImgBook"]
+            del cols_datas["ImgBook"]
             if bool(cols_datas["KitapAdi"]):
                 cols_datas["kitapId"] = self.selectedIdForUpdate
                 db.updateData(TableName="KitapTablosu", **cols_datas)
                 if curs.rowcount>0:
-                    self.saveBookImage(isbn=cols_datas["ISBN"], imgData=cols_datas["ImgBook"])
+                    self.saveBookImage(isbn=cols_datas["ISBN"], imgData= imageData)
                     self.clearForm()
                     self.showBooksOnTablewidget()
             else:
@@ -197,13 +204,17 @@ class SaveBook(QMainWindow):
     def saveBookImage(self, isbn, imgData=None):
         try:
             if imgData is not None and len(isbn)==13:
-                db.insertData("KitapFotoTablosu", ISBN=isbn, ImgBook=imgData)
+                result = db.getImageData("KitapFotoTablosu", "COUNT(*)", ISBN=isbn)
+                if result:
+                    db.updateImage(ISBN=isbn, ImgBook=imgData)
+                else:
+                    db.insertData("KitapFotoTablosu", ISBN=isbn, ImgBook=imgData)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: saveBookImage \t\t Hata Kodu : {E}", self.duration)
 
     def saveNewBook(self) -> None:
         try:
-            def saveBooks(quantityBooks, cols_datas):
+            def saveBooks(quantityBooks, cols_datas) -> int :
                 saved = 0
                 for i in range(quantityBooks):                              # kaç adet kaydetmek istiyoruz
                     db.insertData(TableName="KitapTablosu", **cols_datas)
@@ -214,6 +225,8 @@ class SaveBook(QMainWindow):
 
             kacKitap = self.ui.spinBox_bookCount.value()
             cols_datas = self.getBookInfo()
+            imageData = cols_datas["ImgBook"]
+            del cols_datas["ImgBook"]
             if not cols_datas["KitapAdi"]:
                 msg.popup_mesaj("Boş alan uyarısı", "Eser adı boş olmamalı ! ! !\t\t")
             else:
@@ -229,7 +242,7 @@ class SaveBook(QMainWindow):
                     saved = saveBooks(quantityBooks=kacKitap, cols_datas=cols_datas)
 
                 if saved > 0 :
-                    self.saveBookImage(isbn=cols_datas["ISBN"], imgData= cols_datas["ImgBook"])
+                    self.saveBookImage(isbn=cols_datas["ISBN"], imgData= imageData)
                     mesaj = f"{saved} kitap başarı ile kayıt edildi"
                     saved = 0
                     self.showBooksOnTablewidget()
@@ -322,6 +335,7 @@ class SaveBook(QMainWindow):
 
     def clearForm(self):
         try:
+            self.ui.table_bookList.clearSelection()
             self.ui.le_isbn.clear()
             self.ui.le_bookName.clear()
             self.ui.combo_authorName.setCurrentIndex(-1)
@@ -334,8 +348,12 @@ class SaveBook(QMainWindow):
             self.ui.plain_description.clear()
             self.ui.spinBox_bookCount.setValue(1)
             self.setBarkodeNumber()
+            self.selectedIdForUpdate = None
             self.ui.btn_addImg.setIcon(QtGui.QIcon("img/book_cover.png"))
             self.bookPhotoData = None
+            self.ui.btn_save.setEnabled(True)
+            self.ui.btn_update.setEnabled(False)
+            self.ui.btn_del.setEnabled(False)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: clearForm        Hata Kodu : {E}", self.duration)
 

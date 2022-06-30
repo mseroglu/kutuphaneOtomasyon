@@ -90,6 +90,9 @@ class SaveMember(QWidget):
 
     def showMemberInfoInForm(self):
         try:
+            self.ui.btn_del.setEnabled(True)
+            self.ui.btn_update.setEnabled(True)
+            self.ui.btn_save.setEnabled(False)
             row     = self.ui.table_members.currentRow()
             tcno    = self.ui.table_members.item(row, 0).text()
             cameData = db.getMemberDataWithTcno(tcno)
@@ -199,6 +202,9 @@ class SaveMember(QWidget):
             self.ui.btn_addImg.setIcon(QtGui.QIcon("img/member.png"))
             self.memberPhotoData = None
             self.selectedIdForUpdate = 0
+            self.ui.btn_del.setEnabled(False)
+            self.ui.btn_update.setEnabled(False)
+            self.ui.btn_save.setEnabled(True)
         except Exception as E:
             print(E)
 

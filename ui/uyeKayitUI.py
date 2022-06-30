@@ -14,7 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1096, 686)
+        Form.resize(1200, 686)
+        Form.setMaximumSize(QtCore.QSize(1200, 16777215))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(8)
@@ -354,6 +355,7 @@ class Ui_Form(object):
         self.horizontalLayout_2.setContentsMargins(-1, 30, -1, -1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.btn_del = QtWidgets.QPushButton(Form)
+        self.btn_del.setEnabled(False)
         self.btn_del.setMinimumSize(QtCore.QSize(0, 40))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -361,6 +363,7 @@ class Ui_Form(object):
         self.btn_del.setObjectName("btn_del")
         self.horizontalLayout_2.addWidget(self.btn_del)
         self.btn_update = QtWidgets.QPushButton(Form)
+        self.btn_update.setEnabled(False)
         self.btn_update.setMinimumSize(QtCore.QSize(0, 40))
         font = QtGui.QFont()
         font.setPointSize(10)

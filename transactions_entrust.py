@@ -16,8 +16,8 @@ class ConfirmationUI(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.setWindowFlag( QtCore.Qt.WindowStaysOnTopHint )          # pencereyi en üstte tutar
-        self.setStyleSheet("""QGroupBox{padding: 20px 10px 0px 10px; font: italic bold 12px; }
-                    QGroupBox::title {                                       
+        self.setStyleSheet("""QGroupBox{padding: 10px 10px 0px 10px; font: italic bold 10pt; }
+                    QGroupBox::title {                             
                     border-top-right-radius: 15px;
                     border-top-left-radius: 15px;
                     subcontrol-origin: margin;
@@ -27,19 +27,11 @@ class ConfirmationUI(QWidget):
                     color: rgb(250, 250, 250)  }""")
 
         self.result = None
-        self.ui.btn_ok.clicked.connect(self.returnResult)
         self.ui.btn_escape.clicked.connect(self.close)
-
-    def returnResult(self):
-        try:
-            self.close()
-            Entrust().giveBooksToMembers()
-            Entrust().refreshTableWidgetItems()             # tablewidget ları yenile çalışmıyor
-        except Exception as E:
-            print(f"Fonk: returnResult      Hata: {E} ")
 
     def showConfirmationPage(self, memberData, booksData):
         try:
+            labelImg    = (self.ui.label_resim1, self.ui.label_resim2, self.ui.label_resim3, self.ui.label_resim4, self.ui.label_resim5)
             labelBarkods = (self.ui.label_barkod1, self.ui.label_barkod2, self.ui.label_barkod3, self.ui.label_barkod4, self.ui.label_barkod5)
             labelBooks   = (self.ui.label_eserAdi1, self.ui.label_eserAdi2, self.ui.label_eserAdi3, self.ui.label_eserAdi4, self.ui.label_eserAdi5)
             groupBoxes   = (self.ui.groupBox_1, self.ui.groupBox_2, self.ui.groupBox_3, self.ui.groupBox_4, self.ui.groupBox_5)
@@ -47,20 +39,26 @@ class ConfirmationUI(QWidget):
             self.ui.label_tcno.setText(memberData[5])
             self.ui.label_schoolNumber.setText(memberData[2])
             self.ui.label_class.setText(str(memberData[6])+" / "+memberData[7])
-            dataImg = db.getImageData(TableName="UyeTablosu", Col="Photo", uyeId= memberData[0])
+            imgMemberData = db.getImageData(TableName="UyeTablosu", Col="Photo", uyeId= memberData[0])
             pixmap = QtGui.QPixmap("img/kitap-kurdu.jpg")
-            if dataImg:
-                pixmap.loadFromData(dataImg)
+            if imgMemberData:
+                pixmap.loadFromData(imgMemberData)
             self.ui.label_memberImg.setPixmap(pixmap)
             for i in range(5):                  # önce temizlik
                 labelBarkods[i].setText("")
                 labelBooks[i].setText("")
+                labelImg[i].setPixmap(QtGui.QPixmap("img/book_cover.png"))
                 groupBoxes[i].hide()
 
             i = 0
-            for barkod, bookName in list(zip(booksData["Barkod"], booksData["KitapAdi"])):
+            for barkod, bookName, isbn in list(zip(booksData["Barkod"], booksData["KitapAdi"], booksData["ISBN"])):
                 labelBarkods[i].setText(barkod)
                 labelBooks[i].setText(bookName)
+                imgBookData = db.getImageData(TableName="KitapFotoTablosu", Col="ImgBook", ISBN=isbn)
+                pixmap = QtGui.QPixmap("img/book_cover.png")
+                if imgBookData:
+                    pixmap.loadFromData(imgBookData)
+                labelImg[i].setPixmap(pixmap)
                 groupBoxes[i].show()
                 groupBoxes[i].setStyleSheet("QGroupBox {background-color: #d9ead3; border-radius:10px}")
                 i += 1
@@ -76,33 +74,33 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
     dictBooksInfos      = {}
     dictMembersInfos    = {}
     selectedBarkodList  = []
-
     bookCheckboxObjectsForSelection = dict()
+    duration            = 10_000
+    numberOfBlankLines  = 20
 
     def __init__(self):
         super(Entrust, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.resize(1000,600)
+        self.resize(1200,800)
+        try:
+            self.winConfirmation = ConfirmationUI()
+            self.winConfirmation.ui.btn_ok.clicked.connect(self.giveBooksToMembers)
 
-        self.winConfirmation = ConfirmationUI()
+            self.refreshTableWidgetItems()
+            self.ui.radio_isim.clicked.connect(self.filterMembersOnTablewidget)
+            self.ui.radio_tc.clicked.connect(self.filterMembersOnTablewidget)
+            self.ui.radio_okulNo.clicked.connect(self.filterMembersOnTablewidget)
+            self.ui.le_searchMember.textChanged.connect(self.filterMembersOnTablewidget)
+            self.ui.le_searchBook.textChanged.connect(self.filterBooksOnTablewidget)
+            self.ui.le_searchBook.textChanged.connect(self.editBarkodNumberOnLineedit)
+            self.ui.radio_barkod.clicked.connect(self.filterBooksOnTablewidget)
+            self.ui.radio_isbn.clicked.connect(self.filterBooksOnTablewidget)
+            self.ui.radio_kitapAdi.clicked.connect(self.filterBooksOnTablewidget)
 
-        self.numberOfBlankLines = 20
-        self.duration           = 20_000
-
-
-        self.refreshTableWidgetItems()
-        self.ui.radio_isim.clicked.connect(self.filterMembersOnTablewidget)
-        self.ui.radio_tc.clicked.connect(self.filterMembersOnTablewidget)
-        self.ui.radio_okulNo.clicked.connect(self.filterMembersOnTablewidget)
-        self.ui.le_searchMember.textChanged.connect(self.filterMembersOnTablewidget)
-        self.ui.le_searchBook.textChanged.connect(self.filterBooksOnTablewidget)
-        self.ui.le_searchBook.textChanged.connect(self.editBarkodNumberOnLineedit)
-        self.ui.radio_barkod.clicked.connect(self.filterBooksOnTablewidget)
-        self.ui.radio_isbn.clicked.connect(self.filterBooksOnTablewidget)
-        self.ui.radio_kitapAdi.clicked.connect(self.filterBooksOnTablewidget)
-
-        self.ui.btn_clearSelection.clicked.connect(self.clearSelection)
+            self.ui.btn_clearSelection.clicked.connect(self.clearSelection)
+        except Exception as E:
+            print(f"Fonk: Entrust init   \tHata: {E}")
 
     def editBarkodNumberOnLineedit(self, text):
         try:
@@ -127,14 +125,16 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         tableWidgetResize(self.ui.table_booksList, (2, 3, 6, 4, 4))
 
     def refreshTableWidgetItems(self):
-        self.showMembersInTablewidget()
-        self.showBooksOnTablewidget()
+        try:
+            self.showMembersInTablewidget()
+            self.showBooksOnTablewidget()
+        except Exception as E:
+            print(f"Fonk: refreshTableWidgetItems \t\t{E}")
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         self.ui.le_searchBook.setFocus()
         self.setDateOnLabel()
         self.resizeEvent(QtGui.QResizeEvent)
-        self.ui.btn_clearSelection.click()          # bu da iş yapmıyor
 
     def returnDateXDayLater(self, xDay=7):
         try:
@@ -160,11 +160,11 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             btn = QPushButton("Ver")
             tcno = memberData[5]
             btn.setObjectName(tcno)
-            btn.setStyleSheet("QPushButton{background-color:pink}")
-            btn.setMinimumSize(15, 20)
+            btn.setStyleSheet("QPushButton{background-color: pink; font-size: 9pt}")
+            btn.setMinimumSize(50, 20)
             btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
             btn.clicked.connect( self.beforeShowConfirmationPage )
-            btn.setMaximumSize(30, 20)
+            btn.setMaximumSize(60, 20)
             layout.addWidget(btn)
             widget = QWidget()
             widget.setLayout(layout)
@@ -205,15 +205,20 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             memberId    : int   = Entrust.givenBookMemberId
             listBooksId : list  = Entrust.selectedBooksDict["KitapId"]
             for bookId in listBooksId:
-                db.insertData("EmanetTablosu", KitapId =bookId, UyeId =memberId, VerilisTarihi =datetime.today().date(), MaxKalmaSuresi=db.maxDayBooksStay)
+                db.insertData("EmanetTablosu",
+                              KitapId       = bookId,
+                              UyeId         = memberId,
+                              VerilisTarihi = datetime.today().date(),
+                              MaxKalmaSuresi= db.maxDayBooksStay    )
                 addedData += curs.rowcount
             if not addedData == -1:
+                self.winConfirmation.close()
                 db.updateNumberOfBookAtMember(AldigiEserSayisi=addedData, uyeId=memberId)
-                db.updateState(TableName="KitapTablosu", Durum=(0,), kitapId=listBooksId)  # Durum=0 kitap müsait değil demek
-                self.clearSelection()           # Burası neden çalışmıyor
+                db.updateState(TableName="KitapTablosu", Durum=(0,), kitapId=listBooksId)               # Durum=0 kitap müsait değil demek
+                self.clearSelection()
                 self.ui.le_searchBook.clear()
                 self.ui.le_searchMember.clear()
-                self.ui.statusbar.showMessage(f"{addedData} adet verilen kitap kaydı oluşturuldu")
+                self.ui.statusbar.showMessage(f"{addedData} adet verilen kitap kaydı oluşturuldu", self.duration)
         except Exception as E:
             print(f"Fonk: giveBooksToMembers \t\tHata Kodu : {E}")
 
@@ -228,12 +233,11 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             listBookId   = tuple(Entrust.dictBooksInfos[b][0] for b in Entrust.selectedBarkodList)
             listBarkod   = tuple(Entrust.dictBooksInfos[b][1] for b in Entrust.selectedBarkodList)
             listBookName = tuple(Entrust.dictBooksInfos[b][2] for b in Entrust.selectedBarkodList)
+            listISBN     = tuple(Entrust.dictBooksInfos[b][4] for b in Entrust.selectedBarkodList)
             Entrust.selectedBooksDict["KitapId"]   = listBookId
             Entrust.selectedBooksDict["KitapAdi"]  = listBookName
             Entrust.selectedBooksDict["Barkod"]    = listBarkod
-
-            # print("bookInfo ", Entrust.dictBooksInfos[barcod])
-            # print('self.selectedBooksDict: ', Entrust.selectedBooksDict)
+            Entrust.selectedBooksDict["ISBN"]    = listISBN
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: addBookIdListOnDataDict \t\tHata Kodu : {E}", self.duration)
 
@@ -246,9 +250,9 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             Entrust.bookCheckboxObjectsForSelection[barcodNo] = cBox
             Entrust.dictBooksInfos[ barcodNo ] = bookData           # bookData[1] = Barkod number
             cBox.setObjectName( barcodNo )
-            cBox.setMinimumSize(15, 15)
+            cBox.setMinimumSize(20, 20)
             cBox.clicked[bool].connect( self.addBookIdListOnDataDict )
-            cBox.setMaximumSize(15, 15)
+            cBox.setMaximumSize(30, 30)
             cBox.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
             layout.addWidget(cBox)
             widget = QWidget()
@@ -258,8 +262,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             print(f"Fonk: createCheckboxForTablewidget  Hata: {E} ")
 
     def showBooksOnTablewidget(self):
-        cols = ("kitapId", "Barkod", "KitapAdi", "YazarId", 'ISBN')
-        colLabels = ("Seç", "Barkod No", f"{'Eser Adı':^40}", f"{'Eserin Yazarı':^30}", 'ISBN')
+        colLabels = ("Seç", "Barkod No", 'Eser Adı', 'Eserin Yazarı', 'ISBN')
         try:
             self.ui.table_booksList.clear()
             books = db.getFreeBooks()
@@ -268,10 +271,10 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                 self.ui.table_booksList.setColumnCount(len(colLabels))
                 self.ui.table_booksList.setHorizontalHeaderLabels(colLabels)
                 for row, book in enumerate(books):
-                    self.ui.table_booksList.setCellWidget(row, 0, self.createCheckboxForTablewidget(book))
+                    self.ui.table_booksList.setCellWidget(row, 0, self.createCheckboxForTablewidget(bookData=book))
                     for index, item in enumerate(book[1:]):
                         col = index+1
-                        self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item if item else "")))
+                        self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item) if item else ""))
                         if col in (1,4):
                             self.ui.table_booksList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
                 self.resizeEvent(QtGui.QResizeEvent)
@@ -315,12 +318,10 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
 
     def showMembersInTablewidget(self) -> None:
         try:
-            cols = ("uyeId", "OkulNo", f"{'Ad':^30}", f"{'Soyad':^15}", "TCNo", "Sinif", "Sube", "EldekiSayi")
-            colLabels = ("Tıkla", 'Alabilir', "Okul No", f"{'Ad':^35}", f"{'Soyad':^20}", f"{'TC Kimlik No':^20}", "Sınıf", "Şube")
+            colLabels = ("Tıkla", 'Alabilir', "Okul No", 'Ad', 'Soyad', 'TC Kimlik No', "Sınıf", "Şube")
             self.ui.table_membersList.clear()
-            self.ui.table_membersList.setColumnCount(len(cols))
-            self.ui.table_membersList.setHorizontalHeaderLabels(colLabels)
             self.ui.table_membersList.setColumnCount(len(colLabels))
+            self.ui.table_membersList.setHorizontalHeaderLabels(colLabels)
             memberData = db.getMemberDataNumberOfRead()
             self.ui.table_membersList.setRowCount(len(memberData) + self.numberOfBlankLines)
             for row, uye in enumerate(memberData):
@@ -335,3 +336,6 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             self.resizeEvent(QtGui.QResizeEvent)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showMembersInTablewidget \t\t Hata Kodu : {E}", self.duration)
+
+
+
