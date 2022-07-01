@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1175</width>
-    <height>719</height>
+    <width>1226</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="font">
@@ -20,2103 +20,1097 @@
    <string>Kütüphane Otomasyonu v1.0</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_10">
     <item>
-     <widget class="QFrame" name="frame_side">
-      <property name="font">
-       <font>
-        <family>Tahoma</family>
-        <pointsize>10</pointsize>
-       </font>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QPushButton" name="btn_openTransactions">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Ver</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../gif/change.gif</normaloff>../gif/change.gif</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_openMemberSave">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Üye Kayıt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_openSaveBook">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Kitap Kayıt</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_openReports">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Raporlar</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_openSettings">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Ayarlar</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_quit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Çıkış</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QFrame" name="frame_main">
-      <property name="font">
-       <font>
-        <family>Tahoma</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>15</number>
-       </property>
-       <property name="topMargin">
-        <number>4</number>
-       </property>
-       <item>
-        <widget class="QGroupBox" name="groupBox_header">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <property name="leftMargin">
-           <number>0</number>
+      <widget class="QWidget" name="page">
+       <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,1">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
+color:white; 
+border: None; 
+border-radius: 15px; 
+font:bold; 
+font-size: 10pt; 
+padding: 10px 10px</string>
           </property>
-          <property name="topMargin">
-           <number>0</number>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="rightMargin">
-           <number>0</number>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="bottomMargin">
-           <number>0</number>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="maximumSize">
+              <size>
+               <width>555</width>
+               <height>400</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap>../img/lib1.jpg</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_2">
+          <property name="styleSheet">
+           <string notr="true">border: None</string>
           </property>
-          <item>
-           <widget class="QLabel" name="label_logo_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>500</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Tahoma</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap>../img/panoramic_books.png</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="margin">
-             <number>0</number>
-            </property>
-            <property name="indent">
-             <number>-1</number>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="font">
-             <font>
-              <family>Tahoma</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <property name="leftMargin">
-             <number>100</number>
-            </property>
-            <property name="rightMargin">
-             <number>100</number>
-            </property>
-            <item>
-             <widget class="QLineEdit" name="le_searchBarcode">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>50</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>50</number>
+           </property>
+           <item>
+            <widget class="QTabWidget" name="tabWidget_userOperations">
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QTabWidget{
+background-color: rgba(111, 180, 184, 255);
+}
+QTabWidget::pane{
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+}
+QTabWidget::tab-bar{
+alignment: center;
+background-color: rgba(111, 180, 184, 255);
+}
+QTabBar::tab {
+padding: 5px 30px;
+color: black;
+background-color: rgba(111, 180, 184, 255);
+margin: 1px;
+font-size: 10pt;
+}
+QTabBar::tab:first {
+border-top-left-radius: 10px;
+border-bottom-left-radius: 1px;
+background-color: rgba(111, 180, 184, 255);
+}
+QTabBar::tab:last {
+border-top-right-radius: 10px;
+border-bottom-right-radius: 1px;
+background-color: rgba(111, 180, 184, 255);
+}
+QTabBar::tab:selected{
+border-bottom: 2px solid red;
+}
+
+</string>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <property name="tabBarAutoHide">
+              <bool>false</bool>
+             </property>
+             <widget class="QWidget" name="tab_login">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>25</height>
-               </size>
+              <property name="autoFillBackground">
+               <bool>false</bool>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>150</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Tahoma</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="maxLength">
-               <number>8</number>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="dragEnabled">
-               <bool>true</bool>
-              </property>
-              <property name="placeholderText">
-               <string>barkod</string>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
-              </property>
+              <attribute name="title">
+               <string>Giriş</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <property name="spacing">
+                <number>15</number>
+               </property>
+               <property name="leftMargin">
+                <number>50</number>
+               </property>
+               <property name="rightMargin">
+                <number>50</number>
+               </property>
+               <item>
+                <spacer name="verticalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>161</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_username">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding: 0px 15px;
+}
+
+</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>username</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_password">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding-left: 15px;
+}
+</string>
+                 </property>
+                 <property name="echoMode">
+                  <enum>QLineEdit::Password</enum>
+                 </property>
+                 <property name="placeholderText">
+                  <string>password</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="checkBox_remember">
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: transparent;</string>
+                 </property>
+                 <property name="text">
+                  <string>Hatırla</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_11">
+                 <item>
+                  <spacer name="horizontalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_enter">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>10</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
+color:white; 
+border: None; 
+border-radius: 15px; 
+font:bold; 
+font-size: 10pt; 
+}
+QPushButton:hover{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 
+rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
+}
+</string>
+                   </property>
+                   <property name="text">
+                    <string>Otomasyon Giriş</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>161</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
              </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_barcodeRead">
-              <property name="maximumSize">
-               <size>
-                <width>40</width>
-                <height>30</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Tahoma</family>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="pixmap">
-               <pixmap>../img/barcodOkut.png</pixmap>
-              </property>
-              <property name="scaledContents">
-               <bool>true</bool>
-              </property>
+             <widget class="QWidget" name="tab_logup">
+              <attribute name="title">
+               <string>Kayıt</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <property name="leftMargin">
+                <number>50</number>
+               </property>
+               <property name="rightMargin">
+                <number>50</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="le_kurumAdi">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding: 0px 15px;
+font-size: 10pt;
+}
+
+QLineEdit:focus{
+border-top: 1px solid gray;
+}</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Kurum Adı</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_kurumKodu">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding: 0px 15px;
+font-size: 10pt;
+}
+
+QLineEdit:focus{
+border-top: 1px solid gray;
+}</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Kurum Kodu</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_mail">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding: 0px 15px;
+font-size: 10pt;
+}
+
+QLineEdit:focus{
+border-top: 1px solid gray;
+}</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>ADMIN:  mail@mail.com</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_savePass">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding: 0px 15px;
+font-size: 10pt;
+}
+
+QLineEdit:focus{
+border-top: 1px solid gray;
+}</string>
+                 </property>
+                 <property name="echoMode">
+                  <enum>QLineEdit::Password</enum>
+                 </property>
+                 <property name="placeholderText">
+                  <string>parola</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="le_savePass2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLineEdit{
+border-bottom: 1px solid gray;
+background-color: rgba(111, 180, 184, 255);
+border-radius: 15px;
+padding: 0px 15px;
+font-size: 10pt;
+}
+
+
+QLineEdit:focus{
+border-top: 1px solid gray;
+}</string>
+                 </property>
+                 <property name="echoMode">
+                  <enum>QLineEdit::Password</enum>
+                 </property>
+                 <property name="placeholderText">
+                  <string>parola tekrar</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <spacer name="horizontalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_forgetPass">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
+color:white; 
+border: None; 
+border-radius: 15px; 
+font:bold; 
+font-size: 10pt; 
+}
+QPushButton:hover{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 
+rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Şifremi Unuttum</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_register">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
+color:white; 
+border: None; 
+border-radius: 15px; 
+font:bold; 
+font-size: 10pt; 
+}
+QPushButton:hover{
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 
+rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
+}</string>
+                   </property>
+                   <property name="text">
+                    <string>Kayıt Ol</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_logo">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Tahoma</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap>../img/logo.png</pixmap>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="margin">
-             <number>0</number>
-            </property>
-            <property name="indent">
-             <number>-1</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font-size: 11pt}
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-</string>
-         </property>
-         <property name="tabShape">
-          <enum>QTabWidget::Rounded</enum>
-         </property>
-         <property name="currentIndex">
-          <number>4</number>
-         </property>
-         <property name="documentMode">
-          <bool>false</bool>
-         </property>
-         <widget class="QWidget" name="tab_books">
-          <attribute name="title">
-           <string>Eser Listesi</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <item>
-              <widget class="QPushButton" name="btn_searchBook">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="combo_searchCriteriaBook">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="le_searchBook">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
-               </property>
-               <property name="placeholderText">
-                <string>ara</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="table_bookList">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-             <attribute name="verticalHeaderDefaultSectionSize">
-              <number>40</number>
-             </attribute>
-             <attribute name="verticalHeaderMinimumSectionSize">
-              <number>30</number>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Barkod No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>New Column</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>ISBN</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Eser Adı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Yazarı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Kategori</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Bölüm</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Raf No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Yayınevi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Sayfa Sayısı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Basım Yılı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Kayıt Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Durum</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
             </widget>
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_members">
-          <attribute name="title">
-           <string>Üye Listesi</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QFrame" name="frame_side">
+          <property name="font">
+           <font>
+            <family>Tahoma</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QPushButton" name="btn_searchMember">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="combo_searchCriteriaMember">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="le_searchMember">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
-               </property>
-               <property name="placeholderText">
-                <string>ara</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="table_memberList">
+            <widget class="QPushButton" name="btn_openTransactions">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
              <property name="font">
               <font>
+               <family>Tahoma</family>
                <pointsize>10</pointsize>
               </font>
              </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
+             <property name="text">
+              <string>Ver</string>
              </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
+             <property name="icon">
+              <iconset>
+               <normaloff>../gif/change.gif</normaloff>../gif/change.gif</iconset>
              </property>
-             <attribute name="horizontalHeaderStretchLastSection">
+             <property name="iconSize">
+              <size>
+               <width>48</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_openMemberSave">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Üye Kayıt</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_openSaveBook">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Kitap Kayıt</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_openReports">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Raporlar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_openSettings">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Ayarlar</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_userChange">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Kullanıcı
+Değiştir</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_quit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Çıkış</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_main">
+          <property name="font">
+           <font>
+            <family>Tahoma</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>15</number>
+           </property>
+           <property name="topMargin">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="QGroupBox" name="groupBox_header">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <property name="flat">
               <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderDefaultSectionSize">
-              <number>40</number>
-             </attribute>
-             <attribute name="verticalHeaderMinimumSectionSize">
-              <number>30</number>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Üye Tipi</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <property name="leftMargin">
+               <number>0</number>
               </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
+              <property name="topMargin">
+               <number>0</number>
               </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
+              <property name="rightMargin">
+               <number>0</number>
               </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Durum</string>
+              <property name="bottomMargin">
+               <number>0</number>
               </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>TC Kimlik No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Okul No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Ad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Soyad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Cinsiyet</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Sınıf</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Şube</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Telefon</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Doğum Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Üyelik Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>111</red>
-                <green>180</green>
-                <blue>184</blue>
-               </color>
-              </property>
-             </column>
+              <item>
+               <widget class="QLabel" name="label_logo_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>500</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Tahoma</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap>../img/panoramic_books.png</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="font">
+                 <font>
+                  <family>Tahoma</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="leftMargin">
+                 <number>100</number>
+                </property>
+                <property name="rightMargin">
+                 <number>100</number>
+                </property>
+                <item>
+                 <widget class="QLineEdit" name="le_searchBarcode">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>150</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Tahoma</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="maxLength">
+                   <number>8</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="dragEnabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="placeholderText">
+                   <string>barkod</string>
+                  </property>
+                  <property name="clearButtonEnabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_barcodeRead">
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Tahoma</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap>../img/barcodOkut.png</pixmap>
+                  </property>
+                  <property name="scaledContents">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_logo">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Tahoma</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap>../img/logo.png</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_givenToday">
-          <attribute name="title">
-           <string>Bugün Verilenler</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QPushButton" name="btn_searchGivenToday">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="combo_searchCriteriaTodayGiven">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="le_searchGivenToday">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
-               </property>
-               <property name="placeholderText">
-                <string>ara</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="table_givenToday">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderDefaultSectionSize">
-              <number>40</number>
-             </attribute>
-             <attribute name="verticalHeaderMinimumSectionSize">
-              <number>30</number>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Barkod No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Eser Adı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Yazarı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>TC Kimlik No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Okul No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Ad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Soyad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Sınıf</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Şube</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Veriliş Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Kalan Gün</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>İade Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_expired">
-          <attribute name="title">
-           <string>Süresi Dolanlar</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_10">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <item>
-              <widget class="QPushButton" name="btn_searchExpired">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="combo_searchCriteriaExpired">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px;}
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="le_searchExpired">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
-               </property>
-               <property name="placeholderText">
-                <string>ara</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="table_expaired">
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderDefaultSectionSize">
-              <number>40</number>
-             </attribute>
-             <attribute name="verticalHeaderMinimumSectionSize">
-              <number>30</number>
-             </attribute>
-             <column>
-              <property name="text">
-               <string>Tıkla</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Barkod No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Eser Adı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Yazarı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Veriliş Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Kalan Gün</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>İade Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>TC Kimlik No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="textAlignment">
-               <set>AlignCenter</set>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Okul No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Ad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Soyad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Sınıf</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Şube</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab_outsides">
-          <attribute name="title">
-           <string>Dışardakiler</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_9">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <item>
-              <widget class="QPushButton" name="btn_searchOutside">
-               <property name="font">
-                <font>
-                 <family>Tahoma</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-               <property name="checked">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="combo_searchCriteriaOutside">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-
-
-</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="le_searchOutsides">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
-               </property>
-               <property name="placeholderText">
-                <string>ara</string>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QTableWidget" name="table_outsides">
+            <widget class="QTabWidget" name="tabWidget">
              <property name="font">
               <font>
                <family>Tahoma</family>
@@ -2124,327 +1118,1974 @@ QComboBox::down-arrow {
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QTableWidget:header {
+              <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font-size: 11pt}
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+             </property>
+             <property name="tabShape">
+              <enum>QTabWidget::Rounded</enum>
+             </property>
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <property name="documentMode">
+              <bool>false</bool>
+             </property>
+             <widget class="QWidget" name="tab_books">
+              <attribute name="title">
+               <string>Eser Listesi</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QPushButton" name="btn_searchBook">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="combo_searchCriteriaBook">
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="le_searchBook">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
+                   </property>
+                   <property name="placeholderText">
+                    <string>ara</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="table_bookList">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>true</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>40</number>
+                 </attribute>
+                 <attribute name="verticalHeaderMinimumSectionSize">
+                  <number>30</number>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Barkod No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>New Column</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>ISBN</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Eser Adı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Yazarı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Kategori</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Bölüm</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Raf No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Yayınevi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Sayfa Sayısı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Basım Yılı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Kayıt Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Durum</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_members">
+              <attribute name="title">
+               <string>Üye Listesi</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QPushButton" name="btn_searchMember">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="combo_searchCriteriaMember">
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="le_searchMember">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
+                   </property>
+                   <property name="placeholderText">
+                    <string>ara</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="table_memberList">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>40</number>
+                 </attribute>
+                 <attribute name="verticalHeaderMinimumSectionSize">
+                  <number>30</number>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Üye Tipi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Durum</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>TC Kimlik No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Okul No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Ad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Soyad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Cinsiyet</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Sınıf</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Şube</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Telefon</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Doğum Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Üyelik Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>111</red>
+                    <green>180</green>
+                    <blue>184</blue>
+                   </color>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_givenToday">
+              <attribute name="title">
+               <string>Bugün Verilenler</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QPushButton" name="btn_searchGivenToday">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="combo_searchCriteriaTodayGiven">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="le_searchGivenToday">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
+                   </property>
+                   <property name="placeholderText">
+                    <string>ara</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="table_givenToday">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>40</number>
+                 </attribute>
+                 <attribute name="verticalHeaderMinimumSectionSize">
+                  <number>30</number>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Barkod No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Eser Adı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Yazarı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>TC Kimlik No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Okul No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Ad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Soyad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Sınıf</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Şube</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Veriliş Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Kalan Gün</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>İade Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_expired">
+              <attribute name="title">
+               <string>Süresi Dolanlar</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QPushButton" name="btn_searchExpired">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="combo_searchCriteriaExpired">
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px;}
+
+QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="le_searchExpired">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}</string>
+                   </property>
+                   <property name="placeholderText">
+                    <string>ara</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="table_expaired">
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>true</bool>
+                 </property>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>40</number>
+                 </attribute>
+                 <attribute name="verticalHeaderMinimumSectionSize">
+                  <number>30</number>
+                 </attribute>
+                 <column>
+                  <property name="text">
+                   <string>Tıkla</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Barkod No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Eser Adı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Yazarı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Veriliş Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Kalan Gün</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>İade Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>TC Kimlik No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="textAlignment">
+                   <set>AlignCenter</set>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Okul No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Ad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Soyad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Sınıf</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Şube</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_outsides">
+              <attribute name="title">
+               <string>Dışardakiler</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_9">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QPushButton" name="btn_searchOutside">
+                   <property name="font">
+                    <font>
+                     <family>Tahoma</family>
+                     <pointsize>10</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../img/Search.png</normaloff>../img/Search.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="combo_searchCriteriaOutside">
+                   <property name="minimumSize">
+                    <size>
+                     <width>150</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QComboBox {
+background-color: rgba(66,146,157,255); 
+color:white; 
+border: None;
+border-radius: 5px; }
+
+QComboBox QAbstractItemView {
+color:rgb(0,100,200);
+background:rgb(200,200,200); 
+selection-color: rgb(15,250,250); 
+selection-background-color: rgb(100,100,100);  }
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    color: #272727;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow {
+    image: img/down_arrow.png;
+}
+
+
+</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="le_searchOutsides">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                     <weight>75</weight>
+                     <italic>false</italic>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLineEdit {
+background-color: rgba(66,146,157,255); 
+color:white; 
+border: None; 
+border-radius: 5px; 
+font:bold; 
+font-size: 11pt; 
+padding: 0px 5px;
+caret-color: red;
+}</string>
+                   </property>
+                   <property name="placeholderText">
+                    <string>ara</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QTableWidget" name="table_outsides">
+                 <property name="font">
+                  <font>
+                   <family>Tahoma</family>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QTableWidget:header {
 background-color:red;
 }</string>
+                 </property>
+                 <property name="sortingEnabled">
+                  <bool>false</bool>
+                 </property>
+                 <attribute name="horizontalHeaderMinimumSectionSize">
+                  <number>50</number>
+                 </attribute>
+                 <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="horizontalHeaderStretchLastSection">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderDefaultSectionSize">
+                  <number>40</number>
+                 </attribute>
+                 <attribute name="verticalHeaderMinimumSectionSize">
+                  <number>30</number>
+                 </attribute>
+                 <row>
+                  <property name="text">
+                   <string>1</string>
+                  </property>
+                 </row>
+                 <row>
+                  <property name="text">
+                   <string>2</string>
+                  </property>
+                 </row>
+                 <row>
+                  <property name="text">
+                   <string>3</string>
+                  </property>
+                 </row>
+                 <row>
+                  <property name="text">
+                   <string>4</string>
+                  </property>
+                 </row>
+                 <row>
+                  <property name="text">
+                   <string>5</string>
+                  </property>
+                 </row>
+                 <column>
+                  <property name="text">
+                   <string>Tıkla</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Barkod No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Eser Adı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Yazarı</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>255</red>
+                    <green>170</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Veriliş Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Kalan Gün</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>İade Tarihi</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>127</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>TC Kimlik No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Okul No</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Ad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Soyad</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Sınıf</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Şube</string>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="background">
+                   <color>
+                    <red>170</red>
+                    <green>255</green>
+                    <blue>255</blue>
+                   </color>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_footer">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>100</height>
+              </size>
              </property>
-             <property name="sortingEnabled">
-              <bool>false</bool>
+             <property name="font">
+              <font>
+               <family>Tahoma</family>
+               <pointsize>10</pointsize>
+              </font>
              </property>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>50</number>
-             </attribute>
-             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderDefaultSectionSize">
-              <number>40</number>
-             </attribute>
-             <attribute name="verticalHeaderMinimumSectionSize">
-              <number>30</number>
-             </attribute>
-             <row>
-              <property name="text">
-               <string>1</string>
-              </property>
-             </row>
-             <row>
-              <property name="text">
-               <string>2</string>
-              </property>
-             </row>
-             <row>
-              <property name="text">
-               <string>3</string>
-              </property>
-             </row>
-             <row>
-              <property name="text">
-               <string>4</string>
-              </property>
-             </row>
-             <row>
-              <property name="text">
-               <string>5</string>
-              </property>
-             </row>
-             <column>
-              <property name="text">
-               <string>Tıkla</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Barkod No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Eser Adı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Yazarı</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>255</red>
-                <green>170</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Veriliş Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Kalan Gün</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>İade Tarihi</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>127</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>TC Kimlik No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Okul No</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Ad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Soyad</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Sınıf</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Şube</string>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="background">
-               <color>
-                <red>170</red>
-                <green>255</green>
-                <blue>255</blue>
-               </color>
-              </property>
-             </column>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_6"/>
             </widget>
            </item>
           </layout>
          </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_footer">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Tahoma</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6"/>
-        </widget>
-       </item>
-      </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -2454,7 +3095,7 @@ background-color:red;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1175</width>
+     <width>1226</width>
      <height>26</height>
     </rect>
    </property>
@@ -2462,166 +3103,5 @@ background-color:red;
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>btn_searchOutside</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>le_searchOutsides</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>789</x>
-     <y>239</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>690</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchBook</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>le_searchBook</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>154</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>90</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchMember</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>le_searchMember</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>154</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>90</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchGivenToday</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>le_searchGivenToday</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>154</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>90</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchExpired</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>le_searchExpired</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>154</x>
-     <y>90</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>90</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchOutside</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>combo_searchCriteriaOutside</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>154</x>
-     <y>176</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>253</x>
-     <y>176</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchMember</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>combo_searchCriteriaMember</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>167</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>238</x>
-     <y>167</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchGivenToday</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>combo_searchCriteriaTodayGiven</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>167</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>238</x>
-     <y>167</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchExpired</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>combo_searchCriteriaExpired</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>167</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>238</x>
-     <y>167</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_searchBook</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>combo_searchCriteriaBook</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>139</x>
-     <y>167</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>238</x>
-     <y>167</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

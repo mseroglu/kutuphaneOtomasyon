@@ -18,7 +18,7 @@ class Settings_page(QWidget):
         self.duration = 15_000
         self.selectedUserId = None
 
-        self.ui.btn_saveInstutionInfo.clicked.connect(self.saveSchoolInfos)
+        #self.ui.btn_saveInstutionInfo.clicked.connect(self.saveSchoolInfos)
 
         self.ui.btn_userSave.clicked.connect(self.createNewUser )
         self.ui.btn_updateUser.clicked.connect(self.updateUser )
@@ -129,7 +129,6 @@ class Settings_page(QWidget):
     def showUserInfoInTablewidget(self) -> None :
         try:
             self.ui.tableWidget.clearContents()
-            self.ui.tableWidget.itemDoubleClicked.connect(self.clickedTablewidgetItemForChangeUserState)
             self.ui.tableWidget.itemClicked.connect(self.showUserInfoInForm)
             data = db.getUserInfoWithCase()
             for row, rowData in enumerate(data):
@@ -140,55 +139,22 @@ class Settings_page(QWidget):
         except Exception as E:
             print(f"Fonk: showUserInfoInTablewidget \tHata Kodu : {E}")
 
-    def clickedTablewidgetItemForChangeUserState(self, item):
-        try:
-            userInfo = item.data(QtCore.Qt.UserRole)
-            if userInfo is not None:
-                db.updateUserState(Durum=userInfo[2], Username=userInfo[0])
-                self.showUserInfoInTablewidget()
-        except Exception as E:
-            print(f"Fonk: clickedTablewidgetItemForChangeUserState \tHata Kodu : {E}")
-
     def showInstitutionInfo(self) -> None:
         try:
-            cameInfo = db.getData("OkulBilgiTablosu", "*")[0]
-            self.ui.le_institutionCode.setText(cameInfo[1])
-            self.ui.le_institutionCode.setEnabled(False)
-            self.ui.le_institutionName.setText(cameInfo[2])
-            self.ui.le_institutionName.setEnabled(False)
-            self.ui.btn_saveInstutionInfo.setEnabled(False)
-            self.ui.spinBox_maxNumberOfBooksGiven.setValue(cameInfo[3])
-            self.ui.spinBox_maxDayBooksStay.setValue(cameInfo[4])
+            cameInfo = db.getData("OkulBilgiTablosu", "*")
+            if cameInfo:
+                self.ui.le_institutionCode.setText(cameInfo[0][1])
+                self.ui.le_institutionCode.setEnabled(False)
+                self.ui.le_institutionName.setText(cameInfo[0][2])
+                self.ui.le_institutionName.setEnabled(False)
+                self.ui.btn_saveInstutionInfo.setEnabled(False)
+                self.ui.spinBox_maxNumberOfBooksGiven.setValue(cameInfo[0][3])
+                self.ui.spinBox_maxDayBooksStay.setValue(cameInfo[0][4])
         except Exception as E:
-            mesaj = msg.MesajBox("Dikkat", "Kurum bilgilerini kaydetmeniz gerekmektedir")
-            if mesaj[0]:
-                self.show()
-
-    def saveSchoolInfos(self) -> None:
-        try:
-            curs.execute(F"SELECT COUNT(*) FROM OkulBilgiTablosu")
-            if not curs.fetchone()[0]:
-                infoDict = self.getSchoolInfo()
-                if infoDict["KurumKodu"] and infoDict["OkulAdi"]:
-                    cevap = msg.MesajBox("Dikkat",
-                                          "Kurum bilgileri kaydedildikten sonra değiştirilemez. \n\n" 
-                                          "Kaydetmek istediğinizden emin misiniz? \n")
-                    if cevap[0]:
-                        db.insertData(TableName="OkulBilgiTablosu", **infoDict)
-                        self.ui.btn_saveInstutionInfo.setEnabled(False)
-                else:
-                    msg.popup_mesaj("Dikkat", "Kurum bilgileri boş olamaz !!!")
-        except Exception as E:
-            print(E)
-
-    def getSchoolInfo(self) -> dict:
-        return {"KurumKodu"         : self.ui.le_institutionCode.text().strip(),
-                "OkulAdi"           : self.ui.le_institutionName.text().strip().title(),
-                "MaxCount"          : self.ui.spinBox_maxNumberOfBooksGiven.value(),
-                "MaxDay"            : self.ui.spinBox_maxDayBooksStay.value()}
+            print(f"Fonk: showInstitutionInfo       Hata: {E} ")
 
     def getUserInfo(self) -> dict:
-        return {"GorevliTipi":self.ui.combo_userType.currentIndex(),
+        return {"KullaniciTipi":self.ui.combo_userType.currentIndex(),
                 "TCNo"      : self.ui.le_tcno.text().strip(),
                 "OkulNo"    : self.ui.le_studentNumber.text().strip(),
                 "Ad"        : self.ui.le_name.text().strip().title(),
@@ -203,8 +169,8 @@ class Settings_page(QWidget):
         try:
             if self.selectedUserId:
                 cols_datas = self.getUserInfo()
-                cols_datas['gorevliId'] = self.selectedUserId
-                db.updateData(TableName="GorevliTablosu", **cols_datas)
+                cols_datas['kullaniciId'] = self.selectedUserId
+                db.updateData(TableName="KullaniciTablosu", **cols_datas)
                 self.showUserInfoInTablewidget()
                 self.clearForm()
             else:
@@ -218,7 +184,7 @@ class Settings_page(QWidget):
                 result, _ = msg.MesajBox("DİKKAT : Kullanıcı silinecek",
                                          f"Seçili kullanıcıyı silmek istediğinizden emin misiniz?\t\t\n")
                 if result:
-                    db.delData("GorevliTablosu", gorevliId=self.selectedUserId)
+                    db.delData("KullaniciTablosu", kullaniciId=self.selectedUserId)
                     if curs.rowcount > 0:
                         msg.popup_mesaj('Silindi', "Kullanıcı silindi. Hadi hayırlı olsun. ;-)\t\n")
                     self.showUserInfoInTablewidget()
@@ -231,7 +197,7 @@ class Settings_page(QWidget):
     def createNewUser(self) -> None :
         try:
             cols_datas = self.getUserInfo()
-            db.insertData(TableName="GorevliTablosu", **cols_datas)
+            db.insertData(TableName="KullaniciTablosu", **cols_datas)
             if curs.rowcount>0:
                 title,mesaj = ("Yeni kullanıcı", "Yeni kullanıcı oluşturma işlemi başarılı...\t\t\n")
                 self.showUserInfoInTablewidget()

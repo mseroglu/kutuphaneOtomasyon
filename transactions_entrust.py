@@ -87,7 +87,6 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             self.winConfirmation = ConfirmationUI()
             self.winConfirmation.ui.btn_ok.clicked.connect(self.giveBooksToMembers)
 
-            self.refreshTableWidgetItems()
             self.ui.radio_isim.clicked.connect(self.filterMembersOnTablewidget)
             self.ui.radio_tc.clicked.connect(self.filterMembersOnTablewidget)
             self.ui.radio_okulNo.clicked.connect(self.filterMembersOnTablewidget)
@@ -124,17 +123,11 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         tableWidgetResize(self.ui.table_membersList, (3, 2, 2, 6, 3, 4, 1, 1))
         tableWidgetResize(self.ui.table_booksList, (2, 3, 6, 4, 4))
 
-    def refreshTableWidgetItems(self):
-        try:
-            self.showMembersInTablewidget()
-            self.showBooksOnTablewidget()
-        except Exception as E:
-            print(f"Fonk: refreshTableWidgetItems \t\t{E}")
-
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         self.ui.le_searchBook.setFocus()
         self.setDateOnLabel()
         self.resizeEvent(QtGui.QResizeEvent)
+        self.clearSelection()
 
     def returnDateXDayLater(self, xDay=7):
         try:
@@ -176,7 +169,8 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
     def clearSelection(self):
         try:
             Entrust.selectedBooksDict = {'KitapId':None,'KitapAdi':None}  # Bu temizlenmeli, yoksa son seçili kitaplar birden çok üyeye verilir.
-            self.refreshTableWidgetItems()
+            self.showMembersInTablewidget()
+            self.showBooksOnTablewidget()
             Entrust.selectedBarkodList = []                     # Bu liste sıfırlanmalı, yoksa önceki seçilmiş kitaplar gitmez
         except Exception as E:
             print(f"Fonk: clearSelection    \tHata: {E}")

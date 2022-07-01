@@ -14,18 +14,336 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1175, 719)
+        MainWindow.resize(1226, 761)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(9)
         MainWindow.setFont(font)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
+        self.stackedWidget.setObjectName("stackedWidget")
+        self.page = QtWidgets.QWidget()
+        self.page.setObjectName("page")
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.page)
+        self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_9.setSpacing(0)
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.frame = QtWidgets.QFrame(self.page)
+        self.frame.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));\n"
+"color:white; \n"
+"border: None; \n"
+"border-radius: 15px; \n"
+"font:bold; \n"
+"font-size: 10pt; \n"
+"padding: 10px 10px")
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.frame)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.label = QtWidgets.QLabel(self.frame)
+        self.label.setMaximumSize(QtCore.QSize(555, 400))
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap("ui\\../img/lib1.jpg"))
+        self.label.setScaledContents(True)
+        self.label.setObjectName("label")
+        self.verticalLayout_11.addWidget(self.label)
+        self.horizontalLayout_9.addWidget(self.frame)
+        self.frame_2 = QtWidgets.QFrame(self.page)
+        self.frame_2.setStyleSheet("border: None")
+        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_2.setObjectName("frame_2")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.frame_2)
+        self.verticalLayout_8.setContentsMargins(10, 50, 0, 50)
+        self.verticalLayout_8.setSpacing(0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.tabWidget_userOperations = QtWidgets.QTabWidget(self.frame_2)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.tabWidget_userOperations.setFont(font)
+        self.tabWidget_userOperations.setStyleSheet("QTabWidget{\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"}\n"
+"QTabWidget::pane{\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"}\n"
+"QTabWidget::tab-bar{\n"
+"alignment: center;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"}\n"
+"QTabBar::tab {\n"
+"padding: 5px 30px;\n"
+"color: black;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"margin: 1px;\n"
+"font-size: 10pt;\n"
+"}\n"
+"QTabBar::tab:first {\n"
+"border-top-left-radius: 10px;\n"
+"border-bottom-left-radius: 1px;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"}\n"
+"QTabBar::tab:last {\n"
+"border-top-right-radius: 10px;\n"
+"border-bottom-right-radius: 1px;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"}\n"
+"QTabBar::tab:selected{\n"
+"border-bottom: 2px solid red;\n"
+"}\n"
+"\n"
+"")
+        self.tabWidget_userOperations.setTabBarAutoHide(False)
+        self.tabWidget_userOperations.setObjectName("tabWidget_userOperations")
+        self.tab_login = QtWidgets.QWidget()
+        self.tab_login.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.tab_login.setAutoFillBackground(False)
+        self.tab_login.setObjectName("tab_login")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.tab_login)
+        self.verticalLayout_7.setContentsMargins(50, -1, 50, -1)
+        self.verticalLayout_7.setSpacing(15)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        spacerItem = QtWidgets.QSpacerItem(20, 161, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem)
+        self.le_username = QtWidgets.QLineEdit(self.tab_login)
+        self.le_username.setMinimumSize(QtCore.QSize(0, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.le_username.setFont(font)
+        self.le_username.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding: 0px 15px;\n"
+"}\n"
+"\n"
+"")
+        self.le_username.setObjectName("le_username")
+        self.verticalLayout_7.addWidget(self.le_username)
+        self.le_password = QtWidgets.QLineEdit(self.tab_login)
+        self.le_password.setMinimumSize(QtCore.QSize(0, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.le_password.setFont(font)
+        self.le_password.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding-left: 15px;\n"
+"}\n"
+"")
+        self.le_password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.le_password.setObjectName("le_password")
+        self.verticalLayout_7.addWidget(self.le_password)
+        self.checkBox_remember = QtWidgets.QCheckBox(self.tab_login)
+        self.checkBox_remember.setMaximumSize(QtCore.QSize(200, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.checkBox_remember.setFont(font)
+        self.checkBox_remember.setStyleSheet("background-color: transparent;")
+        self.checkBox_remember.setObjectName("checkBox_remember")
+        self.verticalLayout_7.addWidget(self.checkBox_remember)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_11.addItem(spacerItem1)
+        self.btn_enter = QtWidgets.QPushButton(self.tab_login)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_enter.sizePolicy().hasHeightForWidth())
+        self.btn_enter.setSizePolicy(sizePolicy)
+        self.btn_enter.setMinimumSize(QtCore.QSize(200, 40))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.btn_enter.setFont(font)
+        self.btn_enter.setStyleSheet("QPushButton{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));\n"
+"color:white; \n"
+"border: None; \n"
+"border-radius: 15px; \n"
+"font:bold; \n"
+"font-size: 10pt; \n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 \n"
+"rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));\n"
+"}\n"
+"")
+        self.btn_enter.setObjectName("btn_enter")
+        self.horizontalLayout_11.addWidget(self.btn_enter)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_11.addItem(spacerItem2)
+        self.verticalLayout_7.addLayout(self.horizontalLayout_11)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 161, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_7.addItem(spacerItem3)
+        self.tabWidget_userOperations.addTab(self.tab_login, "")
+        self.tab_logup = QtWidgets.QWidget()
+        self.tab_logup.setObjectName("tab_logup")
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.tab_logup)
+        self.verticalLayout_12.setContentsMargins(50, -1, 50, -1)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.le_kurumAdi = QtWidgets.QLineEdit(self.tab_logup)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_kurumAdi.sizePolicy().hasHeightForWidth())
+        self.le_kurumAdi.setSizePolicy(sizePolicy)
+        self.le_kurumAdi.setMinimumSize(QtCore.QSize(0, 40))
+        self.le_kurumAdi.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding: 0px 15px;\n"
+"font-size: 10pt;\n"
+"}\n"
+"\n"
+"QLineEdit:focus{\n"
+"border-top: 1px solid gray;\n"
+"}")
+        self.le_kurumAdi.setObjectName("le_kurumAdi")
+        self.verticalLayout_12.addWidget(self.le_kurumAdi)
+        self.le_kurumKodu = QtWidgets.QLineEdit(self.tab_logup)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_kurumKodu.sizePolicy().hasHeightForWidth())
+        self.le_kurumKodu.setSizePolicy(sizePolicy)
+        self.le_kurumKodu.setMinimumSize(QtCore.QSize(0, 40))
+        self.le_kurumKodu.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding: 0px 15px;\n"
+"font-size: 10pt;\n"
+"}\n"
+"\n"
+"QLineEdit:focus{\n"
+"border-top: 1px solid gray;\n"
+"}")
+        self.le_kurumKodu.setObjectName("le_kurumKodu")
+        self.verticalLayout_12.addWidget(self.le_kurumKodu)
+        self.le_mail = QtWidgets.QLineEdit(self.tab_logup)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_mail.sizePolicy().hasHeightForWidth())
+        self.le_mail.setSizePolicy(sizePolicy)
+        self.le_mail.setMinimumSize(QtCore.QSize(0, 40))
+        self.le_mail.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding: 0px 15px;\n"
+"font-size: 10pt;\n"
+"}\n"
+"\n"
+"QLineEdit:focus{\n"
+"border-top: 1px solid gray;\n"
+"}")
+        self.le_mail.setObjectName("le_mail")
+        self.verticalLayout_12.addWidget(self.le_mail)
+        self.le_savePass = QtWidgets.QLineEdit(self.tab_logup)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_savePass.sizePolicy().hasHeightForWidth())
+        self.le_savePass.setSizePolicy(sizePolicy)
+        self.le_savePass.setMinimumSize(QtCore.QSize(0, 40))
+        self.le_savePass.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding: 0px 15px;\n"
+"font-size: 10pt;\n"
+"}\n"
+"\n"
+"QLineEdit:focus{\n"
+"border-top: 1px solid gray;\n"
+"}")
+        self.le_savePass.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.le_savePass.setObjectName("le_savePass")
+        self.verticalLayout_12.addWidget(self.le_savePass)
+        self.le_savePass2 = QtWidgets.QLineEdit(self.tab_logup)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.le_savePass2.sizePolicy().hasHeightForWidth())
+        self.le_savePass2.setSizePolicy(sizePolicy)
+        self.le_savePass2.setMinimumSize(QtCore.QSize(0, 40))
+        self.le_savePass2.setStyleSheet("QLineEdit{\n"
+"border-bottom: 1px solid gray;\n"
+"background-color: rgba(111, 180, 184, 255);\n"
+"border-radius: 15px;\n"
+"padding: 0px 15px;\n"
+"font-size: 10pt;\n"
+"}\n"
+"\n"
+"\n"
+"QLineEdit:focus{\n"
+"border-top: 1px solid gray;\n"
+"}")
+        self.le_savePass2.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.le_savePass2.setObjectName("le_savePass2")
+        self.verticalLayout_12.addWidget(self.le_savePass2)
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_13.addItem(spacerItem4)
+        self.btn_forgetPass = QtWidgets.QPushButton(self.tab_logup)
+        self.btn_forgetPass.setMinimumSize(QtCore.QSize(200, 40))
+        self.btn_forgetPass.setStyleSheet("QPushButton{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));\n"
+"color:white; \n"
+"border: None; \n"
+"border-radius: 15px; \n"
+"font:bold; \n"
+"font-size: 10pt; \n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 \n"
+"rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));\n"
+"}")
+        self.btn_forgetPass.setObjectName("btn_forgetPass")
+        self.horizontalLayout_13.addWidget(self.btn_forgetPass)
+        self.btn_register = QtWidgets.QPushButton(self.tab_logup)
+        self.btn_register.setMinimumSize(QtCore.QSize(200, 40))
+        self.btn_register.setStyleSheet("QPushButton{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));\n"
+"color:white; \n"
+"border: None; \n"
+"border-radius: 15px; \n"
+"font:bold; \n"
+"font-size: 10pt; \n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 \n"
+"rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));\n"
+"}")
+        self.btn_register.setObjectName("btn_register")
+        self.horizontalLayout_13.addWidget(self.btn_register)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_13.addItem(spacerItem5)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_13)
+        self.tabWidget_userOperations.addTab(self.tab_logup, "")
+        self.verticalLayout_8.addWidget(self.tabWidget_userOperations)
+        self.horizontalLayout_9.addWidget(self.frame_2)
+        self.horizontalLayout_9.setStretch(0, 1)
+        self.horizontalLayout_9.setStretch(1, 1)
+        self.stackedWidget.addWidget(self.page)
+        self.page_2 = QtWidgets.QWidget()
+        self.page_2.setObjectName("page_2")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.page_2)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.frame_side = QtWidgets.QFrame(self.centralwidget)
+        self.frame_side = QtWidgets.QFrame(self.page_2)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -36,12 +354,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_side)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.btn_openTransactions = QtWidgets.QPushButton(self.frame_side)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_openTransactions.sizePolicy().hasHeightForWidth())
         self.btn_openTransactions.setSizePolicy(sizePolicy)
-        self.btn_openTransactions.setMinimumSize(QtCore.QSize(100, 100))
+        self.btn_openTransactions.setMinimumSize(QtCore.QSize(100, 80))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -53,12 +371,12 @@ class Ui_MainWindow(object):
         self.btn_openTransactions.setObjectName("btn_openTransactions")
         self.verticalLayout_2.addWidget(self.btn_openTransactions)
         self.btn_openMemberSave = QtWidgets.QPushButton(self.frame_side)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_openMemberSave.sizePolicy().hasHeightForWidth())
         self.btn_openMemberSave.setSizePolicy(sizePolicy)
-        self.btn_openMemberSave.setMinimumSize(QtCore.QSize(100, 100))
+        self.btn_openMemberSave.setMinimumSize(QtCore.QSize(100, 80))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -66,12 +384,12 @@ class Ui_MainWindow(object):
         self.btn_openMemberSave.setObjectName("btn_openMemberSave")
         self.verticalLayout_2.addWidget(self.btn_openMemberSave)
         self.btn_openSaveBook = QtWidgets.QPushButton(self.frame_side)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_openSaveBook.sizePolicy().hasHeightForWidth())
         self.btn_openSaveBook.setSizePolicy(sizePolicy)
-        self.btn_openSaveBook.setMinimumSize(QtCore.QSize(100, 100))
+        self.btn_openSaveBook.setMinimumSize(QtCore.QSize(100, 80))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -79,12 +397,12 @@ class Ui_MainWindow(object):
         self.btn_openSaveBook.setObjectName("btn_openSaveBook")
         self.verticalLayout_2.addWidget(self.btn_openSaveBook)
         self.btn_openReports = QtWidgets.QPushButton(self.frame_side)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_openReports.sizePolicy().hasHeightForWidth())
         self.btn_openReports.setSizePolicy(sizePolicy)
-        self.btn_openReports.setMinimumSize(QtCore.QSize(100, 100))
+        self.btn_openReports.setMinimumSize(QtCore.QSize(100, 80))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -92,27 +410,40 @@ class Ui_MainWindow(object):
         self.btn_openReports.setObjectName("btn_openReports")
         self.verticalLayout_2.addWidget(self.btn_openReports)
         self.btn_openSettings = QtWidgets.QPushButton(self.frame_side)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_openSettings.sizePolicy().hasHeightForWidth())
         self.btn_openSettings.setSizePolicy(sizePolicy)
-        self.btn_openSettings.setMinimumSize(QtCore.QSize(100, 100))
+        self.btn_openSettings.setMinimumSize(QtCore.QSize(100, 80))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
         self.btn_openSettings.setFont(font)
         self.btn_openSettings.setObjectName("btn_openSettings")
         self.verticalLayout_2.addWidget(self.btn_openSettings)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem6)
+        self.btn_userChange = QtWidgets.QPushButton(self.frame_side)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btn_userChange.sizePolicy().hasHeightForWidth())
+        self.btn_userChange.setSizePolicy(sizePolicy)
+        self.btn_userChange.setMinimumSize(QtCore.QSize(100, 80))
+        font = QtGui.QFont()
+        font.setFamily("Tahoma")
+        font.setPointSize(10)
+        self.btn_userChange.setFont(font)
+        self.btn_userChange.setObjectName("btn_userChange")
+        self.verticalLayout_2.addWidget(self.btn_userChange)
         self.btn_quit = QtWidgets.QPushButton(self.frame_side)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_quit.sizePolicy().hasHeightForWidth())
         self.btn_quit.setSizePolicy(sizePolicy)
-        self.btn_quit.setMinimumSize(QtCore.QSize(100, 100))
+        self.btn_quit.setMinimumSize(QtCore.QSize(100, 80))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -120,7 +451,7 @@ class Ui_MainWindow(object):
         self.btn_quit.setObjectName("btn_quit")
         self.verticalLayout_2.addWidget(self.btn_quit)
         self.horizontalLayout.addWidget(self.frame_side)
-        self.frame_main = QtWidgets.QFrame(self.centralwidget)
+        self.frame_main = QtWidgets.QFrame(self.page_2)
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -165,8 +496,8 @@ class Ui_MainWindow(object):
         self.label_logo_2.setIndent(-1)
         self.label_logo_2.setObjectName("label_logo_2")
         self.horizontalLayout_6.addWidget(self.label_logo_2)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem1)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem7)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setContentsMargins(100, -1, 100, -1)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
@@ -200,8 +531,8 @@ class Ui_MainWindow(object):
         self.label_barcodeRead.setObjectName("label_barcodeRead")
         self.horizontalLayout_4.addWidget(self.label_barcodeRead)
         self.horizontalLayout_6.addLayout(self.horizontalLayout_4)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem2)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem8)
         self.label_logo = QtWidgets.QLabel(self.groupBox_header)
         self.label_logo.setMaximumSize(QtCore.QSize(100, 16777215))
         font = QtGui.QFont()
@@ -958,9 +1289,17 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(11)
         self.combo_searchCriteriaOutside.setFont(font)
-        self.combo_searchCriteriaOutside.setStyleSheet("QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }\n"
+        self.combo_searchCriteriaOutside.setStyleSheet("QComboBox {\n"
+"background-color: rgba(66,146,157,255); \n"
+"color:white; \n"
+"border: None;\n"
+"border-radius: 5px; }\n"
 "\n"
-"QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }\n"
+"QComboBox QAbstractItemView {\n"
+"color:rgb(0,100,200);\n"
+"background:rgb(200,200,200); \n"
+"selection-color: rgb(15,250,250); \n"
+"selection-background-color: rgb(100,100,100);  }\n"
 "\n"
 "QComboBox::drop-down {\n"
 "    subcontrol-origin: padding;\n"
@@ -995,7 +1334,16 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setWeight(75)
         self.le_searchOutsides.setFont(font)
-        self.le_searchOutsides.setStyleSheet("QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}")
+        self.le_searchOutsides.setStyleSheet("QLineEdit {\n"
+"background-color: rgba(66,146,157,255); \n"
+"color:white; \n"
+"border: None; \n"
+"border-radius: 5px; \n"
+"font:bold; \n"
+"font-size: 11pt; \n"
+"padding: 0px 5px;\n"
+"caret-color: red;\n"
+"}")
         self.le_searchOutsides.setClearButtonEnabled(True)
         self.le_searchOutsides.setObjectName("le_searchOutsides")
         self.horizontalLayout_8.addWidget(self.le_searchOutsides)
@@ -1145,9 +1493,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.verticalLayout.addWidget(self.groupBox_footer)
         self.horizontalLayout.addWidget(self.frame_main)
+        self.stackedWidget.addWidget(self.page_2)
+        self.horizontalLayout_10.addWidget(self.stackedWidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1175, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1226, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -1155,27 +1505,34 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(4)
-        self.btn_searchOutside.clicked['bool'].connect(self.le_searchOutsides.setVisible) # type: ignore
-        self.btn_searchBook.clicked['bool'].connect(self.le_searchBook.setVisible) # type: ignore
-        self.btn_searchMember.clicked['bool'].connect(self.le_searchMember.setVisible) # type: ignore
-        self.btn_searchGivenToday.clicked['bool'].connect(self.le_searchGivenToday.setVisible) # type: ignore
-        self.btn_searchExpired.clicked['bool'].connect(self.le_searchExpired.setVisible) # type: ignore
-        self.btn_searchOutside.clicked['bool'].connect(self.combo_searchCriteriaOutside.setVisible) # type: ignore
-        self.btn_searchMember.clicked['bool'].connect(self.combo_searchCriteriaMember.setVisible) # type: ignore
-        self.btn_searchGivenToday.clicked['bool'].connect(self.combo_searchCriteriaTodayGiven.setVisible) # type: ignore
-        self.btn_searchExpired.clicked['bool'].connect(self.combo_searchCriteriaExpired.setVisible) # type: ignore
-        self.btn_searchBook.clicked['bool'].connect(self.combo_searchCriteriaBook.setVisible) # type: ignore
+        self.stackedWidget.setCurrentIndex(0)
+        self.tabWidget_userOperations.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Kütüphane Otomasyonu v1.0"))
+        self.le_username.setPlaceholderText(_translate("MainWindow", "username"))
+        self.le_password.setPlaceholderText(_translate("MainWindow", "password"))
+        self.checkBox_remember.setText(_translate("MainWindow", "Hatırla"))
+        self.btn_enter.setText(_translate("MainWindow", "Otomasyon Giriş"))
+        self.tabWidget_userOperations.setTabText(self.tabWidget_userOperations.indexOf(self.tab_login), _translate("MainWindow", "Giriş"))
+        self.le_kurumAdi.setPlaceholderText(_translate("MainWindow", "Kurum Adı"))
+        self.le_kurumKodu.setPlaceholderText(_translate("MainWindow", "Kurum Kodu"))
+        self.le_mail.setPlaceholderText(_translate("MainWindow", "ADMIN:  mail@mail.com"))
+        self.le_savePass.setPlaceholderText(_translate("MainWindow", "parola"))
+        self.le_savePass2.setPlaceholderText(_translate("MainWindow", "parola tekrar"))
+        self.btn_forgetPass.setText(_translate("MainWindow", "Şifremi Unuttum"))
+        self.btn_register.setText(_translate("MainWindow", "Kayıt Ol"))
+        self.tabWidget_userOperations.setTabText(self.tabWidget_userOperations.indexOf(self.tab_logup), _translate("MainWindow", "Kayıt"))
         self.btn_openTransactions.setText(_translate("MainWindow", "Ver"))
         self.btn_openMemberSave.setText(_translate("MainWindow", "Üye Kayıt"))
         self.btn_openSaveBook.setText(_translate("MainWindow", "Kitap Kayıt"))
         self.btn_openReports.setText(_translate("MainWindow", "Raporlar"))
         self.btn_openSettings.setText(_translate("MainWindow", "Ayarlar"))
+        self.btn_userChange.setText(_translate("MainWindow", "Kullanıcı\n"
+"Değiştir"))
         self.btn_quit.setText(_translate("MainWindow", "Çıkış"))
         self.le_searchBarcode.setPlaceholderText(_translate("MainWindow", "barkod"))
         self.le_searchBook.setPlaceholderText(_translate("MainWindow", "ara"))

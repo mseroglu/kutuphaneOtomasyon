@@ -29,6 +29,7 @@ class Db:
         self.maxDayBooksStay        = 7    # gün
         self.maxNumberOfBooksGiven  = 3    # adet
         self.byteImg                = None
+        self.loggedAccountType      = None
 
         IdInfo = " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE"
         # self.createTable("YazdirmaKuyruguTablosu", "Id" + IdInfo, "KitapId INTEGER NOT NULL UNIQUE")
@@ -61,16 +62,16 @@ class Db:
                         "Photo BLOB",
                         "UyeKartiPrint INTEGER",
                         "AldigiEserSayisi INTEGER")
-        self.createTable("GorevliTablosu", "gorevliId"+IdInfo,
-                        "GorevliTipi INTEGER NOT NULL",
-                        "TCNo TEXT NOT NULL UNIQUE",
+        self.createTable("KullaniciTablosu", "kullaniciId"+IdInfo,
+                        "KullaniciTipi INTEGER NOT NULL",
+                        "TCNo TEXT UNIQUE",
                         "OkulNo TEXT",
-                        "Ad TEXT NOT NULL",
-                        "Soyad TEXT NOT NULL",
+                        "Ad TEXT",
+                        "Soyad TEXT",
                         "Sinif TEXT",
                         "Sube TEXT",
-                        "Username TEXT UNIQUE",
-                        "Password TEXT",
+                        "Username TEXT NOT NULL UNIQUE",
+                        "Password TEXT NOT NULL",
                         "Durum INTEGER" )
         self.createTable("OkulBilgiTablosu", "kurumId"+IdInfo,
                         "KurumKodu TEXT NOT NULL",
@@ -202,7 +203,7 @@ class Db:
             cols = str(tuple(df_xls.columns)).replace("'", "")
             self.forceInsertMultiMember(cols, df_xls.values)
         except Exception as E:
-            msg.popup_mesaj("İşlem Başarısız", "Eklemeye çalıştığınız veri içerisinde kayıtlı bir TC kimlik numarası tekrar kayıt edilmeye çalışıyor.")
+            msg.popup_mesaj("İşlem Başarısız", "Eklemeye çalıştığınız veri içerisindeki bir TC kimlik numarası daha önce kullanılmıştır.")
             print("Daha önce kaydedilmiş bir TC kimlik numarası tekrar kullanılmaya çalışıyor.\nHata : ", E)
 
     def insertBookDatasFromExcel(self):
@@ -402,7 +403,7 @@ class Db:
     def updateUserState(self, Durum: str, Username: str):
         try:
             durum = {"Aktif": 0, "Pasif": 1}
-            sql = f""" UPDATE GorevliTablosu SET Durum=? WHERE Username=? """
+            sql = f""" UPDATE KullaniciTablosu SET Durum=? WHERE Username=? """
             curs.execute(sql, (durum[Durum], Username))
             conn.commit()
             if curs.rowcount>0:
@@ -536,8 +537,8 @@ class Db:
         gorevliTipi = ("Öğrenci", "Personel", "Admin")
         try:
             sql =f"""SELECT Username, 
-            CASE WHEN GorevliTipi=0 THEN '{gorevliTipi[0]}' WHEN GorevliTipi=1 THEN '{gorevliTipi[1]}' ELSE '{gorevliTipi[2]}' END,
-            CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END, * FROM GorevliTablosu ORDER BY GorevliTipi DESC """
+            CASE WHEN KullaniciTipi=0 THEN '{gorevliTipi[0]}' WHEN KullaniciTipi=1 THEN '{gorevliTipi[1]}' ELSE '{gorevliTipi[2]}' END,
+            CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END, * FROM KullaniciTablosu ORDER BY KullaniciTipi DESC """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -724,18 +725,12 @@ class Db:
 db = Db()
 
 if __name__=="__main__":
-    db.insertBookDatasFromExcel()
-
-
     pass
 
 
-"""
-cols = ['Barkod', 'ISBN', 'KitapAdi', 'KayitTarihi', 'Durum']           # sadece istenen columns
-engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')         
-df_sql = pd.read_sql("KitapTablosu", engine, columns=cols)
-print(df_sql.columns)                                                   # columns
-df_xls = pd.read_excel("excel_pages/Kitap_Listesi.xls")
-df_xls.rename(columns={"KayitTarihi":"Kayıt Tarihi","KitapAdi":"Kitap Adı", "SayfaSayisi":"Sayfa Sayısı"}, inplace=True)
-df_xls.to_sql("KitapTablosu", engine, if_exists="append", index=False)
-"""
+
+import firebase_admin
+from firebase_admin import credentials
+
+cred = credentials.Certificate("path/to/serviceAccountKey.json")
+firebase_admin.initialize_app(cred)

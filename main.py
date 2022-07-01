@@ -3,9 +3,8 @@ import sys, locale
 
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCompleter
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtPrintSupport import QPrintPreviewDialog, QPrintDialog, QPrinter
 
 from ui.anasayfaUI import Ui_MainWindow
 from member_save import SaveMember
@@ -21,10 +20,14 @@ from messageBox import msg
 
 
 class MainWindow(QMainWindow):
+    userType = {0:"Görevli Öğrenci", 1:"Görevli Personel", 2:"Admin"}
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon("img/logo.png"))
         self.setGeometry(200,50,800,600)
+
+
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -44,6 +47,7 @@ class MainWindow(QMainWindow):
         self.dictEscrowBookInfos= {}
 
         self.addItemsInCombos()
+        self.showInstitutionInfo()
 
         self.ui.btn_searchOutside.clicked['bool'].connect(self.clearSearching)
         self.ui.btn_searchBook.clicked['bool'].connect(self.clearSearching)
@@ -79,22 +83,142 @@ class MainWindow(QMainWindow):
         self.ui.table_memberList.installEventFilter(self)
 
 
+        ####################### USER OPERATİONS ###################
+        self.ui.btn_enter.clicked.connect(self.login)
+        self.ui.le_password.returnPressed.connect(self.login)
+        self.ui.btn_userChange.clicked.connect(self.logout)
+        self.ui.btn_register.clicked.connect(self.createSuperUser)
+
+        self.setCompleterUserName()
+
+    def setCompleterUserName(self):
+        completerList = []
+        usernameList = db.getData("KullaniciTablosu", "Username")
+        for user in usernameList:
+            if "@" in user[0]:
+                self.ui.le_mail.setCompleter(QCompleter(user))
+            completerList.append(user[0])
+        self.ui.le_username.setCompleter(QCompleter(completerList))
 
 
-
-    def eventFilter(self, obj, event) -> bool:
+    def showInstitutionInfo(self) -> None:
         try:
-            item = self.ui.table_memberList.currentItem()
-            if item is not None:
-                print(item.text())
-            if event.type() == QtCore.QEvent.Enter:
-                print("label giriş")
-            elif event.type() == QtCore.QEvent.Leave:
-                print("label çıkış")
-            return super(MainWindow, self).eventFilter(obj, event)
+            cameInfo = db.getData("OkulBilgiTablosu", "*")
+            if cameInfo:
+                self.ui.le_kurumKodu.setText(cameInfo[0][1])
+                self.ui.le_kurumKodu.setEnabled(False)
+                self.ui.le_kurumAdi.setText(cameInfo[0][2])
+                self.ui.le_kurumAdi.setEnabled(False)
+                self.ui.btn_register.setVisible(False)
+                self.ui.btn_forgetPass.setVisible(True)
+                self.ui.le_savePass.setVisible(False)
+                self.ui.le_savePass2.setVisible(False)
+            else:
+                self.ui.btn_register.setVisible(True)
+                self.ui.btn_forgetPass.setVisible(False)
+        except Exception as E:
+            print(f"Fonk: showInstitutionInfo       Hata: {E} ")
+
+    def logout(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        self.showNormal()
+
+    def createSuperUser(self) -> None :
+        try:
+            cols_datas = self.getUserInfo()
+            if cols_datas:
+                db.insertData(TableName="KullaniciTablosu", **cols_datas)
+                if curs.rowcount>0:
+                    title,mesaj = ("Yeni kullanıcı", "Yönetici hesabı oluşturma işlemi başarılı...\t\t\n")
+                    self.saveSchoolInfos()
+                    self.clearRegisterForm()
+                else:
+                    title, mesaj = ("Dikkat : İşlem başarısız", "İşlem başarısız. Yeni kullanıcı oluşturulamadı !\n\n" )
+                msg.popup_mesaj(title, mesaj)
         except Exception as E:
             print(E)
 
+    def clearRegisterForm(self):
+        self.ui.le_kurumAdi.setEnabled(False)
+        self.ui.le_kurumKodu.setEnabled(False)
+        self.ui.le_mail.clear()
+        self.ui.le_savePass.clear()
+        self.ui.le_savePass2.clear()
+        self.ui.btn_register.setVisible(False)
+        self.ui.btn_forgetPass.setVisible(True)
+
+    def clearLoginForm(self):
+        self.ui.le_username.clear()
+        self.ui.le_password.clear()
+
+    def getUserInfo(self) -> dict:
+        username = self.ui.le_mail.text().strip()
+        password = self.ui.le_savePass.text().strip()
+        password2= self.ui.le_savePass2.text().strip()
+        if username.find("@") == -1:
+            msg.popup_mesaj("e-mail hatası", "Girdiğiniz kullanıcı adı bir e-mail adresi olmalıdır")
+            return
+        elif not password.isalnum():
+            msg.popup_mesaj("Karakter Hatası", "Şifre sadece sayı ve harflerden oluşabilir !")
+            return
+        elif password != password2:
+            msg.popup_mesaj("Parola eşleşme hatası", "Girdiğiniz parolalar eşleşmiyor !")
+            self.ui.le_savePass2.clear()
+            self.ui.le_savePass.clear()
+        else:
+            return {"KullaniciTipi" : 2,
+                    "Username"      : username,
+                    "Password"      : password,
+                    "Durum"         : 1 }
+
+    def saveSchoolInfos(self) -> None:
+        try:
+            curs.execute(F"SELECT COUNT(*) FROM OkulBilgiTablosu")
+            if not curs.fetchone()[0]:
+                infoDict = self.getSchoolInfo()
+                if infoDict:
+                    db.insertData(TableName="OkulBilgiTablosu", **infoDict)
+        except Exception as E:
+            self.ui.statusbar.showMessage(f"Fonk: saveSchoolInfos    Hata: {E} ", self.duration)
+
+    def getSchoolInfo(self) -> dict:
+        kurumKodu = self.ui.le_kurumKodu.text().strip()
+        kurumAdi  = self.ui.le_kurumAdi.text().strip().title()
+        if not kurumAdi or not kurumKodu :
+            msg.popup_mesaj("Kurum bilgileri eksik", "Kurum adı veya kurum kodu boş olmamalı")
+            return
+        return {"KurumKodu" : kurumKodu,
+                "OkulAdi"   : kurumAdi,
+                "MaxCount"  : 3,
+                "MaxDay"    : 7}
+
+    def login(self):
+        try:
+            username = self.ui.le_username.text().strip()
+            password = self.ui.le_password.text().strip()
+            curs.execute("SELECT KullaniciTipi FROM KullaniciTablosu WHERE Username=? AND Password=?", (username, password))
+            userTypeList = curs.fetchone()
+            if userTypeList:
+                db.loggedAccountType = userTypeList[0]
+                self.setWindowTitle(f"Kütüphane Otomasyonu v1.0          Oturum :  {username}  ({self.userType[db.loggedAccountType]})")
+                self.ui.stackedWidget.setCurrentIndex(1)
+                self.showMaximized()
+                if not self.ui.checkBox_remember.isChecked():
+                    self.clearLoginForm()
+            else:
+                msg.popup_mesaj("Hata !", "Kullanıcı Adı veya Parola hatalı !!!\t\t\n")
+        except Exception as E:
+            print(E)
+
+    def eventFilter(self, obj, event) -> bool:
+        try:
+            if event.type() == QtCore.QEvent.Enter:
+                pass
+            elif event.type() == QtCore.QEvent.Leave:
+                pass
+            return super(MainWindow, self).eventFilter(obj, event)
+        except Exception as E:
+            print(E)
 
     def tusaBasYaziYazdir(self):
         key_press = QtGui.QKeyEvent(QtGui.QKeyEvent.KeyPress, QtCore.Qt.Key_X, QtCore.Qt.NoModifier, "X")
@@ -103,60 +227,12 @@ class MainWindow(QMainWindow):
     def enterEvent(self, a0: QtCore.QEvent) -> None:
         self.ui.le_searchBarcode.setFocus()
 
-
-    def handlePreview(self):
-        try:
-            dialog = QPrintPreviewDialog()
-            dialog.paintRequested.connect(self.handlePaintRequest)
-            dialog.exec_()
-        except Exception as E:
-            print(f"Fonk: handlePreview   \t\t{E}")
-
-
-    # ve son olarak belgeyi oluşturmak ve yazdırmak için bazı yöntemler:
-
-    def handlePaintRequest(self, printer):
-        try:
-            document = self.makeTableDocument()
-            document.print_(printer)
-        except Exception as E:
-            print(f"Fonk: handlePaintRequest   \t\t{E}")
-
+    """
     def imgDataToQImageObj(self, imgData) -> QtGui.QImage :
         image = QtGui.QImage()
         image.loadFromData(imgData)
         return image.scaledToWidth(150)
-
-    def makeTableDocument(self):
-        try:
-            # setPixmap(pixmap.scaled(width, height, Qt.IgnoreAspectRatio, Qt.SmoothTransformation))
-            document    = QtGui.QTextDocument()
-            cursor      = QtGui.QTextCursor(document)
-            # math.ceil(rows/6)
-            rows    = 16
-            columns = 4
-
-            table   = cursor.insertTable(rows, columns)
-            formatT = table.format()
-            formatT.setAlignment( QtCore.Qt.AlignCenter )
-            table.setFormat(formatT)
-            formatC = cursor.blockCharFormat()
-            formatC.setFontWeight(QtGui.QFont.Normal)
-            for row in range(rows):
-                for column in range(columns):
-                    if not row % 2:
-                        cursor.setCharFormat(formatC)
-                        cursor.insertText(f"   Bölüm\t: {'A12'}\n   Raf No\t: {'A123'}\n   ISBN\t: {9876543210123}\n   {3*'Kitap Adı'}")
-                    else:
-                        image = self.imgDataToQImageObj(imgData="")     # datayı ver
-                        cursor.insertImage(image)
-                    cursor.movePosition(QtGui.QTextCursor.NextCell)
-
-            return document
-        except Exception as E:
-            print(f"Fonk: makeTableDocument   \t\t{E}")
-
-
+    """
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         tableWidgetResize(self.ui.table_memberList, (2, 2, 3, 2, 6, 4, 2, 2, 2, 4, 3, 2), blank=30)
@@ -230,7 +306,7 @@ class MainWindow(QMainWindow):
         except Exception as E:
             print(E)
 
-    def addItemsInCombos(self):                 #       *item  Bu kullanım tuple olan itemı parçalara böler. Burada 2 parçaya bölünecek
+    def addItemsInCombos(self):                 #       *item  Bu kullanım tuple olan itemı unpack eder. Burada 2 parçaya bölünecek
         try:
             for item in (("Barkod", 1), ("Eser Adı", 2), ("Yazar Adı", 3), ("TC Kimlik No", 7), ("Okul No", 8), ("Üye Adı", 9), ("Üye Soyadı", 10)):
                 self.ui.combo_searchCriteriaOutside.addItem(*item)
