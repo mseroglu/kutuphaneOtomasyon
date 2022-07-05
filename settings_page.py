@@ -18,7 +18,6 @@ class Settings_page(QWidget):
         self.duration = 15_000
         self.selectedUserId = None
 
-        #self.ui.btn_saveInstutionInfo.clicked.connect(self.saveSchoolInfos)
 
         self.ui.btn_userSave.clicked.connect(self.createNewUser )
         self.ui.btn_updateUser.clicked.connect(self.updateUser )
@@ -83,12 +82,23 @@ class Settings_page(QWidget):
             print(E)
 
     def whenMaxChanged(self):
-        db.maxDayBooksStay  = self.ui.spinBox_maxDayBooksStay.value()
-        db.maxNumberOfBooksGiven = self.ui.spinBox_maxNumberOfBooksGiven.value()
-        db.updateSchoolInfo(maxCount= db.maxNumberOfBooksGiven, maxDay  = db.maxDayBooksStay)
+        try:
+            if db.activeUserType < 1:
+                msg.popup_mesaj("Yetkisiz işlem girişimi", "Bu işlem öğrenci girişi ile yapılamaz")
+                self.ui.spinBox_maxDayBooksStay.setEnabled(False)
+                self.ui.spinBox_maxNumberOfBooksGiven.setEnabled(False)
+                return
+            db.maxDayBooksStay  = self.ui.spinBox_maxDayBooksStay.value()
+            db.maxNumberOfBooksGiven = self.ui.spinBox_maxNumberOfBooksGiven.value()
+            db.updateSchoolInfo(maxCount= db.maxNumberOfBooksGiven, maxDay  = db.maxDayBooksStay)
+        except Exception as E:
+            print(f"Fonk: whenMaxChanged    Hata: {E}  ")
 
     def takeEveryoneToNextLevel(self):
         try:
+            if db.activeUserType != 2:                              # Admin =2, Personel = 1, Öğrenci = 0
+                msg.popup_mesaj("Yetkisiz işlem girişimi !", "Bu işlemi sadece Admin girişi ile yapabilirsiniz\t")
+                return
             mezunSinif = self.ui.combo_chooseGrade.currentIndex()
             if not mezunSinif:
                 msg.popup_mesaj("Mezun sınıf seçimi yapılmadı",
@@ -147,7 +157,6 @@ class Settings_page(QWidget):
                 self.ui.le_institutionCode.setEnabled(False)
                 self.ui.le_institutionName.setText(cameInfo[0][2])
                 self.ui.le_institutionName.setEnabled(False)
-                self.ui.btn_saveInstutionInfo.setEnabled(False)
                 self.ui.spinBox_maxNumberOfBooksGiven.setValue(cameInfo[0][3])
                 self.ui.spinBox_maxDayBooksStay.setValue(cameInfo[0][4])
         except Exception as E:
@@ -167,6 +176,9 @@ class Settings_page(QWidget):
 
     def updateUser(self) -> None :
         try:
+            if db.activeUserType <1:
+                msg.popup_mesaj("Yetkisiz işlem girişimi", "Bu işlemi öğrenci girişi ile yapamazsınız\t")
+                return
             if self.selectedUserId:
                 cols_datas = self.getUserInfo()
                 cols_datas['kullaniciId'] = self.selectedUserId
@@ -180,6 +192,9 @@ class Settings_page(QWidget):
 
     def delUser(self):
         try:
+            if db.activeUserType <1:
+                msg.popup_mesaj("Yetkisiz işlem girişimi", "Bu işlemi öğrenci girişi ile yapamazsınız\t")
+                return
             if self.selectedUserId:
                 result, _ = msg.MesajBox("DİKKAT : Kullanıcı silinecek",
                                          f"Seçili kullanıcıyı silmek istediğinizden emin misiniz?\t\t\n")
@@ -196,6 +211,9 @@ class Settings_page(QWidget):
 
     def createNewUser(self) -> None :
         try:
+            if db.activeUserType <1:
+                msg.popup_mesaj("Yetkisiz işlem girişimi", "Bu işlemi öğrenci girişi ile yapamazsınız\t")
+                return
             cols_datas = self.getUserInfo()
             db.insertData(TableName="KullaniciTablosu", **cols_datas)
             if curs.rowcount>0:

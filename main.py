@@ -3,7 +3,7 @@ import sys, locale
 
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCompleter
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QPushButton, QHBoxLayout, QWidget, QCompleter, QGraphicsDropShadowEffect
 from PyQt5 import QtGui, QtCore
 
 from ui.anasayfaUI import Ui_MainWindow
@@ -15,6 +15,7 @@ from reports import ReportsPage
 
 from database import db, curs, tableWidgetResize
 from messageBox import msg
+from auxiliary_files.css_ import mystyle
 
 
 
@@ -26,12 +27,16 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon("img/logo.png"))
         self.setGeometry(200,50,800,600)
+        self.activeUserId = None
 
+        # self.setWindowFlags(QtCore.Qt.FramelessWindowHint)          # window çerçeveyi yok eder
+        # self.setAttribute(QtCore.Qt.WA_TranslucentBackground)       # transparan arka plan oluşur
 
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         # self.setWindowTitle("Kütüphanem")
+        self.ui.btn_enter.setGraphicsEffect(QGraphicsDropShadowEffect(blurRadius=25, xOffset=3, yOffset=3))     # buton efecti
         self.ui.le_searchOutsides.setVisible(False)
         self.ui.le_searchExpired.setVisible(False)
         self.ui.le_searchGivenToday.setVisible(False)
@@ -55,6 +60,18 @@ class MainWindow(QMainWindow):
         self.ui.btn_searchExpired.clicked['bool'].connect(self.clearSearching)
         self.ui.btn_searchGivenToday.clicked['bool'].connect(self.clearSearching)
 
+        self.ui.btn_searchOutside.clicked['bool'].connect(self.ui.le_searchOutsides.setVisible)
+        self.ui.btn_searchBook.clicked['bool'].connect(self.ui.le_searchBook.setVisible)
+        self.ui.btn_searchMember.clicked['bool'].connect(self.ui.le_searchMember.setVisible)
+        self.ui.btn_searchExpired.clicked['bool'].connect(self.ui.le_searchExpired.setVisible)
+        self.ui.btn_searchGivenToday.clicked['bool'].connect(self.ui.le_searchGivenToday.setVisible)
+
+        self.ui.btn_searchOutside.clicked['bool'].connect(self.ui.combo_searchCriteriaOutside.setVisible)
+        self.ui.btn_searchBook.clicked['bool'].connect(self.ui.combo_searchCriteriaBook.setVisible)
+        self.ui.btn_searchMember.clicked['bool'].connect(self.ui.combo_searchCriteriaMember.setVisible)
+        self.ui.btn_searchExpired.clicked['bool'].connect(self.ui.combo_searchCriteriaExpired.setVisible)
+        self.ui.btn_searchGivenToday.clicked['bool'].connect(self.ui.combo_searchCriteriaTodayGiven.setVisible)
+
         self.ui.tabWidget.currentChanged.connect(self.showEvent)
         self.ui.le_searchBarcode.cursorPositionChanged.connect(self.bookStateControl)
 
@@ -67,29 +84,36 @@ class MainWindow(QMainWindow):
 
 
         self.ui.btn_openSaveBook.clicked.connect(winSaveBook.show)
-        self.ui.btn_openSaveBook.clicked.connect(self.openWindowControl)
         self.ui.btn_openMemberSave.clicked.connect(winSaveMember.show)
-        self.ui.btn_openMemberSave.clicked.connect(self.openWindowControl)
         self.ui.btn_openTransactions.clicked.connect(winEntrust.show)
-        self.ui.btn_openTransactions.clicked.connect(self.openWindowControl)
         self.ui.btn_openSettings.clicked.connect(winSettings.show)
-        self.ui.btn_openSettings.clicked.connect(self.openWindowControl)
         self.ui.btn_openReports.clicked.connect(winReports.show)
-        self.ui.btn_openReports.clicked.connect(self.openWindowControl)
         self.ui.btn_quit.clicked.connect(sys.exit)
 
         # self.ui.btn_openTransactions.installEventFilter(self)           # buton üzerine gelince
-        # self.ui.label_logo.installEventFilter(self)
-        self.ui.table_memberList.installEventFilter(self)
+        self.ui.tab_logup.installEventFilter(self)
+        self.ui.stackedWidget.setCurrentIndex(1)
+
 
 
         ####################### USER OPERATİONS ###################
         self.ui.btn_enter.clicked.connect(self.login)
         self.ui.le_password.returnPressed.connect(self.login)
         self.ui.btn_userChange.clicked.connect(self.logout)
+        self.ui.btn_userChange.clicked.connect(self.closeEvent)
+
         self.ui.btn_register.clicked.connect(self.createSuperUser)
 
         self.setCompleterUserName()
+
+
+
+    def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
+        winSaveBook.close()
+        winEntrust.close()
+        winSettings.close()
+        winSaveMember.close()
+        winReports.close()
 
     def setCompleterUserName(self):
         completerList = []
@@ -99,7 +123,6 @@ class MainWindow(QMainWindow):
                 self.ui.le_mail.setCompleter(QCompleter(user))
             completerList.append(user[0])
         self.ui.le_username.setCompleter(QCompleter(completerList))
-
 
     def showInstitutionInfo(self) -> None:
         try:
@@ -196,11 +219,11 @@ class MainWindow(QMainWindow):
         try:
             username = self.ui.le_username.text().strip()
             password = self.ui.le_password.text().strip()
-            curs.execute("SELECT KullaniciTipi FROM KullaniciTablosu WHERE Username=? AND Password=?", (username, password))
+            curs.execute("SELECT kullaniciId, KullaniciTipi FROM KullaniciTablosu WHERE Durum=1 AND Username=? AND Password=? " , (username, password))
             userTypeList = curs.fetchone()
             if userTypeList:
-                db.loggedAccountType = userTypeList[0]
-                self.setWindowTitle(f"Kütüphane Otomasyonu v1.0          Oturum :  {username}  ({self.userType[db.loggedAccountType]})")
+                db.activeUserId, db.activeUserType = userTypeList
+                self.setWindowTitle(f"Kütüphane Otomasyonu v1.0          Oturum :  {username}  ({self.userType[db.activeUserType]})")
                 self.ui.stackedWidget.setCurrentIndex(1)
                 self.showMaximized()
                 if not self.ui.checkBox_remember.isChecked():
@@ -212,8 +235,8 @@ class MainWindow(QMainWindow):
 
     def eventFilter(self, obj, event) -> bool:
         try:
-            if event.type() == QtCore.QEvent.Enter:
-                pass
+            if event.type() == QtCore.QEvent.Show and obj.objectName() == "tab_logup":
+                self.ui.le_kurumAdi.setFocus() if self.ui.le_kurumAdi.isEnabled() else self.ui.le_mail.setFocus()
             elif event.type() == QtCore.QEvent.Leave:
                 pass
             return super(MainWindow, self).eventFilter(obj, event)
@@ -250,6 +273,7 @@ class MainWindow(QMainWindow):
             self.showOutsidesOnTablewidget()
             self.showTodayEntrustOnTablewidget()
             self.showBooksReturnTodayOnTablewidget()
+            self.openWindowControl()
         except Exception as E:
             print(f"Fonk: showEvent  \tHata : {E}")
 
@@ -280,6 +304,9 @@ class MainWindow(QMainWindow):
             winEntrust.close()
             winSettings.close()
 
+    def hideComboLineeditForSearch(self, state):
+        pass
+
     def clearSearching(self, state):
         if not state:
             self.ui.le_searchBook.clear()
@@ -294,8 +321,9 @@ class MainWindow(QMainWindow):
             if new==8:
                 barkod = self.ui.le_searchBarcode.text()
                 bookStateData = db.getBookState(Barkod=barkod)
+                print(bookStateData)
                 if bookStateData:
-                    if bookStateData[0]:
+                    if not bookStateData[0]:            # 1 = dışarda 0 = rafta
                         winEntrust.show()
                         winEntrust.ui.le_searchBook.setText(barkod)
                         self.ui.le_searchBarcode.clear()
@@ -355,7 +383,10 @@ class MainWindow(QMainWindow):
             barkod = data[2]
             btn.setObjectName(barkod)
 
-            if data[6] < 1: btn.setStyleSheet('QPushButton{background-color: #aaaaff; font-size:10pt; }')
+            if data[6] < 1 :
+                btn.setStyleSheet('QPushButton {background-color: #aaaaff; font-size:10pt; }')
+            else:
+                btn.setStyleSheet('QPushButton {background-color: pink; font-size:10pt; }')
             btn.setMinimumSize(60, 20)
             btn.clicked.connect( self.returnTheBook )
             btn.setMaximumSize(80, 20)
@@ -377,19 +408,12 @@ class MainWindow(QMainWindow):
                                                            "İşlemin doğruluğundan emin misiniz?\n")
             if cevap:
                 returnDate  = datetime.date.today()
-                db.updateNumberOfBookAtMember(AldigiEserSayisi=-1, TCNo=tcno)
-                db.updateState(TableName="KitapTablosu", Durum=(1,), kitapId=(bookId,) )            # Durum=1 'Rafta', Durum=0 "Okunuyor"
-                kitapDurum = curs.rowcount
                 db.updateEntrustTableEscrowState( "EmanetTablosu", DonusTarihi=returnDate, emanetId=escrowId )
                 emanetDurum= curs.rowcount
-                if kitapDurum == 1 and emanetDurum == 1 :
+                if emanetDurum == 1 :
                     title,mesaj = "Başarılı","Geri alma işlemi başarılı. Kitabı rafına koyunuz !\t\t\n"
                     self.ui.statusbar.showMessage("Geri alma işlemi başarılı. Kitabı rafına koyunuz !", self.duration)
                     self.showOutsidesOnTablewidget()
-                elif kitapDurum < 1 and emanetDurum == 1:
-                    title, mesaj = "Dikkat Problem", "Kitap geri alımı gerçekleşti.\n" \
-                                                    "Ancak kitap durumu 'Okunuyor' dan 'Rafta' haline gelmedi !\n" \
-                                                    "Kitap 'Rafta' gözükmezse onu listede göremez ve artık veremezsiniz\n"
                 else:
                     title, mesaj = "DİKKAT : Başarısız ! ! !", "Kitap geri alımı başarısız, lütfen tekrar deneyiniz !\t\t\n"
                 msg.popup_mesaj(title,mesaj )
@@ -521,6 +545,7 @@ if __name__ == "__main__":
     winMain         = MainWindow()
     winMain.show()
     app.setStyle("Fusion")
+    app.setStyleSheet(mystyle)
     sys.exit(app.exec_())
 
 

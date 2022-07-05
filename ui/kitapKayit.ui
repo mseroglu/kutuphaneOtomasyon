@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1135</width>
+    <width>1271</width>
     <height>781</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
        <widget class="QGroupBox" name="groupBox">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>500</width>
           <height>400</height>
          </size>
         </property>
@@ -57,6 +57,12 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -81,6 +87,12 @@
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="le_isbn">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -105,6 +117,12 @@
          </item>
          <item row="2" column="1">
           <widget class="QLineEdit" name="le_bookName">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -128,6 +146,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
             <widget class="QComboBox" name="combo_authorName">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -154,9 +178,15 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>25</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>
@@ -193,6 +223,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
             <widget class="QComboBox" name="combo_category">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -219,9 +255,15 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>25</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>
@@ -256,6 +298,12 @@
          </item>
          <item row="5" column="1">
           <widget class="QLineEdit" name="le_publisher">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -277,6 +325,12 @@
          </item>
          <item row="6" column="1">
           <widget class="QLineEdit" name="le_publicationYear">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -298,6 +352,12 @@
          </item>
          <item row="7" column="1">
           <widget class="QLineEdit" name="le_pageCount">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -321,6 +381,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
             <widget class="QComboBox" name="combo_section">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -347,9 +413,15 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>25</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>
@@ -386,6 +458,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
             <widget class="QComboBox" name="combo_bookshelf">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -412,9 +490,15 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>25</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>
@@ -451,6 +535,12 @@
           <widget class="QComboBox" name="combo_exportability">
            <property name="enabled">
             <bool>true</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
            </property>
            <property name="font">
             <font>
@@ -691,32 +781,6 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
            </property>
           </spacer>
          </item>
-         <item>
-          <widget class="QPushButton" name="btn_showExcelFile">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Excel Dosyası</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_getDataFromExcel">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Excel'den Veri Aktar</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
@@ -810,6 +874,74 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
        <number>20</number>
       </property>
       <item>
+       <widget class="QPushButton" name="btn_showExcelFile">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Excel Dosyası</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_getDataFromExcel">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Excel'den Aktar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_del">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Sil</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_update">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Güncelle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_clear">
         <property name="minimumSize">
          <size>
@@ -845,66 +977,6 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btn_printBarkod">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Barkod Yazdır</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_update">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Güncelle</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_del">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Sil</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -914,7 +986,7 @@ Her kitap eşsiz bir barkod no ile kaydedilir.</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1135</width>
+     <width>1271</width>
      <height>26</height>
     </rect>
    </property>

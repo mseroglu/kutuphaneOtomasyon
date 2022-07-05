@@ -37,7 +37,7 @@ class SaveBook(QMainWindow):
         self.ui.btn_getDataFromExcel.clicked.connect(db.insertBookDatasFromExcel)
         self.ui.btn_getDataFromExcel.clicked.connect(self.showEvent)
         self.ui.btn_showExcelFile.clicked.connect(self.openSampleExcelPage)
-        self.ui.table_bookList.itemDoubleClicked.connect(self.showBookInfoInForm)
+        self.ui.table_bookList.itemClicked.connect(self.showBookInfoInForm)
         self.ui.btn_update.clicked.connect(self.updateBookInfo)
         self.ui.btn_del.clicked.connect(self.delBook)
 
@@ -95,7 +95,7 @@ class SaveBook(QMainWindow):
                         self.ui.table_bookList.setItem(row,col,QTableWidgetItem(str(item)))
                         if col==1:
                             self.ui.table_bookList.item(row,col).setData(QtCore.Qt.UserRole,book)
-                            self.ui.table_bookList.item(row,col).setToolTip("Double click for update")
+                            self.ui.table_bookList.item(row,col).setToolTip("click")
                     self.ui.table_bookList.item(row, 0).setTextAlignment(QtCore.Qt.AlignCenter)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksOnTablewidget     Hata Kodu : {E}", self.duration)
@@ -127,7 +127,6 @@ class SaveBook(QMainWindow):
                 "Aciklama"  : self.ui.plain_description.toPlainText(),
                 "DisariVerme": self.ui.combo_exportability.currentIndex(),
                 "KayitTarihi": datetime.now().date(),
-                "Durum"     : 1,
                 "ImgBook"   : self.bookPhotoData,
                 "BarkodPrint": self.ui.checkBox_barkodYazdirma.checkState()}
 

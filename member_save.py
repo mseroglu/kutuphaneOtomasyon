@@ -27,7 +27,7 @@ class SaveMember(QWidget):
         self.ui.btn_openSampleExcel.clicked.connect(self.openSampleExcelPage)
         self.ui.btn_save.clicked.connect(self.createNewMember)
         self.ui.btn_update.clicked.connect(self.updateMemberInfo)
-        self.ui.table_members.itemDoubleClicked.connect(self.showMemberInfoInForm)
+        self.ui.table_members.itemClicked.connect(self.showMemberInfoInForm)
         self.ui.btn_del.clicked.connect(self.delMember)
 
 
@@ -172,7 +172,6 @@ class SaveMember(QWidget):
                 result, _ = msg.MesajBox("Yeni üye kaydı", f"{cols_datas['Ad']+' '+cols_datas['Soyad']} isimli üyeyi kaydetmek istiyor musunuz?")
                 if result:
                     cols_datas["UyelikTarihi"] = datetime.now().date()
-                    cols_datas["AldigiEserSayisi"] = 0
                     db.insertData(TableName="UyeTablosu", **cols_datas)
                     if curs.rowcount>0:
                         msg.popup_mesaj("Yeni üye kaydı", f"Yeni üye kaydı başarı ile yapılmıştır")

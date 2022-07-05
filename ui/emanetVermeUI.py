@@ -174,7 +174,7 @@ class Ui_MainWindow(object):
         self.radio_barkod.setObjectName("radio_barkod")
         self.horizontalLayout_2.addWidget(self.radio_barkod)
         self.btn_clearSelection = QtWidgets.QPushButton(self.groupBox_2)
-        self.btn_clearSelection.setMinimumSize(QtCore.QSize(0, 0))
+        self.btn_clearSelection.setMinimumSize(QtCore.QSize(0, 30))
         self.btn_clearSelection.setObjectName("btn_clearSelection")
         self.horizontalLayout_2.addWidget(self.btn_clearSelection)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)

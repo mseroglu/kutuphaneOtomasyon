@@ -137,36 +137,6 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QPushButton" name="btn_saveInstutionInfo">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>25</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Kaydet</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
          </layout>
@@ -508,11 +478,6 @@ Bir Üst Sınıfa Geçir</string>
               <item>
                <property name="text">
                 <string>Görevli Personel</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Admin</string>
                </property>
               </item>
              </widget>
@@ -870,6 +835,12 @@ Bir Üst Sınıfa Geçir</string>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QLineEdit" name="le_kategori">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -881,6 +852,12 @@ Bir Üst Sınıfa Geçir</string>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <widget class="QPushButton" name="btn_addCategori">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -893,6 +870,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item>
              <widget class="QPushButton" name="btn_delCategori">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -930,6 +913,12 @@ Bir Üst Sınıfa Geçir</string>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLineEdit" name="le_author">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -941,6 +930,12 @@ Bir Üst Sınıfa Geçir</string>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QPushButton" name="btn_addAuthor">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -953,6 +948,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item>
              <widget class="QPushButton" name="btn_delAuthor">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -990,6 +991,12 @@ Bir Üst Sınıfa Geçir</string>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <widget class="QLineEdit" name="le_section">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -1001,6 +1008,12 @@ Bir Üst Sınıfa Geçir</string>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
              <widget class="QPushButton" name="btn_addSection">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -1013,6 +1026,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item>
              <widget class="QPushButton" name="btn_delSection">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -1050,6 +1069,12 @@ Bir Üst Sınıfa Geçir</string>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <widget class="QLineEdit" name="le_bookshelf">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -1061,6 +1086,12 @@ Bir Üst Sınıfa Geçir</string>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
              <widget class="QPushButton" name="btn_addBookshelf">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -1073,6 +1104,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item>
              <widget class="QPushButton" name="btn_delBookshelf">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <pointsize>10</pointsize>

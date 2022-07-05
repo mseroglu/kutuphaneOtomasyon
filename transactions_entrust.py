@@ -101,6 +101,12 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
         except Exception as E:
             print(f"Fonk: Entrust init   \tHata: {E}")
 
+
+
+
+    def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
+        self.winConfirmation.close()
+
     def editBarkodNumberOnLineedit(self, text):
         try:
             if self.ui.radio_barkod.isChecked():
@@ -196,19 +202,16 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
     def giveBooksToMembers(self):                                           # Verme onaylanırsa yapılacaklar
         addedData = 0
         try:
-            memberId    : int   = Entrust.givenBookMemberId
             listBooksId : list  = Entrust.selectedBooksDict["KitapId"]
             for bookId in listBooksId:
                 db.insertData("EmanetTablosu",
                               KitapId       = bookId,
-                              UyeId         = memberId,
+                              UyeId         = Entrust.givenBookMemberId,
                               VerilisTarihi = datetime.today().date(),
-                              MaxKalmaSuresi= db.maxDayBooksStay    )
+                              VerenGorevliId= db.activeUserId    )
                 addedData += curs.rowcount
             if not addedData == -1:
                 self.winConfirmation.close()
-                db.updateNumberOfBookAtMember(AldigiEserSayisi=addedData, uyeId=memberId)
-                db.updateState(TableName="KitapTablosu", Durum=(0,), kitapId=listBooksId)               # Durum=0 kitap müsait değil demek
                 self.clearSelection()
                 self.ui.le_searchBook.clear()
                 self.ui.le_searchMember.clear()
@@ -261,12 +264,13 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             self.ui.table_booksList.clear()
             books = db.getFreeBooks()
             if books:
+                books = list(filter(lambda x: x[5] == 0, books))                             # Lambda 6. sütunu 0 olan yani verilmemiş kitapları getir
                 self.ui.table_booksList.setRowCount(len(books)+self.numberOfBlankLines)
                 self.ui.table_booksList.setColumnCount(len(colLabels))
                 self.ui.table_booksList.setHorizontalHeaderLabels(colLabels)
                 for row, book in enumerate(books):
                     self.ui.table_booksList.setCellWidget(row, 0, self.createCheckboxForTablewidget(bookData=book))
-                    for index, item in enumerate(book[1:]):
+                    for index, item in enumerate(book[1:5]):
                         col = index+1
                         self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item) if item else ""))
                         if col in (1,4):

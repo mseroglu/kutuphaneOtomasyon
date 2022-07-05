@@ -32,13 +32,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.setSpacing(0)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.frame = QtWidgets.QFrame(self.page)
-        self.frame.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));\n"
+        self.frame.setStyleSheet("QFrame {\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));\n"
 "color:white; \n"
 "border: None; \n"
 "border-radius: 15px; \n"
 "font:bold; \n"
 "font-size: 10pt; \n"
-"padding: 10px 10px")
+"padding: 10px 10px\n"
+"}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -65,37 +67,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tabWidget_userOperations.setFont(font)
-        self.tabWidget_userOperations.setStyleSheet("QTabWidget{\n"
-"background-color: rgba(111, 180, 184, 255);\n"
-"}\n"
-"QTabWidget::pane{\n"
-"background-color: rgba(111, 180, 184, 255);\n"
-"border-radius: 15px;\n"
-"}\n"
-"QTabWidget::tab-bar{\n"
-"alignment: center;\n"
-"background-color: rgba(111, 180, 184, 255);\n"
-"}\n"
-"QTabBar::tab {\n"
-"padding: 5px 30px;\n"
-"color: black;\n"
-"background-color: rgba(111, 180, 184, 255);\n"
-"margin: 1px;\n"
-"font-size: 10pt;\n"
-"}\n"
-"QTabBar::tab:first {\n"
-"border-top-left-radius: 10px;\n"
-"border-bottom-left-radius: 1px;\n"
-"background-color: rgba(111, 180, 184, 255);\n"
-"}\n"
-"QTabBar::tab:last {\n"
-"border-top-right-radius: 10px;\n"
-"border-bottom-right-radius: 1px;\n"
-"background-color: rgba(111, 180, 184, 255);\n"
-"}\n"
-"QTabBar::tab:selected{\n"
-"border-bottom: 2px solid red;\n"
-"}\n"
+        self.tabWidget_userOperations.setStyleSheet("\n"
 "\n"
 "")
         self.tabWidget_userOperations.setTabBarAutoHide(False)
@@ -121,6 +93,9 @@ class Ui_MainWindow(object):
 "border-radius: 15px;\n"
 "padding: 0px 15px;\n"
 "}\n"
+"QLineEdit:focus{\n"
+"border-bottom: 1px solid black;\n"
+"}\n"
 "\n"
 "")
         self.le_username.setObjectName("le_username")
@@ -136,7 +111,9 @@ class Ui_MainWindow(object):
 "border-radius: 15px;\n"
 "padding-left: 15px;\n"
 "}\n"
-"")
+"QLineEdit:focus{\n"
+"border-bottom: 1px solid black;\n"
+"}")
         self.le_password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.le_password.setObjectName("le_password")
         self.verticalLayout_7.addWidget(self.le_password)
@@ -153,7 +130,7 @@ class Ui_MainWindow(object):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_11.addItem(spacerItem1)
         self.btn_enter = QtWidgets.QPushButton(self.tab_login)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_enter.sizePolicy().hasHeightForWidth())
@@ -207,7 +184,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QLineEdit:focus{\n"
-"border-top: 1px solid gray;\n"
+"border-bottom: 1px solid black;\n"
 "}")
         self.le_kurumAdi.setObjectName("le_kurumAdi")
         self.verticalLayout_12.addWidget(self.le_kurumAdi)
@@ -225,9 +202,8 @@ class Ui_MainWindow(object):
 "padding: 0px 15px;\n"
 "font-size: 10pt;\n"
 "}\n"
-"\n"
 "QLineEdit:focus{\n"
-"border-top: 1px solid gray;\n"
+"border-bottom: 1px solid black;\n"
 "}")
         self.le_kurumKodu.setObjectName("le_kurumKodu")
         self.verticalLayout_12.addWidget(self.le_kurumKodu)
@@ -245,9 +221,8 @@ class Ui_MainWindow(object):
 "padding: 0px 15px;\n"
 "font-size: 10pt;\n"
 "}\n"
-"\n"
 "QLineEdit:focus{\n"
-"border-top: 1px solid gray;\n"
+"border-bottom: 1px solid black;\n"
 "}")
         self.le_mail.setObjectName("le_mail")
         self.verticalLayout_12.addWidget(self.le_mail)
@@ -265,9 +240,8 @@ class Ui_MainWindow(object):
 "padding: 0px 15px;\n"
 "font-size: 10pt;\n"
 "}\n"
-"\n"
 "QLineEdit:focus{\n"
-"border-top: 1px solid gray;\n"
+"border-bottom: 1px solid black;\n"
 "}")
         self.le_savePass.setEchoMode(QtWidgets.QLineEdit.Password)
         self.le_savePass.setObjectName("le_savePass")
@@ -286,10 +260,8 @@ class Ui_MainWindow(object):
 "padding: 0px 15px;\n"
 "font-size: 10pt;\n"
 "}\n"
-"\n"
-"\n"
 "QLineEdit:focus{\n"
-"border-top: 1px solid gray;\n"
+"border-bottom: 1px solid black;\n"
 "}")
         self.le_savePass2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.le_savePass2.setObjectName("le_savePass2")
@@ -507,7 +479,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.le_searchBarcode.sizePolicy().hasHeightForWidth())
         self.le_searchBarcode.setSizePolicy(sizePolicy)
-        self.le_searchBarcode.setMinimumSize(QtCore.QSize(150, 25))
+        self.le_searchBarcode.setMinimumSize(QtCore.QSize(150, 35))
         self.le_searchBarcode.setMaximumSize(QtCore.QSize(150, 16777215))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
@@ -582,6 +554,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.btn_searchBook = QtWidgets.QPushButton(self.tab_books)
+        self.btn_searchBook.setMinimumSize(QtCore.QSize(0, 30))
         self.btn_searchBook.setStyleSheet("QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}")
         self.btn_searchBook.setText("")
         icon1 = QtGui.QIcon()
@@ -592,29 +565,11 @@ class Ui_MainWindow(object):
         self.btn_searchBook.setObjectName("btn_searchBook")
         self.horizontalLayout_5.addWidget(self.btn_searchBook)
         self.combo_searchCriteriaBook = QtWidgets.QComboBox(self.tab_books)
-        self.combo_searchCriteriaBook.setMinimumSize(QtCore.QSize(150, 25))
+        self.combo_searchCriteriaBook.setMinimumSize(QtCore.QSize(200, 30))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.combo_searchCriteriaBook.setFont(font)
-        self.combo_searchCriteriaBook.setStyleSheet("QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }\n"
-"\n"
-"QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 15px;\n"
-"    color: #272727;\n"
-"    border-left-width: 1px;\n"
-"    border-left-color: darkgray;\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 3px;\n"
-"    border-bottom-right-radius: 3px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"    image: img/down_arrow.png;\n"
-"}\n"
-"")
+        self.combo_searchCriteriaBook.setStyleSheet("")
         self.combo_searchCriteriaBook.setObjectName("combo_searchCriteriaBook")
         self.horizontalLayout_5.addWidget(self.combo_searchCriteriaBook)
         self.le_searchBook = QtWidgets.QLineEdit(self.tab_books)
@@ -623,15 +578,15 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.le_searchBook.sizePolicy().hasHeightForWidth())
         self.le_searchBook.setSizePolicy(sizePolicy)
-        self.le_searchBook.setMinimumSize(QtCore.QSize(0, 25))
+        self.le_searchBook.setMinimumSize(QtCore.QSize(0, 30))
         self.le_searchBook.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(True)
+        font.setPointSize(10)
+        font.setBold(False)
         font.setItalic(False)
-        font.setWeight(75)
+        font.setWeight(50)
         self.le_searchBook.setFont(font)
-        self.le_searchBook.setStyleSheet("QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}")
+        self.le_searchBook.setStyleSheet("")
         self.le_searchBook.setObjectName("le_searchBook")
         self.horizontalLayout_5.addWidget(self.le_searchBook)
         self.verticalLayout_4.addLayout(self.horizontalLayout_5)
@@ -648,7 +603,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -656,7 +611,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -664,7 +619,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -672,7 +627,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -680,7 +635,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -688,7 +643,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -696,7 +651,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(6, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -704,7 +659,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(7, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -712,7 +667,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(8, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -720,7 +675,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(9, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -728,7 +683,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(10, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -736,7 +691,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(11, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -744,7 +699,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_bookList.setHorizontalHeaderItem(12, item)
         self.table_bookList.horizontalHeader().setStretchLastSection(True)
         self.table_bookList.verticalHeader().setDefaultSectionSize(40)
@@ -758,6 +713,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.btn_searchMember = QtWidgets.QPushButton(self.tab_members)
+        self.btn_searchMember.setMinimumSize(QtCore.QSize(0, 30))
         self.btn_searchMember.setStyleSheet("QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}")
         self.btn_searchMember.setText("")
         self.btn_searchMember.setIcon(icon1)
@@ -766,29 +722,11 @@ class Ui_MainWindow(object):
         self.btn_searchMember.setObjectName("btn_searchMember")
         self.horizontalLayout_3.addWidget(self.btn_searchMember)
         self.combo_searchCriteriaMember = QtWidgets.QComboBox(self.tab_members)
-        self.combo_searchCriteriaMember.setMinimumSize(QtCore.QSize(150, 25))
+        self.combo_searchCriteriaMember.setMinimumSize(QtCore.QSize(200, 30))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.combo_searchCriteriaMember.setFont(font)
-        self.combo_searchCriteriaMember.setStyleSheet("QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }\n"
-"\n"
-"QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 15px;\n"
-"    color: #272727;\n"
-"    border-left-width: 1px;\n"
-"    border-left-color: darkgray;\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 3px;\n"
-"    border-bottom-right-radius: 3px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"    image: img/down_arrow.png;\n"
-"}\n"
-"")
+        self.combo_searchCriteriaMember.setStyleSheet("")
         self.combo_searchCriteriaMember.setObjectName("combo_searchCriteriaMember")
         self.horizontalLayout_3.addWidget(self.combo_searchCriteriaMember)
         self.le_searchMember = QtWidgets.QLineEdit(self.tab_members)
@@ -797,15 +735,15 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.le_searchMember.sizePolicy().hasHeightForWidth())
         self.le_searchMember.setSizePolicy(sizePolicy)
-        self.le_searchMember.setMinimumSize(QtCore.QSize(0, 25))
+        self.le_searchMember.setMinimumSize(QtCore.QSize(0, 30))
         self.le_searchMember.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(True)
+        font.setPointSize(10)
+        font.setBold(False)
         font.setItalic(False)
-        font.setWeight(75)
+        font.setWeight(50)
         self.le_searchMember.setFont(font)
-        self.le_searchMember.setStyleSheet("QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}")
+        self.le_searchMember.setStyleSheet("")
         self.le_searchMember.setObjectName("le_searchMember")
         self.horizontalLayout_3.addWidget(self.le_searchMember)
         self.verticalLayout_3.addLayout(self.horizontalLayout_3)
@@ -823,7 +761,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -831,7 +769,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -839,7 +777,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -847,7 +785,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -855,7 +793,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -863,7 +801,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -871,7 +809,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(6, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -879,7 +817,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(7, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -887,7 +825,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(8, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -895,7 +833,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(9, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -903,7 +841,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(10, item)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
@@ -911,7 +849,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
-        item.setBackground(QtGui.QColor(111, 180, 184))
+        item.setBackground(QtGui.QColor(170, 255, 255))
         self.table_memberList.setHorizontalHeaderItem(11, item)
         self.table_memberList.horizontalHeader().setStretchLastSection(False)
         self.table_memberList.verticalHeader().setDefaultSectionSize(40)
@@ -925,6 +863,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.btn_searchGivenToday = QtWidgets.QPushButton(self.tab_givenToday)
+        self.btn_searchGivenToday.setMinimumSize(QtCore.QSize(0, 30))
         self.btn_searchGivenToday.setStyleSheet("QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}")
         self.btn_searchGivenToday.setText("")
         self.btn_searchGivenToday.setIcon(icon1)
@@ -938,29 +877,11 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.combo_searchCriteriaTodayGiven.sizePolicy().hasHeightForWidth())
         self.combo_searchCriteriaTodayGiven.setSizePolicy(sizePolicy)
-        self.combo_searchCriteriaTodayGiven.setMinimumSize(QtCore.QSize(150, 25))
+        self.combo_searchCriteriaTodayGiven.setMinimumSize(QtCore.QSize(200, 30))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.combo_searchCriteriaTodayGiven.setFont(font)
-        self.combo_searchCriteriaTodayGiven.setStyleSheet("QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; }\n"
-"\n"
-"QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 15px;\n"
-"    color: #272727;\n"
-"    border-left-width: 1px;\n"
-"    border-left-color: darkgray;\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 3px;\n"
-"    border-bottom-right-radius: 3px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"    image: img/down_arrow.png;\n"
-"}\n"
-"")
+        self.combo_searchCriteriaTodayGiven.setStyleSheet("")
         self.combo_searchCriteriaTodayGiven.setObjectName("combo_searchCriteriaTodayGiven")
         self.horizontalLayout_2.addWidget(self.combo_searchCriteriaTodayGiven)
         self.le_searchGivenToday = QtWidgets.QLineEdit(self.tab_givenToday)
@@ -969,15 +890,15 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.le_searchGivenToday.sizePolicy().hasHeightForWidth())
         self.le_searchGivenToday.setSizePolicy(sizePolicy)
-        self.le_searchGivenToday.setMinimumSize(QtCore.QSize(0, 25))
+        self.le_searchGivenToday.setMinimumSize(QtCore.QSize(0, 30))
         self.le_searchGivenToday.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(True)
+        font.setPointSize(10)
+        font.setBold(False)
         font.setItalic(False)
-        font.setWeight(75)
+        font.setWeight(50)
         self.le_searchGivenToday.setFont(font)
-        self.le_searchGivenToday.setStyleSheet("QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}")
+        self.le_searchGivenToday.setStyleSheet("")
         self.le_searchGivenToday.setObjectName("le_searchGivenToday")
         self.horizontalLayout_2.addWidget(self.le_searchGivenToday)
         self.verticalLayout_5.addLayout(self.horizontalLayout_2)
@@ -1097,6 +1018,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
         self.btn_searchExpired = QtWidgets.QPushButton(self.tab_expired)
+        self.btn_searchExpired.setMinimumSize(QtCore.QSize(0, 30))
         self.btn_searchExpired.setStyleSheet("QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}")
         self.btn_searchExpired.setText("")
         self.btn_searchExpired.setIcon(icon1)
@@ -1105,29 +1027,12 @@ class Ui_MainWindow(object):
         self.btn_searchExpired.setObjectName("btn_searchExpired")
         self.horizontalLayout_7.addWidget(self.btn_searchExpired)
         self.combo_searchCriteriaExpired = QtWidgets.QComboBox(self.tab_expired)
-        self.combo_searchCriteriaExpired.setMinimumSize(QtCore.QSize(150, 25))
+        self.combo_searchCriteriaExpired.setMinimumSize(QtCore.QSize(200, 30))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.combo_searchCriteriaExpired.setFont(font)
-        self.combo_searchCriteriaExpired.setStyleSheet("QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px;}\n"
-"\n"
-"QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 15px;\n"
-"    color: #272727;\n"
-"    border-left-width: 1px;\n"
-"    border-left-color: darkgray;\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 3px;\n"
-"    border-bottom-right-radius: 3px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"    image: img/down_arrow.png;\n"
-"}\n"
-"")
+        self.combo_searchCriteriaExpired.setStyleSheet("background-color: rgb(170, 255, 255);\n"
+"color: rgb(50, 50, 50);")
         self.combo_searchCriteriaExpired.setObjectName("combo_searchCriteriaExpired")
         self.horizontalLayout_7.addWidget(self.combo_searchCriteriaExpired)
         self.le_searchExpired = QtWidgets.QLineEdit(self.tab_expired)
@@ -1136,15 +1041,15 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.le_searchExpired.sizePolicy().hasHeightForWidth())
         self.le_searchExpired.setSizePolicy(sizePolicy)
-        self.le_searchExpired.setMinimumSize(QtCore.QSize(0, 25))
+        self.le_searchExpired.setMinimumSize(QtCore.QSize(0, 30))
         self.le_searchExpired.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(True)
+        font.setPointSize(10)
+        font.setBold(False)
         font.setItalic(False)
-        font.setWeight(75)
+        font.setWeight(50)
         self.le_searchExpired.setFont(font)
-        self.le_searchExpired.setStyleSheet("QLineEdit {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font:bold; font-size: 11pt; padding: 0px 5px}")
+        self.le_searchExpired.setStyleSheet("")
         self.le_searchExpired.setObjectName("le_searchExpired")
         self.horizontalLayout_7.addWidget(self.le_searchExpired)
         self.verticalLayout_10.addLayout(self.horizontalLayout_7)
@@ -1272,6 +1177,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.btn_searchOutside = QtWidgets.QPushButton(self.tab_outsides)
+        self.btn_searchOutside.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
         font.setFamily("Tahoma")
         font.setPointSize(10)
@@ -1285,39 +1191,14 @@ class Ui_MainWindow(object):
         self.btn_searchOutside.setObjectName("btn_searchOutside")
         self.horizontalLayout_8.addWidget(self.btn_searchOutside)
         self.combo_searchCriteriaOutside = QtWidgets.QComboBox(self.tab_outsides)
-        self.combo_searchCriteriaOutside.setMinimumSize(QtCore.QSize(150, 25))
+        self.combo_searchCriteriaOutside.setMinimumSize(QtCore.QSize(200, 30))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.combo_searchCriteriaOutside.setFont(font)
         self.combo_searchCriteriaOutside.setStyleSheet("QComboBox {\n"
-"background-color: rgba(66,146,157,255); \n"
-"color:white; \n"
-"border: None;\n"
-"border-radius: 5px; }\n"
-"\n"
-"QComboBox QAbstractItemView {\n"
-"color:rgb(0,100,200);\n"
-"background:rgb(200,200,200); \n"
-"selection-color: rgb(15,250,250); \n"
-"selection-background-color: rgb(100,100,100);  }\n"
-"\n"
-"QComboBox::drop-down {\n"
-"    subcontrol-origin: padding;\n"
-"    subcontrol-position: top right;\n"
-"    width: 15px;\n"
-"    color: #272727;\n"
-"    border-left-width: 1px;\n"
-"    border-left-color: darkgray;\n"
-"    border-left-style: solid;\n"
-"    border-top-right-radius: 3px;\n"
-"    border-bottom-right-radius: 3px;\n"
-"}\n"
-"QComboBox::down-arrow {\n"
-"    image: img/down_arrow.png;\n"
-"}\n"
-"\n"
-"\n"
-"")
+"    background-color: rgba(160, 230, 234, 255);\n"
+"    color : rgb(50,50,50);\n"
+"}")
         self.combo_searchCriteriaOutside.setObjectName("combo_searchCriteriaOutside")
         self.horizontalLayout_8.addWidget(self.combo_searchCriteriaOutside)
         self.le_searchOutsides = QtWidgets.QLineEdit(self.tab_outsides)
@@ -1326,24 +1207,15 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.le_searchOutsides.sizePolicy().hasHeightForWidth())
         self.le_searchOutsides.setSizePolicy(sizePolicy)
-        self.le_searchOutsides.setMinimumSize(QtCore.QSize(0, 25))
+        self.le_searchOutsides.setMinimumSize(QtCore.QSize(0, 30))
         self.le_searchOutsides.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(True)
+        font.setPointSize(10)
+        font.setBold(False)
         font.setItalic(False)
-        font.setWeight(75)
+        font.setWeight(50)
         self.le_searchOutsides.setFont(font)
-        self.le_searchOutsides.setStyleSheet("QLineEdit {\n"
-"background-color: rgba(66,146,157,255); \n"
-"color:white; \n"
-"border: None; \n"
-"border-radius: 5px; \n"
-"font:bold; \n"
-"font-size: 11pt; \n"
-"padding: 0px 5px;\n"
-"caret-color: red;\n"
-"}")
+        self.le_searchOutsides.setStyleSheet("")
         self.le_searchOutsides.setClearButtonEnabled(True)
         self.le_searchOutsides.setObjectName("le_searchOutsides")
         self.horizontalLayout_8.addWidget(self.le_searchOutsides)
@@ -1505,9 +1377,9 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         self.tabWidget_userOperations.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

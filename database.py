@@ -29,7 +29,8 @@ class Db:
         self.maxDayBooksStay        = 7    # gün
         self.maxNumberOfBooksGiven  = 3    # adet
         self.byteImg                = None
-        self.loggedAccountType      = None
+        self.activeUserType         = None
+        self.activeUserId           = None
 
         IdInfo = " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE"
         # self.createTable("YazdirmaKuyruguTablosu", "Id" + IdInfo, "KitapId INTEGER NOT NULL UNIQUE")
@@ -42,10 +43,10 @@ class Db:
                          "UyeId INTEGER NOT NULL",
                          "VerilisTarihi TEXT NOT NULL",
                          "VerenGorevliId INTEGER",
-                         "MaxKalmaSuresi INTEGER NOT NULL",
                          "DonusTarihi TEXT",
                          "TeslimGorevliId INTEGER",
-                         "FOREIGN KEY(KitapId) REFERENCES KitapTablosu(kitapId)")
+                         "FOREIGN KEY(KitapId) REFERENCES KitapTablosu(kitapId)",
+                         "FOREIGN KEY(UyeId) REFERENCES UyeTablosu(uyeId)")
         self.createTable("UyeTablosu", "uyeId"+IdInfo,
                         "UyeTipi INTEGER NOT NULL",
                         "Durum INTEGER NOT NULL",
@@ -60,8 +61,7 @@ class Db:
                         "DogumTarihi TEXT",
                         "UyelikTarihi TEXT",
                         "Photo BLOB",
-                        "UyeKartiPrint INTEGER",
-                        "AldigiEserSayisi INTEGER")
+                        "UyeKartiPrint INTEGER")
         self.createTable("KullaniciTablosu", "kullaniciId"+IdInfo,
                         "KullaniciTipi INTEGER NOT NULL",
                         "TCNo TEXT UNIQUE",
@@ -93,7 +93,6 @@ class Db:
                         "Aciklama TEXT",
                         "DisariVerme INTEGER",
                         "KayitTarihi TEXT",
-                        "Durum INTEGER",
                         "ImgBarcod BLOB",
                         "BarkodPrint INTEGER")
 
@@ -184,39 +183,44 @@ class Db:
 
     def insertMembersDataFromExcel(self):
         try:
-            engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')
-            df_sql = pd.read_sql("UyeTablosu", engine)
-            df_xls = pd.read_excel("excel_pages/Ogrenci_Listesi.xls")
-            del df_sql["Tel"], df_sql['Photo']
-            newColNames = dict(zip(df_xls, df_sql.columns[3:]))
-            df_xls.rename(columns=newColNames, inplace=True)
-            df_xls["Ad"]        = df_xls["Ad"].str.title().str.replace("i","ı").str.replace("ı̇", "i")
-            df_xls["Soyad"]     = df_xls["Soyad"].str.title().str.replace("i","ı").str.replace("ı̇", "i")
-            df_xls["UyeTipi"]   = 0
-            df_xls["Durum"]     = 1
-            df_xls["UyeKartiPrint"] = 1
-            df_xls["AldigiEserSayisi"] = 0
-            df_xls["UyelikTarihi"]=datetime.today().date()
-            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1").str.replace("erkek","1")
-            df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0").str.replace("kız","0")
-            df_xls["DogumTarihi"] = df_xls["DogumTarihi"].fillna(datetime.today())      # Boş alanları bugun tarihi ile dolduruyoruz
-            cols = str(tuple(df_xls.columns)).replace("'", "")
-            self.forceInsertMultiMember(cols, df_xls.values)
+            result, _ = msg.MesajBox("Dikkat", "Excel tablosundan veri aktarımı yapılacak.\t\n"
+                                               "Bu işlemi yapmak istiyor musnuz?\n")
+            if result:
+                engine = sqlalchemy.create_engine('sqlite:///Otomasyon.sqlite')
+                df_sql = pd.read_sql("UyeTablosu", engine)
+                df_xls = pd.read_excel("excel_pages/Ogrenci_Listesi.xls")
+                del df_sql["Tel"], df_sql['Photo']
+                newColNames = dict(zip(df_xls, df_sql.columns[3:]))
+                df_xls.rename(columns=newColNames, inplace=True)
+                df_xls["Ad"]        = df_xls["Ad"].str.title().str.replace("i","ı").str.replace("ı̇", "i")
+                df_xls["Soyad"]     = df_xls["Soyad"].str.title().str.replace("i","ı").str.replace("ı̇", "i")
+                df_xls["UyeTipi"]   = 0
+                df_xls["Durum"]     = 1
+                df_xls["UyeKartiPrint"] = 1
+                df_xls["UyelikTarihi"]=datetime.today().date()
+                df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Erkek","1").str.replace("ERKEK","1").str.replace("erkek","1")
+                df_xls["Cinsiyet"]  = df_xls["Cinsiyet"].str.replace("Kız","0").str.replace("KIZ","0").str.replace("kız","0")
+                df_xls["DogumTarihi"] = df_xls["DogumTarihi"].fillna(datetime.today())      # Boş alanları bugun tarihi ile dolduruyoruz
+                cols = str(tuple(df_xls.columns)).replace("'", "")
+                self.forceInsertMultiMember(cols, df_xls.values)
         except Exception as E:
             msg.popup_mesaj("İşlem Başarısız", "Eklemeye çalıştığınız veri içerisindeki bir TC kimlik numarası daha önce kullanılmıştır.")
             print("Daha önce kaydedilmiş bir TC kimlik numarası tekrar kullanılmaya çalışıyor.\nHata : ", E)
 
     def insertBookDatasFromExcel(self):
         try:
-            df_xls = pd.read_excel("excel_pages/Kitap_Listesi.xls")
-            #   excel_pages den gelen sutun isimlerini sql tablolardaki duruma çeviriyoruz. Bu sayede df leri MERGE edebiliyoruz.
-            forRename = dict(zip(df_xls.columns[2:6], ["YazarAdi", "Kategori", "Bolum", "RafNo"]))
-            df_xls.rename(columns=forRename, inplace=True)
-            self.insertYazarFromExcel(df_xls)
-            self.insertKategoriFromExcel(df_xls)
-            self.insertBolumFromExcel(df_xls)
-            self.insertRafFromExcel(df_xls)
-            self.insertBookFromExcel(df_xls)
+            result,_ = msg.MesajBox("Dikkat", "Excel tablosundan veri aktarımı yapılacak.\t\n"
+                                            "Bu işlemi yapmak istiyor musnuz?\n")
+            if result:
+                df_xls = pd.read_excel("excel_pages/Kitap_Listesi.xls")
+                #   excel_pages den gelen sutun isimlerini sql tablolardaki duruma çeviriyoruz. Bu sayede df leri MERGE edebiliyoruz.
+                forRename = dict(zip(df_xls.columns[2:6], ["YazarAdi", "Kategori", "Bolum", "RafNo"]))
+                df_xls.rename(columns=forRename, inplace=True)
+                self.insertYazarFromExcel(df_xls)
+                self.insertKategoriFromExcel(df_xls)
+                self.insertBolumFromExcel(df_xls)
+                self.insertRafFromExcel(df_xls)
+                self.insertBookFromExcel(df_xls)
         except Exception as E:
             print(f"Fonk: insertBookDatasFromExcel   \nHata: {E}")
 
@@ -265,7 +269,6 @@ class Db:
             imgBarkod   = [b[1] for b in barkodPlusImg]
             result3["Barkod"]    = barkods
             result3['ImgBarcod'] = imgBarkod
-            result3["Durum"]     = 1
             result3['KayitTarihi'] = datetime.today().date()
             cols        = str(tuple(result3.columns))
             soruIsareti = ", ".join(["?"]*len(result3.columns))
@@ -377,29 +380,6 @@ class Db:
         except Exception as E:
             print(f"FONK: updateEntrustTableEscrowState  HATA KODU : {E}")
 
-    def updateState(self, TableName, **cols_datas):
-        try:
-            print(cols_datas)
-            colsInList  = tuple(cols_datas.keys())
-            veriler     = tuple(cols_datas.values())
-            sql = f""" UPDATE {TableName} SET { colsInList[0] }=? WHERE {colsInList[1]}=? """
-            curs.executemany(sql, zip( veriler[0]*len(veriler[1]), veriler[1] ))
-            conn.commit()
-        except Exception as E:
-            print(f"FONK: updateState HATA KODU : {E}")
-
-    def updateNumberOfBookAtMember(self, AldigiEserSayisi, **kwargs):
-        try:
-            key = tuple(kwargs.keys())[0]
-            val = tuple(kwargs.values())[0]
-            kosul2 = "AldigiEserSayisi > 0" if AldigiEserSayisi<0 else "AldigiEserSayisi < 5"
-            sql = f""" UPDATE UyeTablosu SET AldigiEserSayisi = AldigiEserSayisi+{AldigiEserSayisi} 
-                    WHERE {key}={val} AND {kosul2} """
-            curs.execute(sql)
-            conn.commit()
-        except Exception as E:
-            print(f"FONK: updateNumberOfBookAtMember     HATA KODU : {E}")
-
     def updateUserState(self, Durum: str, Username: str):
         try:
             durum = {"Aktif": 0, "Pasif": 1}
@@ -438,8 +418,11 @@ class Db:
 
     def getFreeBooks(self):
         try:
-            sql = f"""SELECT KitapTablosu.kitapId, Barkod, KitapAdi, YazarAdi, ISBN FROM KitapTablosu
-            LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId WHERE Durum=1 """
+            sql = f"""SELECT KitapTablosu.kitapId, Barkod, KitapAdi, YazarAdi, ISBN, 
+                sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL  THEN +1 ELSE 0 END) as Durum FROM KitapTablosu
+                LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId 
+                LEFT JOIN EmanetTablosu ON EmanetTablosu.KitapId = KitapTablosu.kitapId            
+                GROUP BY KitapTablosu.kitapId       """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -459,8 +442,10 @@ class Db:
 
     def getMemberDataNumberOfRead(self):
         try:
-            sql = f"""SELECT uyeId, {self.maxNumberOfBooksGiven}-AldigiEserSayisi, 
-                        OkulNo, Ad, Soyad, TCNo, Sinif, Sube FROM UyeTablosu WHERE Durum=1"""
+            sql = f"""SELECT UyeTablosu.uyeId, {self.maxNumberOfBooksGiven}-sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL  THEN +1 ELSE 0 END), 
+                        OkulNo, Ad, Soyad, TCNo, Sinif, Sube FROM UyeTablosu 
+                        LEFT JOIN EmanetTablosu ON EmanetTablosu.UyeId = UyeTablosu.uyeId
+                        WHERE Durum=1 GROUP BY UyeTablosu.uyeId """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -468,8 +453,6 @@ class Db:
 
     def getMemberDataWithWhere(self):
         try:
-            colLabels = ("Üye Tipi", "Durum", "TC Kimlik No", "Okul No", "Ad", "Soyad", "Cinsiyet", "Sınıf", "Şube",
-                         "Telefon", "Doğum Tarihi", "Üyelik Tarihi", "Foto")
             sql = f"""SELECT CASE WHEN UyeTipi=0 THEN 'Öğrenci' ELSE 'Personel' END, CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END,
                      TCNo, OkulNo, Ad, Soyad, CASE WHEN Cinsiyet=0 THEN 'Kız' ELSE 'Erkek' END, Sinif, Sube, Tel,
                      strftime('%d.%m.%Y',DogumTarihi), strftime('%d.%m.%Y',UyelikTarihi) FROM UyeTablosu WHERE Durum=1"""
@@ -513,13 +496,17 @@ class Db:
             result = curs.fetchone()
             return result[0]
         except Exception as E:
-            print("Fonk: getBookDataWithId => ", E)
+            print("Fonk: checkBook => ", E)
 
     def getBookDataWithId(self, Id):
         try:
-            sql =f"""SELECT kitapId, Barkod, KitapTablosu.ISBN, KitapAdi, YazarId, KategoriId, BolumId, RafId, Yayinevi, SayfaSayisi,   
-                BasimYili, Aciklama, DisariVerme, KayitTarihi, Durum, ImgBarcod, KitapFotoTablosu.ImgBook, BarkodPrint FROM KitapTablosu                     
-                LEFT JOIN KitapFotoTablosu ON KitapFotoTablosu.ISBN=KitapTablosu.ISBN WHERE kitapId={Id}"""
+            sql =f"""SELECT KitapTablosu.kitapId, Barkod, KitapTablosu.ISBN, KitapAdi, YazarId, KategoriId, BolumId, 
+                RafId, Yayinevi, SayfaSayisi,   BasimYili, Aciklama, DisariVerme, KayitTarihi, 
+                sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL  THEN +1 ELSE 0 END) as Durum,
+                ImgBarcod, KitapFotoTablosu.ImgBook, BarkodPrint FROM KitapTablosu                     
+                LEFT JOIN KitapFotoTablosu ON KitapFotoTablosu.ISBN=KitapTablosu.ISBN
+                LEFT JOIN EmanetTablosu ON EmanetTablosu.kitapId = KitapTablosu.kitapId 
+                WHERE KitapTablosu.kitapId={Id}     GROUP BY KitapTablosu.kitapId"""
             curs.execute(sql)
             return curs.fetchone()
         except Exception as E:
@@ -527,7 +514,9 @@ class Db:
 
     def getBookState(self, Barkod):
         try:
-            sql =f"""SELECT Durum FROM KitapTablosu WHERE Barkod LIKE '%{Barkod}%' """
+            sql =f""" SELECT sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL  THEN +1 ELSE 0 END) as Durum 
+                FROM KitapTablosu LEFT JOIN EmanetTablosu ON EmanetTablosu.KitapId = KitapTablosu.kitapId
+                WHERE KitapTablosu.Barkod LIKE '%{Barkod}%'     GROUP BY KitapTablosu.kitapId """
             curs.execute(sql)
             return curs.fetchone()
         except Exception as E:
@@ -538,21 +527,23 @@ class Db:
         try:
             sql =f"""SELECT Username, 
             CASE WHEN KullaniciTipi=0 THEN '{gorevliTipi[0]}' WHEN KullaniciTipi=1 THEN '{gorevliTipi[1]}' ELSE '{gorevliTipi[2]}' END,
-            CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END, * FROM KullaniciTablosu ORDER BY KullaniciTipi DESC """
+            CASE WHEN Durum=1 THEN 'Aktif' ELSE 'Pasif' END, * FROM KullaniciTablosu WHERE KullaniciTipi <2 ORDER BY KullaniciTipi DESC """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
             print("Fonk: getUserInfoWithCase => ", E)
 
     def getBookDataWithJoinTables(self) -> list :
-        durum_0, durum_1 = "Okunuyor", "Rafta"
+        durum_0, durum_1 = "Rafta", "Okunuyor"
         try:
-            sql =f"""SELECT Barkod, ISBN, KitapAdi, YazarAdi, Kategori, Bolum, RafNo, Yayinevi, SayfaSayisi, BasimYili,                    
-                    KayitTarihi, CASE WHEN Durum=1 THEN '{durum_1}' ELSE '{durum_0}' END, Aciklama FROM KitapTablosu 
+            sql =f"""SELECT Barkod, ISBN, KitapAdi, YazarAdi, Kategori, Bolum, RafNo, Yayinevi, SayfaSayisi, BasimYili, KayitTarihi,                   
+                    CASE WHEN 1=sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL THEN 1 ELSE 0 END) THEN 'Okunuyor' ELSE 'Rafta' END, Aciklama FROM KitapTablosu 
                     LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId
                     LEFT JOIN KategoriTablosu ON KitapTablosu.KategoriId=KategoriTablosu.kategoriId
                     LEFT JOIN BolumTablosu ON KitapTablosu.BolumId=BolumTablosu.bolumId
-                    LEFT JOIN RafTablosu ON KitapTablosu.RafId=RafTablosu.rafId     """
+                    LEFT JOIN RafTablosu ON KitapTablosu.RafId=RafTablosu.rafId 
+                    LEFT JOIN EmanetTablosu ON EmanetTablosu.KitapId = KitapTablosu.kitapId
+                    GROUP BY KitapTablosu.kitapId """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -718,19 +709,47 @@ class Db:
         controlNumber = str(math.ceil(toplam / 10) * 10 - toplam)
         return controlNumber
 
+    def veriTabaniniSifirla(self):
+        curs.execute("TRANCATE ")
 
 
+    def sutunSil(self, TabloAdi, Column):
+        curs.execute(f"ALTER TABLE {TabloAdi} DROP COLUMN {Column}")
+        conn.commit()
+
+
+mail = "mse@yahoo.com"
+pword= "123456"
+
+
+firebaseConfig = {
+    "apiKey": "AIzaSyD9JxQI7SEENELa1MOnzjZb9m0-9rLaOaY",
+    "authDomain": "mokoko-93c40.firebaseapp.com",
+    "databaseURL": "https://mokoko-93c40-default-rtdb.europe-west1.firebasedatabase.app",
+    "projectId": "mokoko-93c40",
+    "storageBucket": "mokoko-93c40.appspot.com",
+    "messagingSenderId": "1036889730055",
+    "appId": "1:1036889730055:web:b40bb66b20b84a4d5d0ea2",
+    "measurementId": "G-KMYTF1YF4P" }
 
 
 db = Db()
 
 if __name__=="__main__":
-    pass
+    db.sutunSil(TabloAdi="KitapTablosu", Column="Durum")
+    import firebase_admin as fb
+    from firebase_admin import credentials, auth, firestore
+
+    cred = credentials.Certificate( firebaseConfig )
+
+    app = fb.App("mokoko", credential=cred)
+    fb.initialize_app()
+
+    firestore.client(app)
+
+    user = auth.create_user(mail, pword)
+
+    print(user.uid)
 
 
 
-import firebase_admin
-from firebase_admin import credentials
-
-cred = credentials.Certificate("path/to/serviceAccountKey.json")
-firebase_admin.initialize_app(cred)
