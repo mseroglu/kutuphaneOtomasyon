@@ -1,13 +1,14 @@
 import locale, os, io
 locale.setlocale(locale.LC_ALL, 'Turkish_Turkey.1254')
 
-from PyQt5.QtWidgets import QMainWindow, QInputDialog, QTableWidgetItem, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QInputDialog, QTableWidgetItem, QFileDialog, QCompleter
 from PyQt5 import QtGui, QtCore
 from ui.kitapKayitUI import Ui_MainWindow
 from database import db, curs
 from datetime import datetime
 from messageBox import msg
 from PIL import Image
+import json
 
 
 class SaveBook(QMainWindow):
@@ -24,6 +25,9 @@ class SaveBook(QMainWindow):
         self.showSectionsOnCombo()
         self.showBookshelfsOnCombo()
         self.showBooksOnTablewidget()
+
+        self.ui.btn_update.setVisible(False)
+        self.ui.btn_del.setVisible(False)
 
 
 
@@ -42,6 +46,33 @@ class SaveBook(QMainWindow):
         self.ui.btn_del.clicked.connect(self.delBook)
 
         self.ui.btn_addImg.clicked.connect(self.addBookPhoto)
+
+        self.ui.le_isbn.installEventFilter(self)
+        self.veriSetiAktar()
+
+    def eventFilter(self, obj: 'QObject', event: 'QEvent') -> bool:
+        if event.type() == QtCore.QEvent.FocusOut and obj.objectName()== "le_isbn":
+            listBookData = self.completerDict.get( self.ui.le_isbn.text())
+            if listBookData:
+                self.ui.le_bookName.setText(listBookData[0])
+                self.ui.combo_authorName.setCurrentText(listBookData[1])
+                self.ui.le_publisher.setText(listBookData[2])
+                self.ui.le_pageCount.setText(listBookData[3])
+        return super(SaveBook, self).eventFilter(obj, event)
+
+
+    def veriSetiAktar(self):
+        completerList = []
+        self.completerDict = {}
+        with open("./auxiliary_files/books.json", encoding="utf-8") as file:
+            books = json.loads(file.read())
+            for book in books:
+                completerList.append(book["isbn"])
+                self.completerDict[book["isbn"]] = list(book.values())[1:]
+
+            self.ui.le_isbn.setCompleter(QCompleter(completerList))
+
+
 
     def addBookPhoto(self):
         try:
@@ -133,9 +164,9 @@ class SaveBook(QMainWindow):
 
     def showBookInfoInForm(self):
         try:
-            self.ui.btn_save.setEnabled(False)
-            self.ui.btn_update.setEnabled(True)
-            self.ui.btn_del.setEnabled(True)
+            self.ui.btn_save.setVisible(False)
+            self.ui.btn_update.setVisible(True)
+            self.ui.btn_del.setVisible(True)
             Id, Barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
             cameData = db.getBookDataWithId(Id=Id)
             self.selectedIdForUpdate = Id
@@ -257,8 +288,12 @@ class SaveBook(QMainWindow):
             self.ui.combo_authorName.clear()
             self.ui.combo_authorName.insertItem(0, "")
             authors = db.getDataWithOrderBy("YazarTablosu", "YazarAdi", "yazarId")
+            row = 1
             for Name, ID in authors:
                 self.ui.combo_authorName.addItem(Name,userData=ID)
+                self.ui.combo_authorName.setIconSize(QtCore.QSize(24,24))
+                self.ui.combo_authorName.setItemIcon(row,QtGui.QIcon("./img/profil.jpg"))
+                row +=1
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showAuthorsOnCombo        Hata Kodu : {E}", self.duration)
 
@@ -350,9 +385,9 @@ class SaveBook(QMainWindow):
             self.selectedIdForUpdate = None
             self.ui.btn_addImg.setIcon(QtGui.QIcon("img/book_cover.png"))
             self.bookPhotoData = None
-            self.ui.btn_save.setEnabled(True)
-            self.ui.btn_update.setEnabled(False)
-            self.ui.btn_del.setEnabled(False)
+            self.ui.btn_save.setVisible(True)
+            self.ui.btn_update.setVisible(False)
+            self.ui.btn_del.setVisible(False)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: clearForm        Hata Kodu : {E}", self.duration)
 
