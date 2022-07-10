@@ -84,13 +84,18 @@ class MainWindow(QMainWindow):
 
 
         self.ui.btn_openSaveBook.clicked.connect(winSaveBook.show)
+        self.ui.btn_openSaveBook.clicked.connect(self.openWindowControl)
         self.ui.btn_openMemberSave.clicked.connect(winSaveMember.show)
+        self.ui.btn_openMemberSave.clicked.connect(self.openWindowControl)
         self.ui.btn_openTransactions.clicked.connect(winEntrust.show)
+        self.ui.btn_openTransactions.clicked.connect(self.openWindowControl)
         self.ui.btn_openSettings.clicked.connect(winSettings.show)
+        self.ui.btn_openSettings.clicked.connect(self.openWindowControl)
         self.ui.btn_openReports.clicked.connect(winReports.show)
+        self.ui.btn_openReports.clicked.connect(self.openWindowControl)
         self.ui.btn_quit.clicked.connect(sys.exit)
 
-        # self.ui.btn_openTransactions.installEventFilter(self)           # buton üzerine gelince
+        # self.ui.btn_openTransactions.installEventFilter(self)           # event
         self.ui.tab_logup.installEventFilter(self)
         self.ui.stackedWidget.setCurrentIndex(1)
 
@@ -250,13 +255,6 @@ class MainWindow(QMainWindow):
     def enterEvent(self, a0: QtCore.QEvent) -> None:
         self.ui.le_searchBarcode.setFocus()
 
-    """
-    def imgDataToQImageObj(self, imgData) -> QtGui.QImage :
-        image = QtGui.QImage()
-        image.loadFromData(imgData)
-        return image.scaledToWidth(150)
-    """
-
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
         tableWidgetResize(self.ui.table_memberList, (2, 2, 3, 2, 6, 4, 2, 2, 2, 4, 3, 2), blank=30)
         tableWidgetResize(self.ui.table_bookList, (2, 3, 6, 4, 2, 2, 2, 3, 2, 2, 3, 2, 2), blank=30)
@@ -267,13 +265,11 @@ class MainWindow(QMainWindow):
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         try:
             self.ui.le_searchBarcode.setFocus()
-            self.openWindowControl()
             self.showBooksOnTablewidget()
             self.showMembersInTablewidget()
             self.showOutsidesOnTablewidget()
             self.showTodayEntrustOnTablewidget()
             self.showBooksReturnTodayOnTablewidget()
-            self.openWindowControl()
         except Exception as E:
             print(f"Fonk: showEvent  \tHata : {E}")
 
@@ -304,9 +300,6 @@ class MainWindow(QMainWindow):
             winEntrust.close()
             winSettings.close()
 
-    def hideComboLineeditForSearch(self, state):
-        pass
-
     def clearSearching(self, state):
         if not state:
             self.ui.le_searchBook.clear()
@@ -320,15 +313,15 @@ class MainWindow(QMainWindow):
             self.ui.le_searchOutsides.clear()
             if new==8:
                 barkod = self.ui.le_searchBarcode.text()
-                bookStateData = db.getBookState(Barkod=barkod)
-                print(bookStateData)
-                if bookStateData:
-                    if not bookStateData[0]:            # 1 = dışarda 0 = rafta
+                bookState= db.getBookState(Barkod=barkod)
+                if bookState:
+                    if not bookState[0]:                                    # 1 = dışarda, 0 = rafta
                         winEntrust.show()
                         winEntrust.ui.le_searchBook.setText(barkod)
                         self.ui.le_searchBarcode.clear()
                     else:
                         self.genelfilter()
+                        self.returnTheBook()
             else:
                 self.genelfilter()
         except Exception as E:
@@ -382,7 +375,6 @@ class MainWindow(QMainWindow):
             btn = QPushButton("Geri Al")
             barkod = data[2]
             btn.setObjectName(barkod)
-
             if data[6] < 1 :
                 btn.setStyleSheet('QPushButton {background-color: #aaaaff; font-size:10pt; }')
             else:
@@ -401,6 +393,8 @@ class MainWindow(QMainWindow):
     def returnTheBook(self) -> None:
         try:
             barkod      = self.sender().objectName()
+            if barkod == "le_searchBarcode":
+                barkod = self.sender().text()
             bookInfo    = self.dictEscrowBookInfos[barkod]
             bookId, escrowId, bookName, tcno, name, lastname = bookInfo[0], bookInfo[1], bookInfo[3], bookInfo[8], bookInfo[10], bookInfo[11]
             cevap, _    = msg.MesajBox("Geri alma işlemi", f"Barkod No :  {barkod} \nKitap Adı\t :  {bookName} \n\n"
@@ -408,12 +402,13 @@ class MainWindow(QMainWindow):
                                                            "İşlemin doğruluğundan emin misiniz?\n")
             if cevap:
                 returnDate  = datetime.date.today()
-                db.updateEntrustTableEscrowState( "EmanetTablosu", DonusTarihi=returnDate, emanetId=escrowId )
+                db.updateEntrustTableEscrowState( "EmanetTablosu", DonusTarihi=returnDate, TeslimGorevliId=db.activeUserId, emanetId=escrowId  )
                 emanetDurum= curs.rowcount
                 if emanetDurum == 1 :
                     title,mesaj = "Başarılı","Geri alma işlemi başarılı. Kitabı rafına koyunuz !\t\t\n"
                     self.ui.statusbar.showMessage("Geri alma işlemi başarılı. Kitabı rafına koyunuz !", self.duration)
                     self.showOutsidesOnTablewidget()
+                    self.ui.le_searchBarcode.clear()
                 else:
                     title, mesaj = "DİKKAT : Başarısız ! ! !", "Kitap geri alımı başarısız, lütfen tekrar deneyiniz !\t\t\n"
                 msg.popup_mesaj(title,mesaj )

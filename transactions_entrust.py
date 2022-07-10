@@ -117,22 +117,20 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                         text += ", "
                         self.ui.le_searchBook.setText(text)
                     except Exception as E:
-                        print("Bu kitap rafta bulunamadı")
                         msg.popup_mesaj("Barkod bulunamadı", "Okuttuğunuz barkoda ait kitap rafta bulunamadı. Olası sebepler:\n\n"
-                                                             "   1- Üyedeki bir kitap barkodunu okuttunuz ise önce geri almalısınız.\t\n"
+                                                             "   1- Üyedeki bir kitap barkodunu okuttuysanız önce geri almalısınız.\t\n"
                                                              "   2- Ya da kayıtlı olmayan bir barkod okuttunuz.\n")
         except Exception as E:
             print(f"Fonk: editBarkodNumberOnLineedit    \tHata: {E}")
 
 
-    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        tableWidgetResize(self.ui.table_membersList, (3, 2, 2, 6, 3, 4, 1, 1))
-        tableWidgetResize(self.ui.table_booksList, (2, 3, 6, 4, 4))
+    def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
+        tableWidgetResize(self.ui.table_membersList, cols=(3, 2, 2, 6, 3, 4, 1, 1))
+        tableWidgetResize(self.ui.table_booksList, cols=(2, 3, 6, 4, 4))
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         self.ui.le_searchBook.setFocus()
         self.setDateOnLabel()
-        self.resizeEvent(QtGui.QResizeEvent)
         self.clearSelection()
 
     def returnDateXDayLater(self, xDay=7):
@@ -264,7 +262,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             self.ui.table_booksList.clear()
             books = db.getFreeBooks()
             if books:
-                books = list(filter(lambda x: x[5] == 0, books))                             # Lambda 6. sütunu 0 olan yani verilmemiş kitapları getir
+                books = list(filter(lambda x: x[6] == 0, books))                             # Lambda 6. sütunu 0 olan yani verilmemiş kitapları getir
                 self.ui.table_booksList.setRowCount(len(books)+self.numberOfBlankLines)
                 self.ui.table_booksList.setColumnCount(len(colLabels))
                 self.ui.table_booksList.setHorizontalHeaderLabels(colLabels)
@@ -275,7 +273,6 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                         self.ui.table_booksList.setItem(row,col,QTableWidgetItem(str(item) if item else ""))
                         if col in (1,4):
                             self.ui.table_booksList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
-                self.resizeEvent(QtGui.QResizeEvent)
                 # self.ui.table_booksList.resizeColumnsToContents()
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showBooksOnTablewidget     Hata Kodu : {E}", self.duration)
@@ -305,7 +302,7 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
             elif self.ui.radio_okulNo.isChecked()   :  col = 2
             rows = self.ui.table_membersList.rowCount() - self.numberOfBlankLines
             for row in range(rows):
-                item = self.ui.table_membersList.item(row,col)
+                item = self.ui.table_membersList.item(row, col)
                 if item is not None:
                     if aranan.lower() not in item.text().lower():
                         self.ui.table_membersList.hideRow(row)
@@ -331,7 +328,6 @@ class Entrust(QMainWindow):                         # Entrust = Emanet
                     if col in (1,2,5,6,7):
                         self.ui.table_membersList.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
             # self.ui.table_membersList.resizeColumnsToContents()
-            self.resizeEvent(QtGui.QResizeEvent)
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showMembersInTablewidget \t\t Hata Kodu : {E}", self.duration)
 

@@ -19,6 +19,9 @@ class SaveMember(QWidget):
         self.selectedIdForUpdate = None
         # self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)      # hep üstte kalması için
 
+        self.ui.btn_del.setVisible(False)
+        self.ui.btn_update.setVisible(False)
+
 
 
 
@@ -27,13 +30,15 @@ class SaveMember(QWidget):
         self.ui.btn_openSampleExcel.clicked.connect(self.openSampleExcelPage)
         self.ui.btn_save.clicked.connect(self.createNewMember)
         self.ui.btn_update.clicked.connect(self.updateMemberInfo)
-        self.ui.table_members.itemClicked.connect(self.showMemberInfoInForm)
+        self.ui.table_members.currentItemChanged.connect(self.showMemberInfoInForm)
         self.ui.btn_del.clicked.connect(self.delMember)
 
 
 
         self.ui.btn_clear.clicked.connect(self.clearForm)
         self.ui.btn_addImg.clicked.connect(self.addMemberPhoto)
+
+
 
     def openSampleExcelPage(self):
         try:
@@ -43,10 +48,10 @@ class SaveMember(QWidget):
 
     def showMemberPhoto(self, data):
         try:
-            pixmap = QtGui.QPixmap()
-            pixmap.loadFromData( data )
-            if not data:
-                pixmap = "img/kitap-kurdu.jpg"
+            pixmap = "img/member.jpg"
+            if data:
+                pixmap = QtGui.QPixmap()
+                pixmap.loadFromData(data)
             self.ui.btn_addImg.setIcon( QtGui.QIcon(pixmap) )
             self.ui.btn_addImg.setStyleSheet("QPushButton {border-radius: 20px}")
             self.memberPhotoData = data
@@ -79,20 +84,30 @@ class SaveMember(QWidget):
             tcno    = self.ui.table_members.item(row, 0).text()
             name    = self.ui.table_members.item(row,2).text()
             lastname = self.ui.table_members.item(row,3).text()
+            bookData = db.checkBookEntrustState(TCNo=tcno)
+            if bookData:
+                msg.popup_mesaj("Silme işlemi başarısız", f"Barkod\t:  {bookData[0]}\n"
+                                                          f"Kitap Adı\t:  {bookData[1]}\n"                                                          
+                                                          f"Uye No\t:  {bookData[2]}\n"
+                                                          f"Uye Adı\t:  {bookData[3]} {bookData[4]}\n\n"
+                                                          f"Üye kitap ile eşleşiyor. Üyeyi silmek için önce üyedeki kitabı geri almalısınız")
+                self.clearForm()
+                return
             result, _ = msg.MesajBox("DİKKAT : Üye kaydı silinecek", f"{name+' '+lastname} isimli üyeyi silmek istiyor musunuz?")
             if result:
                 db.delData("UyeTablosu", TCNo=tcno)
                 if curs.rowcount>0:
                     msg.popup_mesaj('Silindi', "Üyenin kaydı silindi. Hadi hayırlı olsun. ;-)       ")
                 self.showMembersInTablewidget()
+                self.clearForm()
         except Exception as E:
-            print(E)
+            print(f"Fonk: delMember    Hata: {E}")
 
     def showMemberInfoInForm(self):
         try:
-            self.ui.btn_del.setEnabled(True)
-            self.ui.btn_update.setEnabled(True)
-            self.ui.btn_save.setEnabled(False)
+            self.ui.btn_del.setVisible(True)
+            self.ui.btn_update.setVisible(True)
+            self.ui.btn_save.setVisible(False)
             row     = self.ui.table_members.currentRow()
             tcno    = self.ui.table_members.item(row, 0).text()
             cameData = db.getMemberDataWithTcno(tcno)
@@ -112,7 +127,7 @@ class SaveMember(QWidget):
             self.showMemberPhoto( cameData[13] )
             self.ui.checkBox_uyeKartiYazdirma.setCheckState( cameData[14])
         except Exception as E:
-            print(E)
+            print(f"Fonk: showMemberInfoInForm    Hata: {E}")
 
     def showMembersInTablewidget(self):
         try:
@@ -130,7 +145,7 @@ class SaveMember(QWidget):
                         self.ui.table_members.item(row, col).setTextAlignment(QtCore.Qt.AlignCenter)
             self.ui.table_members.resizeColumnsToContents()
         except Exception as E:
-            print(E)
+            print(f"Fonk: showMembersInTablewidget    Hata: {E}")
 
     def getMemberInfo(self) -> dict:
         return {"UyeTipi"   : self.ui.combo_memberType.currentIndex(),
@@ -198,12 +213,12 @@ class SaveMember(QWidget):
             self.ui.le_phoneNumber.clear()
             self.ui.le_beMemberDate.clear()
             self.ui.checkBox_uyeKartiYazdirma.setCheckState(True)
-            self.ui.btn_addImg.setIcon(QtGui.QIcon("img/member.png"))
+            self.ui.btn_addImg.setIcon(QtGui.QIcon("img/member.jpg"))
             self.memberPhotoData = None
             self.selectedIdForUpdate = 0
-            self.ui.btn_del.setEnabled(False)
-            self.ui.btn_update.setEnabled(False)
-            self.ui.btn_save.setEnabled(True)
+            self.ui.btn_del.setVisible(False)
+            self.ui.btn_update.setVisible(False)
+            self.ui.btn_save.setVisible(True)
         except Exception as E:
             print(E)
 

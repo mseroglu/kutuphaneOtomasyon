@@ -50,29 +50,32 @@ class SaveBook(QMainWindow):
         self.ui.le_isbn.installEventFilter(self)
         self.veriSetiAktar()
 
-    def eventFilter(self, obj: 'QObject', event: 'QEvent') -> bool:
-        if event.type() == QtCore.QEvent.FocusOut and obj.objectName()== "le_isbn":
-            listBookData = self.completerDict.get( self.ui.le_isbn.text())
-            if listBookData:
-                self.ui.le_bookName.setText(listBookData[0])
-                self.ui.combo_authorName.setCurrentText(listBookData[1])
-                self.ui.le_publisher.setText(listBookData[2])
-                self.ui.le_pageCount.setText(listBookData[3])
-        return super(SaveBook, self).eventFilter(obj, event)
 
+    def eventFilter(self, obj: 'QObject', event: 'QEvent') -> bool:
+        try:
+            if event.type() == QtCore.QEvent.FocusOut and obj.objectName()== "le_isbn":
+                listBookData = self.completerBookInfoDict.get( self.ui.le_isbn.text())
+                if listBookData:
+                    self.ui.le_bookName.setText(listBookData[0])
+                    self.ui.combo_authorName.setCurrentText(listBookData[1])
+                    self.ui.le_publisher.setText(listBookData[2])
+                    self.ui.le_pageCount.setText(listBookData[3])
+            return super(SaveBook, self).eventFilter(obj, event)
+        except Exception as E:
+            self.ui.statusbar.showMessage(f"Fonk: eventFilter\t\tHata Kodu : {E}", self.duration)
 
     def veriSetiAktar(self):
-        completerList = []
-        self.completerDict = {}
-        with open("./auxiliary_files/books.json", encoding="utf-8") as file:
-            books = json.loads(file.read())
-            for book in books:
-                completerList.append(book["isbn"])
-                self.completerDict[book["isbn"]] = list(book.values())[1:]
-
-            self.ui.le_isbn.setCompleter(QCompleter(completerList))
-
-
+        try:
+            completerList = []
+            self.completerBookInfoDict = {}
+            with open("./auxiliary_files/books.json", encoding="utf-8") as file:
+                books = json.loads(file.read())
+                for book in books:
+                    completerList.append(book["isbn"])
+                    self.completerBookInfoDict[book["isbn"]] = list(book.values())[1:]
+                self.ui.le_isbn.setCompleter(QCompleter(completerList))
+        except Exception as E:
+            self.ui.statusbar.showMessage(f"Fonk: veriSetiAktar\t\tHata Kodu : {E}", self.duration)
 
     def addBookPhoto(self):
         try:
@@ -198,13 +201,22 @@ class SaveBook(QMainWindow):
         try:
             if self.selectedIdForUpdate:
                 bookId, barkod, bookName = self.ui.table_bookList.currentItem().data(QtCore.Qt.UserRole)
-
+                bookData = db.checkBookEntrustState(Id=bookId)
+                if bookData:
+                    msg.popup_mesaj("Silme işlemi başarısız", f"Barkod\t:  {bookData[0]}\n"
+                                                              f"Kitap Adı\t:  {bookData[1]}\n"  
+                                                              f"Uye No\t:  {bookData[2]}\n"
+                                                              f"Uye Adı\t:  {bookData[3]} {bookData[4]}\n\n"
+                                                              f"Kitap üye ile eşleşiyor. Kitabı silmek için önce üyeden geri almalısınız")
+                    self.clearForm()
+                    return
                 result, _ = msg.MesajBox("DİKKAT : Eser Silinecek", f"Barkod No :  {barkod}\nEser Adı\t :  {bookName} \n\neseri silmek istediğinizden emin misiniz?\t\t\n")
                 if result:
                     db.delData("KitapTablosu", kitapId=bookId)
                     if curs.rowcount>0:
                         msg.popup_mesaj('Silindi', "Kitap kaydı silindi. Hadi hayırlı olsun. ;-)\t\n")
                     self.showBooksOnTablewidget()
+                    self.clearForm()
             else:
                 msg.popup_mesaj('Seçim yapılmadı', f'Silmek için bir kitap seçmediniz. \t\t\n')
         except AttributeError as E:
@@ -276,11 +288,11 @@ class SaveBook(QMainWindow):
                     mesaj = f"{saved} kitap başarı ile kayıt edildi"
                     saved = 0
                     self.showBooksOnTablewidget()
+                    self.clearForm()
                 else:
                     mesaj = "Kayıt işlemi yapılmadı ! ! !"
-                self.ui.statusbar.showMessage(mesaj, self.duration)
+                msg.popup_mesaj("Kayıt", mesaj=mesaj)
         except Exception as E:
-            print(f"Fonk: saveNewBook   Hata Kodu : {E}")
             self.ui.statusbar.showMessage(f"Fonk: saveNewBook      Hata Kodu : {E}", self.duration)
 
     def showAuthorsOnCombo(self):
@@ -292,7 +304,7 @@ class SaveBook(QMainWindow):
             for Name, ID in authors:
                 self.ui.combo_authorName.addItem(Name,userData=ID)
                 self.ui.combo_authorName.setIconSize(QtCore.QSize(24,24))
-                self.ui.combo_authorName.setItemIcon(row,QtGui.QIcon("./img/profil.jpg"))
+                self.ui.combo_authorName.setItemIcon(row, QtGui.QIcon( "./img/author.png" if row % 2 else "./img/author1.png" ))
                 row +=1
         except Exception as E:
             self.ui.statusbar.showMessage(f"Fonk: showAuthorsOnCombo        Hata Kodu : {E}", self.duration)
@@ -329,7 +341,7 @@ class SaveBook(QMainWindow):
 
     def saveNewAuthorName(self):
         try:
-            text, result = QInputDialog.getText(self, "Yazar Adı kayıt", "Yazar Adı Giriniz :")
+            text, result = QInputDialog.getText(self, "Yazar Adı kayıt", "Kaydetmek istediğiniz YAZARIN ADINI Giriniz :")
             text = text.strip().title()
             if result and bool(text):
                 db.insertData(TableName = "YazarTablosu", YazarAdi= text.title())

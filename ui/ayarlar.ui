@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>998</width>
-    <height>596</height>
+    <width>1000</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>800</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -21,13 +27,19 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <pointsize>10</pointsize>
       </font>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -83,6 +95,12 @@
             <property name="enabled">
              <bool>true</bool>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>10</pointsize>
@@ -114,6 +132,12 @@
              <widget class="QLineEdit" name="le_institutionCode">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -437,26 +461,44 @@ Bir Üst Sınıfa Geçir</string>
       <attribute name="title">
        <string>Kullanıcı Tanımlama</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>20</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="spacing">
-          <number>100</number>
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <item>
-          <widget class="QGroupBox" name="groupBox">
-           <property name="maximumSize">
-            <size>
-             <width>400</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="title">
-            <string/>
-           </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>30</number>
+          </property>
+          <property name="bottomMargin">
+           <number>11</number>
+          </property>
+          <item>
            <layout class="QFormLayout" name="formLayout">
             <property name="horizontalSpacing">
-             <number>20</number>
+             <number>25</number>
             </property>
             <property name="verticalSpacing">
              <number>15</number>
@@ -470,6 +512,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item row="0" column="1">
              <widget class="QComboBox" name="combo_userType">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <item>
                <property name="text">
                 <string>Görevli Öğrenci</string>
@@ -491,6 +539,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item row="1" column="1">
              <widget class="QLineEdit" name="le_tcno">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="maxLength">
                <number>11</number>
               </property>
@@ -504,7 +558,14 @@ Bir Üst Sınıfa Geçir</string>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="le_studentNumber"/>
+             <widget class="QLineEdit" name="le_studentNumber">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_10">
@@ -514,7 +575,14 @@ Bir Üst Sınıfa Geçir</string>
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLineEdit" name="le_name"/>
+             <widget class="QLineEdit" name="le_name">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="label_9">
@@ -524,7 +592,14 @@ Bir Üst Sınıfa Geçir</string>
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLineEdit" name="le_lastname"/>
+             <widget class="QLineEdit" name="le_lastname">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item row="5" column="0">
              <widget class="QLabel" name="label_13">
@@ -540,9 +615,15 @@ Bir Üst Sınıfa Geçir</string>
               </property>
               <item>
                <widget class="QLineEdit" name="le_sinif">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
-                  <width>50</width>
+                  <width>80</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -575,9 +656,15 @@ Bir Üst Sınıfa Geçir</string>
               </item>
               <item>
                <widget class="QLineEdit" name="le_sube">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="maximumSize">
                  <size>
-                  <width>50</width>
+                  <width>80</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -615,7 +702,14 @@ Bir Üst Sınıfa Geçir</string>
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QLineEdit" name="le_username"/>
+             <widget class="QLineEdit" name="le_username">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+             </widget>
             </item>
             <item row="7" column="0">
              <widget class="QLabel" name="label_2">
@@ -626,6 +720,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item row="7" column="1">
              <widget class="QLineEdit" name="le_password">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="echoMode">
                <enum>QLineEdit::Password</enum>
               </property>
@@ -640,6 +740,12 @@ Bir Üst Sınıfa Geçir</string>
             </item>
             <item row="8" column="1">
              <widget class="QComboBox" name="combo_userState">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
               <property name="currentIndex">
                <number>1</number>
               </property>
@@ -656,164 +762,186 @@ Bir Üst Sınıfa Geçir</string>
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_5">
-           <property name="title">
-            <string/>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="topMargin">
+             <number>10</number>
+            </property>
             <item>
-             <widget class="QTableWidget" name="tableWidget">
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
+             <widget class="QPushButton" name="btn_clear">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
               </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::SingleSelection</enum>
+              <property name="text">
+               <string>Formu Temizle</string>
               </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectItems</enum>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_delUser">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
               </property>
-              <attribute name="horizontalHeaderDefaultSectionSize">
-               <number>120</number>
-              </attribute>
-              <attribute name="horizontalHeaderMinimumSectionSize">
-               <number>30</number>
-              </attribute>
-              <attribute name="horizontalHeaderStretchLastSection">
-               <bool>true</bool>
-              </attribute>
-              <row>
-               <property name="text">
-                <string>1</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>2</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>3</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>4</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>5</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>6</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>7</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>8</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>9</string>
-               </property>
-              </row>
-              <row>
-               <property name="text">
-                <string>10</string>
-               </property>
-              </row>
-              <column>
-               <property name="text">
-                <string>Kullanıcı Adı</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Kullanıcı Tipi</string>
-               </property>
-              </column>
-              <column>
-               <property name="text">
-                <string>Durum</string>
-               </property>
-              </column>
+              <property name="text">
+               <string>Sil</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_updateUser">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Güncelle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_userSave">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Kaydet</string>
+              </property>
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-        </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <property name="topMargin">
-          <number>30</number>
+        <widget class="QFrame" name="frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <item>
-          <widget class="QPushButton" name="btn_userSave">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Kaydet</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_clear">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Formu Temizle</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_delUser">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Sil</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_updateUser">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Güncelle</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="topMargin">
+           <number>30</number>
+          </property>
+          <property name="bottomMargin">
+           <number>11</number>
+          </property>
+          <item>
+           <widget class="QTableWidget" name="tableWidget">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectItems</enum>
+            </property>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>120</number>
+            </attribute>
+            <attribute name="horizontalHeaderMinimumSectionSize">
+             <number>30</number>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <row>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>3</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>4</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>5</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>6</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>7</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>8</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>9</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>10</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>Kullanıcı Adı</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Kullanıcı Tipi</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Durum</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -851,7 +979,7 @@ Bir Üst Sınıfa Geçir</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QPushButton" name="btn_addCategori">
+             <widget class="QPushButton" name="btn_addCategori_settings">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -929,7 +1057,7 @@ Bir Üst Sınıfa Geçir</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <widget class="QPushButton" name="btn_addAuthor">
+             <widget class="QPushButton" name="btn_addAuthor_settings">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1007,7 +1135,7 @@ Bir Üst Sınıfa Geçir</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
-             <widget class="QPushButton" name="btn_addSection">
+             <widget class="QPushButton" name="btn_addSection_settings">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -1085,7 +1213,7 @@ Bir Üst Sınıfa Geçir</string>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
-             <widget class="QPushButton" name="btn_addBookshelf">
+             <widget class="QPushButton" name="btn_addBookshelf_settings">
               <property name="minimumSize">
                <size>
                 <width>0</width>

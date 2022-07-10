@@ -18,6 +18,9 @@ class Settings_page(QWidget):
         self.duration = 15_000
         self.selectedUserId = None
 
+        self.ui.btn_updateUser.hide()
+        self.ui.btn_delUser.hide()
+
 
         self.ui.btn_userSave.clicked.connect(self.createNewUser )
         self.ui.btn_updateUser.clicked.connect(self.updateUser )
@@ -26,10 +29,10 @@ class Settings_page(QWidget):
         self.ui.btn_clear.clicked.connect(self.clearForm)
 
 
-        self.ui.btn_addAuthor.clicked.connect(self.addNewAuthor)
-        self.ui.btn_addCategori.clicked.connect(self.addNewCategory)
-        self.ui.btn_addBookshelf.clicked.connect(self.addNewBookshelf)
-        self.ui.btn_addSection.clicked.connect(self.addNewSection)
+        self.ui.btn_addAuthor_settings.clicked.connect(self.addNewAuthor)
+        self.ui.btn_addCategori_settings.clicked.connect(self.addNewCategory)
+        self.ui.btn_addBookshelf_settings.clicked.connect(self.addNewBookshelf)
+        self.ui.btn_addSection_settings.clicked.connect(self.addNewSection)
         self.ui.le_author.returnPressed.connect(self.addNewAuthor)
         self.ui.le_kategori.returnPressed.connect(self.addNewCategory)
         self.ui.le_bookshelf.returnPressed.connect(self.addNewBookshelf)
@@ -72,7 +75,7 @@ class Settings_page(QWidget):
             secilenAlan = self.sender().objectName()
             table, col  = veriAlani[secilenAlan]
             yeniVeri, result = QInputDialog.getText(self, "Düzenleme", "Düzenleyiniz", text=eskiVeri)
-            if result:
+            if result and yeniVeri:
                 sql = f""" UPDATE {table} SET {col}=? WHERE {col}=? """
                 curs.execute(sql, (yeniVeri, eskiVeri))
                 conn.commit()
@@ -120,6 +123,9 @@ class Settings_page(QWidget):
 
     def showUserInfoInForm(self):
         try:
+            self.ui.btn_updateUser.show()
+            self.ui.btn_delUser.show()
+            self.ui.btn_userSave.hide()
             row      = self.ui.tableWidget.currentItem().row()
             userData = self.ui.tableWidget.item(row, 2).data(QtCore.Qt.UserRole)[3:]
             self.selectedUserId = userData[0]
@@ -181,10 +187,13 @@ class Settings_page(QWidget):
                 return
             if self.selectedUserId:
                 cols_datas = self.getUserInfo()
-                cols_datas['kullaniciId'] = self.selectedUserId
-                db.updateData(TableName="KullaniciTablosu", **cols_datas)
-                self.showUserInfoInTablewidget()
-                self.clearForm()
+                if cols_datas["Username"] and cols_datas["Password"] and cols_datas["Ad"] and cols_datas["Soyad"]:
+                    cols_datas['kullaniciId'] = self.selectedUserId
+                    db.updateData(TableName="KullaniciTablosu", **cols_datas)
+                    self.showUserInfoInTablewidget()
+                    self.clearForm()
+                else:
+                    msg.popup_mesaj("Eksik bilgi girişi", "Ad, Soyad, Kullanıcı Adı ve Parola alanları boş olmamalıdır")
             else:
                 msg.popup_mesaj("Dikkat", "Güncellenecek kullanıcı verisi yok !\t")
         except Exception as E:
@@ -215,15 +224,18 @@ class Settings_page(QWidget):
                 msg.popup_mesaj("Yetkisiz işlem girişimi", "Bu işlemi öğrenci girişi ile yapamazsınız\t")
                 return
             cols_datas = self.getUserInfo()
-            db.insertData(TableName="KullaniciTablosu", **cols_datas)
-            if curs.rowcount>0:
-                title,mesaj = ("Yeni kullanıcı", "Yeni kullanıcı oluşturma işlemi başarılı...\t\t\n")
-                self.showUserInfoInTablewidget()
-                self.clearForm()
+            if cols_datas["Username"] and cols_datas["Password"] and cols_datas["Ad"] and cols_datas["Soyad"]:
+                db.insertData(TableName="KullaniciTablosu", **cols_datas)
+                if curs.rowcount>0:
+                    title,mesaj = ("Yeni kullanıcı", "Yeni kullanıcı oluşturma işlemi başarılı...\t\t\n")
+                    self.showUserInfoInTablewidget()
+                    self.clearForm()
+                else:
+                    title, mesaj = ("Dikkat : İşlem başarısız", "İşlem başarısız. Yeni kullanıcı oluşturulamadı !\n\n"
+                                                                "Kullanıcı adı veya TC Kimlik No daha önce kullanılmış.\t\n")
+                msg.popup_mesaj(title, mesaj)
             else:
-                title, mesaj = ("Dikkat : İşlem başarısız", "İşlem başarısız. Yeni kullanıcı oluşturulamadı !\n\n"
-                                                            "Kullanıcı adı veya TC Kimlik No daha önce kullanılmış.\t\n")
-            msg.popup_mesaj(title, mesaj)
+                msg.popup_mesaj("Eksik bilgi girişi", "Ad, Soyad, Kullanıcı Adı ve Parola alanları boş olmamalıdır")
         except Exception as E:
             print(E)
 
@@ -263,24 +275,39 @@ class Settings_page(QWidget):
             self.listBookshelfs()
 
     def delAuthor(self):
-        cols_datas = {"YazarAdi": self.ui.list_author.currentItem().text()}
-        db.delData("YazarTablosu", **cols_datas)
-        self.listAuthors()
+        if self.ui.list_author.currentItem():
+            cols_datas = {"YazarAdi": self.ui.list_author.currentItem().text()}
+            result,_ = msg.MesajBox("Dikkat silme işlemi geri alınamaz", f"'{cols_datas['YazarAdi']}'\n\nisimli yazarı silmek istediğinizden emin misiniz?\n\n")
+            if result:
+                db.delData("YazarTablosu", **cols_datas)
+                self.listAuthors()
 
     def delCategory(self):
-        cols_datas = {"Kategori": self.ui.list_categories.currentItem().text()}
-        db.delData("KategoriTablosu", **cols_datas)
-        self.listCategories()
+        if self.ui.list_categories.currentItem():
+            cols_datas = {"Kategori": self.ui.list_categories.currentItem().text()}
+            result, _ = msg.MesajBox("Dikkat silme işlemi geri alınamaz",
+                                     f"'{cols_datas['Kategori']}' kategorisini silmek istediğinizden emin misiniz?\n\n")
+            if result:
+                db.delData("KategoriTablosu", **cols_datas)
+                self.listCategories()
 
     def delSection(self) -> None:
-        cols_datas = {"Bolum": self.ui.list_section.currentItem().text()}
-        db.delData("BolumTablosu", **cols_datas)
-        self.listSections()
+        if self.ui.list_section.currentItem():
+            cols_datas = {"Bolum": self.ui.list_section.currentItem().text()}
+            result, _ = msg.MesajBox("Dikkat silme işlemi geri alınamaz",
+                                     f"'{cols_datas['Bolum']}' isimli dolap/bölümü silmek istediğinizden emin misiniz?\n\n")
+            if result:
+                db.delData("BolumTablosu", **cols_datas)
+                self.listSections()
 
     def delBookshelf(self) -> None:
-        cols_datas = {"RafNo": self.ui.list_bookshelf.currentItem().text()}
-        db.delData("RafTablosu", **cols_datas)
-        self.listBookshelfs()
+        if self.ui.list_bookshelf.currentItem():
+            cols_datas = {"RafNo": self.ui.list_bookshelf.currentItem().text()}
+            result, _ = msg.MesajBox("Dikkat silme işlemi geri alınamaz",
+                                     f"'{cols_datas['RafNo']}' nolu rafı silmek istediğinizden emin misiniz?\n\n")
+            if result:
+                db.delData("RafTablosu", **cols_datas)
+                self.listBookshelfs()
 
     def listAuthors(self) -> None:
         self.ui.list_author.clear()
@@ -330,6 +357,9 @@ class Settings_page(QWidget):
             self.ui.le_username.clear()
             self.ui.le_password.clear()
             self.selectedUserId = None
+            self.ui.btn_delUser.hide()
+            self.ui.btn_updateUser.hide()
+            self.ui.btn_userSave.show()
         except Exception as E:
             print(E)
 

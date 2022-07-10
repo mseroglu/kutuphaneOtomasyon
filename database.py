@@ -29,7 +29,7 @@ class Db:
         self.maxDayBooksStay        = 7    # gün
         self.maxNumberOfBooksGiven  = 3    # adet
         self.byteImg                = None
-        self.activeUserType         = None
+        self.activeUserType         = 1
         self.activeUserId           = None
 
         IdInfo = " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE"
@@ -418,11 +418,11 @@ class Db:
 
     def getFreeBooks(self):
         try:
-            sql = f"""SELECT KitapTablosu.kitapId, Barkod, KitapAdi, YazarAdi, ISBN, 
+            sql = f"""SELECT KitapTablosu.kitapId, Barkod, KitapAdi, YazarAdi, ISBN, DisariVerme,
                 sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL  THEN +1 ELSE 0 END) as Durum FROM KitapTablosu
                 LEFT JOIN YazarTablosu ON KitapTablosu.YazarId=YazarTablosu.yazarId 
-                LEFT JOIN EmanetTablosu ON EmanetTablosu.KitapId = KitapTablosu.kitapId            
-                GROUP BY KitapTablosu.kitapId       """
+                LEFT JOIN EmanetTablosu ON EmanetTablosu.KitapId = KitapTablosu.kitapId                            
+                WHERE DisariVerme > 0 GROUP BY KitapTablosu.kitapId       """
             curs.execute(sql)
             return curs.fetchall()
         except Exception as E:
@@ -472,7 +472,7 @@ class Db:
 
     def getMemberDataWithTcno(self, tcno):
         try:
-            sql =f"""SELECT * FROM UyeTablosu WHERE TCNo={tcno}"""
+            sql =f"""SELECT * FROM UyeTablosu WHERE TCNo = '{tcno}' """
             curs.execute(sql)
             return curs.fetchone()
         except Exception as E:
@@ -498,10 +498,22 @@ class Db:
         except Exception as E:
             print("Fonk: checkBook => ", E)
 
+    def checkBookEntrustState(self, Id=0, TCNo="0") -> int :
+        try:
+            sql = f""" SELECT  Barkod, KitapAdi, UyeTablosu.TCNo, Ad, Soyad FROM EmanetTablosu
+                        LEFT JOIN KitapTablosu ON EmanetTablosu.kitapId = KitapTablosu.kitapId 
+                        LEFT JOIN UyeTablosu ON EmanetTablosu.UyeId = UyeTablosu.uyeId
+                        WHERE VerilisTarihi is NOT NULL AND DonusTarihi is NULL AND (EmanetTablosu.KitapId={Id} OR TCNo = '{TCNo}') """
+            curs.execute(sql)
+            result = curs.fetchone()
+            return result
+        except Exception as E:
+            print("Fonk: checkBookEntrustState => ", E)
+
     def getBookDataWithId(self, Id):
         try:
             sql =f"""SELECT KitapTablosu.kitapId, Barkod, KitapTablosu.ISBN, KitapAdi, YazarId, KategoriId, BolumId, 
-                RafId, Yayinevi, SayfaSayisi,   BasimYili, Aciklama, DisariVerme, KayitTarihi, 
+                RafId, Yayinevi, SayfaSayisi, BasimYili, Aciklama, DisariVerme, KayitTarihi, 
                 sum(CASE WHEN VerilisTarihi is NOT NULL AND DonusTarihi is NULL  THEN +1 ELSE 0 END) as Durum,
                 ImgBarcod, KitapFotoTablosu.ImgBook, BarkodPrint FROM KitapTablosu                     
                 LEFT JOIN KitapFotoTablosu ON KitapFotoTablosu.ISBN=KitapTablosu.ISBN

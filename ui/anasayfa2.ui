@@ -44,17 +44,9 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QFrame" name="frame">
+         <widget class="QFrame" name="frame_login1">
           <property name="styleSheet">
-           <string notr="true">QFrame {
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
-color:white; 
-border: None; 
-border-radius: 15px; 
-font:bold; 
-font-size: 10pt; 
-padding: 10px 10px
-}</string>
+           <string notr="true"/>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -86,9 +78,9 @@ padding: 10px 10px
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_2">
+         <widget class="QFrame" name="frame_login2">
           <property name="styleSheet">
-           <string notr="true">border: None</string>
+           <string notr="true"/>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -120,9 +112,7 @@ padding: 10px 10px
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">
-
-</string>
+              <string notr="true"/>
              </property>
              <property name="currentIndex">
               <number>0</number>
@@ -177,17 +167,7 @@ padding: 10px 10px
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding: 0px 15px;
-}
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}
-
-</string>
+                  <string notr="true"/>
                  </property>
                  <property name="placeholderText">
                   <string>username</string>
@@ -208,15 +188,7 @@ border-bottom: 1px solid black;
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding-left: 15px;
-}
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Password</enum>
@@ -240,7 +212,7 @@ border-bottom: 1px solid black;
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: transparent;</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
                   <string>Hatırla</string>
@@ -285,19 +257,7 @@ border-bottom: 1px solid black;
                     </font>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
-color:white; 
-border: None; 
-border-radius: 15px; 
-font:bold; 
-font-size: 10pt; 
-}
-QPushButton:hover{
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 
-rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
-}
-</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>Otomasyon Giriş</string>
@@ -360,17 +320,7 @@ rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding: 0px 15px;
-font-size: 10pt;
-}
-
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="placeholderText">
                   <string>Kurum Adı</string>
@@ -392,16 +342,7 @@ border-bottom: 1px solid black;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding: 0px 15px;
-font-size: 10pt;
-}
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="placeholderText">
                   <string>Kurum Kodu</string>
@@ -423,16 +364,7 @@ border-bottom: 1px solid black;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding: 0px 15px;
-font-size: 10pt;
-}
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="placeholderText">
                   <string>ADMIN:  mail@mail.com</string>
@@ -454,16 +386,7 @@ border-bottom: 1px solid black;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding: 0px 15px;
-font-size: 10pt;
-}
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Password</enum>
@@ -488,16 +411,7 @@ border-bottom: 1px solid black;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLineEdit{
-border-bottom: 1px solid gray;
-background-color: rgba(111, 180, 184, 255);
-border-radius: 15px;
-padding: 0px 15px;
-font-size: 10pt;
-}
-QLineEdit:focus{
-border-bottom: 1px solid black;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Password</enum>
@@ -531,18 +445,7 @@ border-bottom: 1px solid black;
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
-color:white; 
-border: None; 
-border-radius: 15px; 
-font:bold; 
-font-size: 10pt; 
-}
-QPushButton:hover{
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 
-rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
-}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>Şifremi Unuttum</string>
@@ -558,18 +461,7 @@ rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(66, 146, 157, 255), stop:1 rgba(15, 55, 55, 255));
-color:white; 
-border: None; 
-border-radius: 15px; 
-font:bold; 
-font-size: 10pt; 
-}
-QPushButton:hover{
-background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 
-rgba(66, 146, 157,100), stop:1 rgba(15, 55, 55, 100));
-}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>Kayıt Ol</string>
@@ -889,71 +781,9 @@ Değiştir</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QLabel" name="label_logo_2">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>500</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Tahoma</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="pixmap">
-                 <pixmap>../img/panoramic_books.png</pixmap>
-                </property>
-                <property name="scaledContents">
-                 <bool>true</bool>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-                <property name="indent">
-                 <number>-1</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer">
-                <property name="font">
-                 <font>
-                  <family>Tahoma</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <property name="leftMargin">
-                 <number>100</number>
+                 <number>10</number>
                 </property>
                 <property name="rightMargin">
                  <number>100</number>
@@ -1090,25 +920,7 @@ Değiştir</string>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QComboBox {background-color: rgba(66,146,157,255); color:white; border: None; border-radius: 5px; font-size: 11pt}
-
-QComboBox QAbstractItemView {color:rgb(0,100,200); background:rgb(200,200,200); selection-color: rgb(15,250,250); selection-background-color: rgb(100,100,100);  }
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-    color: #272727;
-    border-left-width: 1px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-QComboBox::down-arrow {
-    image: img/down_arrow.png;
-}
-</string>
+              <string notr="true"/>
              </property>
              <property name="tabShape">
               <enum>QTabWidget::Rounded</enum>
@@ -1120,6 +932,9 @@ QComboBox::down-arrow {
               <bool>false</bool>
              </property>
              <widget class="QWidget" name="tab_books">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <attribute name="title">
                <string>Eser Listesi</string>
               </attribute>
@@ -1135,7 +950,7 @@ QComboBox::down-arrow {
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string/>
@@ -1165,7 +980,7 @@ QComboBox::down-arrow {
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>11</pointsize>
+                     <pointsize>10</pointsize>
                     </font>
                    </property>
                    <property name="styleSheet">
@@ -1494,7 +1309,7 @@ QComboBox::down-arrow {
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string/>
@@ -1524,7 +1339,7 @@ QComboBox::down-arrow {
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>11</pointsize>
+                     <pointsize>10</pointsize>
                     </font>
                    </property>
                    <property name="styleSheet">
@@ -1840,7 +1655,7 @@ QComboBox::down-arrow {
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string/>
@@ -1876,7 +1691,7 @@ QComboBox::down-arrow {
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>11</pointsize>
+                     <pointsize>10</pointsize>
                     </font>
                    </property>
                    <property name="styleSheet">
@@ -2192,7 +2007,7 @@ QComboBox::down-arrow {
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string/>
@@ -2222,12 +2037,11 @@ QComboBox::down-arrow {
                    </property>
                    <property name="font">
                     <font>
-                     <pointsize>11</pointsize>
+                     <pointsize>10</pointsize>
                     </font>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">background-color: rgb(170, 255, 255);
-color: rgb(50, 50, 50);</string>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -2543,6 +2357,9 @@ color: rgb(50, 50, 50);</string>
               </layout>
              </widget>
              <widget class="QWidget" name="tab_outsides">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <attribute name="title">
                <string>Dışardakiler</string>
               </attribute>
@@ -2564,7 +2381,7 @@ color: rgb(50, 50, 50);</string>
                     </font>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QPushButton {background-color: rgba(66,146,157,255); border: None; border-radius: 5px}</string>
+                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string/>
@@ -2601,10 +2418,7 @@ color: rgb(50, 50, 50);</string>
                     </font>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">QComboBox {
-	background-color: rgba(160, 230, 234, 255);
-	color : rgb(50,50,50);
-}</string>
+                    <string notr="true"/>
                    </property>
                   </widget>
                  </item>
@@ -2658,9 +2472,7 @@ color: rgb(50, 50, 50);</string>
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QTableWidget:header {
-background-color:red;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="sortingEnabled">
                   <bool>false</bool>
@@ -2966,6 +2778,12 @@ background-color:red;
                <height>100</height>
               </size>
              </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>100</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Tahoma</family>
@@ -2975,7 +2793,54 @@ background-color:red;
              <property name="title">
               <string/>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6"/>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QLabel" name="label_logo_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Tahoma</family>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="pixmap">
+                 <pixmap>../img/multicultural-reading-books.png</pixmap>
+                </property>
+                <property name="scaledContents">
+                 <bool>true</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+                <property name="indent">
+                 <number>-1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
