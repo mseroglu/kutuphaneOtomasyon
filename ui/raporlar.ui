@@ -21,7 +21,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="groupBox_110">
       <property name="title">
        <string>Yazdırma Seçenekleri</string>
       </property>
@@ -150,7 +150,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBox_2">
+     <widget class="QGroupBox" name="groupBox_111">
       <property name="title">
        <string>Okuma İstatistikleri</string>
       </property>
@@ -243,7 +243,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBox_3">
+     <widget class="QGroupBox" name="groupBox_112">
       <property name="title">
        <string>Tarihleri arasında</string>
       </property>

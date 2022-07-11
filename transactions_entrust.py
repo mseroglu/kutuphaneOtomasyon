@@ -16,15 +16,7 @@ class ConfirmationUI(QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.setWindowFlag( QtCore.Qt.WindowStaysOnTopHint )          # pencereyi en üstte tutar
-        self.setStyleSheet("""QGroupBox{padding: 10px 10px 0px 10px; font: italic bold 10pt; }
-                    QGroupBox::title {                             
-                    border-top-right-radius: 15px;
-                    border-top-left-radius: 15px;
-                    subcontrol-origin: margin;
-                    subcontrol-position: top center;
-                    padding: 4px 40px 4px 40px;
-                    background-color: green;
-                    color: rgb(250, 250, 250)  }""")
+        self.setStyleSheet("""""")
 
         self.result = None
         self.ui.btn_escape.clicked.connect(self.close)

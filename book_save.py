@@ -51,6 +51,7 @@ class SaveBook(QMainWindow):
         self.veriSetiAktar()
 
 
+
     def eventFilter(self, obj: 'QObject', event: 'QEvent') -> bool:
         try:
             if event.type() == QtCore.QEvent.FocusOut and obj.objectName()== "le_isbn":

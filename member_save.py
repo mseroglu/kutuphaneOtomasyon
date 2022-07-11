@@ -1,18 +1,18 @@
 import os, io
 
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QFileDialog
 from PyQt5 import QtGui, QtCore
-from ui.uyeKayitUI import Ui_Form
+from ui.uyeKayitUI import Ui_MainWindow
 from datetime import datetime
 from messageBox import msg
 from database import curs, db, tableWidgetResize
 from PIL import Image
 
 
-class SaveMember(QWidget):
+class SaveMember(QMainWindow):
     def __init__(self):
         super(SaveMember, self).__init__()
-        self.ui = Ui_Form()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.btn_addImg.setStyleSheet("QPushButton {border: None; background: transparent; border-radius: 20px }")
         self.memberPhotoData = None
@@ -22,6 +22,7 @@ class SaveMember(QWidget):
         self.ui.btn_del.setVisible(False)
         self.ui.btn_update.setVisible(False)
 
+        self.ui.le_beMemberDate.setText(datetime.now().strftime("%d.%m.%Y"))
 
 
 
@@ -72,7 +73,7 @@ class SaveMember(QWidget):
             print(f"Fonk: addMemberPhoto    Hata: {E}")
 
     def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
-        tableWidgetResize(self.ui.table_members, (3,2,4,2,1,1), blank=12)
+        tableWidgetResize(self.ui.table_members, (3,2,4,2,1,1), blank=3)
 
     def showEvent(self, a0: QtGui.QShowEvent) -> None:
         self.showMembersInTablewidget()
@@ -211,7 +212,7 @@ class SaveMember(QWidget):
             self.ui.le_sinif.clear()
             self.ui.le_sube.clear()
             self.ui.le_phoneNumber.clear()
-            self.ui.le_beMemberDate.clear()
+            self.ui.le_beMemberDate.setText(datetime.now().strftime("%d.%m.%Y"))
             self.ui.checkBox_uyeKartiYazdirma.setCheckState(True)
             self.ui.btn_addImg.setIcon(QtGui.QIcon("img/member.jpg"))
             self.memberPhotoData = None

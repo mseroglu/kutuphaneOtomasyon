@@ -167,17 +167,17 @@ class Db:
                     counter += curs.rowcount
                     ekle()
                 except sqlite3.Error as E:
-                    msg.popup_mesaj("Hata", f"Okul No\t:  {veri[1]}\nİsim\t:  {veri[2]} {veri[3].upper()}\n\n"
-                                            f"üyenin TC kimlik numarası kullanılmaktadır. Bu üyenin kaydı yapılmadı!\n")
-                    print(f"Fonk: ekle  \tHata: {E}")
-                    ekle()
+                    cevap, _ = msg.MesajBox("Hata", f"Okul No\t:  {veri[1]}\nİsim\t:  {veri[2]} {veri[3].upper()}\n\n"
+                                            f"Zaten kayıtlı bir TC Kimlik numarasını girdiniz. Bu üyenin kaydı yapılmadı!\n\n"
+                                            "Diğer kayıtlar için devam etmek istiyor musunuz?\n\n")
+                    if cevap:
+                        ekle()
             ekle()
         except AttributeError as E:
             msg.popup_mesaj("Dikkat", f"Doğum Tarihi vb bir sütunda, uygun olmayan veri tipi işlemi engelliyor!\n"
                                       f"Lütfen Excel tablosunda sütun veri tiplerini değiştirmeden \n"
                                       f"(özellikle Doğum Tarihi sütunu) doğru veri giriniz veya boş bırakınız.")
         except Exception as E:
-            print("Eklenen kayıt sayısı : ", counter)
             print(f"Fonk: forceInsertMultiMember  \tHata: {E}")
             msg.popup_mesaj("Başlık", f"Eklenen Üye sayısı : {counter}")
 

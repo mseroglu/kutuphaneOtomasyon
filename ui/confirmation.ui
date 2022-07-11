@@ -31,7 +31,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,3">
      <item>
-      <widget class="QGroupBox" name="groupBox_21">
+      <widget class="QGroupBox" name="groupBox_uyeBilgileri">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
@@ -466,7 +466,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="groupBox_verilenler">
        <property name="font">
         <font>
          <pointsize>11</pointsize>

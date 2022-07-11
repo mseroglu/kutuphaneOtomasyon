@@ -1,16 +1,16 @@
 import locale
 locale.setlocale(locale.LC_ALL, "")                                             # Yerel ayarları uygular
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QInputDialog
 from PyQt5 import QtCore, QtGui
-from ui.ayarlarUI import Ui_Form
+from ui.ayarlarUI import Ui_MainWindow
 
 from database import conn, curs, db
 from messageBox import msg
 
-class Settings_page(QWidget):
+class Settings_page(QMainWindow):
     def __init__(self):
         super(Settings_page, self).__init__()
-        self.ui = Ui_Form()
+        self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         #self.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)     # pencereyi en üstte tutuyor
 
