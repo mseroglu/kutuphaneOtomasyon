@@ -97,7 +97,7 @@ class MainWindow(QMainWindow):
 
         # self.ui.btn_openTransactions.installEventFilter(self)           # event
         self.ui.tab_logup.installEventFilter(self)
-        self.ui.stackedWidget.setCurrentIndex(1)
+        self.ui.stackedWidget.setCurrentIndex(0)
 
 
 
